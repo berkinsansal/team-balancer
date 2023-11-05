@@ -30,6 +30,11 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+                            "node_modules/primeng/resources/primeng.min.css",
+                            "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
+                            "node_modules/@fortawesome/fontawesome-free/css/solid.css",
+                            "node_modules/@fortawesome/fontawesome-free/css/regular.css",
                             "src/styles.scss"
                         ],
                         "scripts": []
@@ -93,6 +98,11 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+                            "node_modules/primeng/resources/primeng.min.css",
+                            "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
+                            "node_modules/@fortawesome/fontawesome-free/css/solid.css",
+                            "node_modules/@fortawesome/fontawesome-free/css/regular.css",
                             "src/styles.scss"
                         ],
                         "scripts": []
