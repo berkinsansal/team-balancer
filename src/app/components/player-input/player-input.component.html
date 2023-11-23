@@ -1,0 +1,17 @@
+<h2>Add Player</h2>
+<form [formGroup]="playerForm" (ngSubmit)="addPlayer()">
+    <div class="grid">
+        <span class="col-3">
+            <input pInputText id="name" type="text" formControlName="name" placeholder="Name" class="w-full">
+        </span>
+        <span class="col-9">
+            <p-selectButton [options]="genderList" formControlName="gender" optionLabel="label" optionValue="value"></p-selectButton>
+        </span>
+        <span *ngFor="let skill of skillList" class="col-3">
+            <p-inputNumber [inputId]="skill" [formControlName]="skill" [placeholder]="skill | titlecase" inputStyleClass="w-full"></p-inputNumber>
+        </span>
+        <span class="col-12">
+            <button pButton type="submit" [disabled]="!playerForm.valid">Add Player</button>
+        </span>
+    </div>
+</form>
