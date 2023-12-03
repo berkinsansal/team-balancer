@@ -19,6 +19,10 @@ export class HomeComponent {
         this.teamBalancerService.balanceTeams();
     }
 
+    balanceTeamsOLD() {
+        this.teamBalancerService.balanceTeamsOLD();
+    }
+
     addTestPlayers() {
         this.teamBalancerService.players.push(new Player(
             'Player 1',
