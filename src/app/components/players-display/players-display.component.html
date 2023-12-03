@@ -1,10 +1,50 @@
-<table>
-    <tr>
-        <th>#</th>
-        <th *ngFor="let prop of playerProperties">{{ prop | titlecase }}</th>
-    </tr>
-    <tr *ngFor="let player of players; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td *ngFor="let prop of playerProperties">{{ player | playerSkillValue : prop }}</td>
-    </tr>
-</table>
+<p-table [columns]="playerProperties" [value]="players" [rowHover]="true" [styleClass]="'p-datatable-sm p-datatable-striped'">
+    <ng-template pTemplate="header" let-properties>
+        <tr>
+            <th>#</th>
+            <th *ngFor="let prop of properties" class="text-center">
+                {{ prop | titlecase }}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-player let-rowIndex="rowIndex" let-properties="columns">
+        <tr>
+            <td>{{ rowIndex + 1 }}</td>
+            <ng-container *ngFor="let prop of properties; let i = index">
+                <!-- player properties start with name(0), gender(1), and skills(2,...,n) one by one -->
+                <ng-container [ngSwitch]="i">
+                    <ng-container *ngSwitchCase="0">
+                        <ng-container *ngTemplateOutlet="namePropTemplate; context:{$implicit: player | playerSkillValue : prop}">
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="1">
+                        <ng-container *ngTemplateOutlet="genderPropTemplate; context:{$implicit: player | playerSkillValue : prop}">
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <ng-container *ngTemplateOutlet="skillPropTemplate; context:{$implicit: player | playerSkillValue : prop}">
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </tr>
+    </ng-template>
+</p-table>
+
+<ng-template #namePropTemplate let-value>
+    <td>
+        {{ value }}
+    </td>
+</ng-template>
+
+<ng-template #genderPropTemplate let-value>
+    <td class="text-center">
+        <i class="fa-solid" [ngClass]="value === 0 ? 'fa-mars' : 'fa-venus'" [ngStyle]="{'color': value === 0 ? 'deepskyblue' : 'deeppink'}"></i>
+    </td>
+</ng-template>
+
+<ng-template #skillPropTemplate let-value>
+    <td class="text-center" [ngStyle]="{'background-color': value > 8 ? '#3ab449' : value > 6 ? '#92ca61' : value > 3 ? '#fcb041' : value > 1 ? '#f57951' : '#e22026'}">
+        {{ value }}
+    </td>
+</ng-template>

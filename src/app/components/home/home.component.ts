@@ -22,7 +22,7 @@ export class HomeComponent {
     addTestPlayers() {
         this.teamBalancerService.players.push(new Player(
             'Player 1',
-            Gender.Male,
+            Gender.Female,
             1,
             1,
             1,
@@ -31,7 +31,7 @@ export class HomeComponent {
 
         this.teamBalancerService.players.push(new Player(
             'Player 10',
-            Gender.Male,
+            Gender.Female,
             10,
             10,
             10,
