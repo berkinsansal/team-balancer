@@ -26,8 +26,7 @@ export class PlayerInputComponent {
             label: genderKey
         }));
 
-        const playerProperties = Object.keys(Reflect.construct(Player, []));
-        this.skillList = playerProperties.slice(2, playerProperties.length - 1); // remove name and gender properties
+        this.skillList = Player.getPlayerClassSkillProperties();
 
         // this.playerForm = new FormGroup({
         //     name: new FormControl(null, Validators.required),

@@ -13,7 +13,7 @@ export class PlayersDisplayComponent {
     playerProperties: string[];
 
     constructor() {
-        this.playerProperties = Object.keys(Reflect.construct(Player, []));
+        this.playerProperties = Player.getPlayerClassAllProperties();
     }
 
 }
