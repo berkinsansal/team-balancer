@@ -51,6 +51,6 @@
 
 <ng-template #skillPropTemplate let-value>
     <td class="text-center" [ngStyle]="{'background-color': value > 8 ? '#3ab449' : value > 6 ? '#92ca61' : value > 3 ? '#fcb041' : value > 1 ? '#f57951' : '#e22026'}">
-        {{ value }}
+        {{ value | number: '1.0-2' }}
     </td>
 </ng-template>
