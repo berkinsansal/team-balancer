@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Player } from '../models/player';
+import { Player, playerPropertyWeightMap } from '../models/player';
 
 @Injectable({
     providedIn: 'root'
@@ -71,9 +71,9 @@ export class TeamBalancerService {
         const skillList = Player.getPlayerClassSkillProperties();
 
         let similarity = 0;
-        similarity += player1.gender === player2.gender ? 0 : 10;
+        similarity += (player1.gender === player2.gender ? 0 : 10) * (playerPropertyWeightMap.get('gender') ?? 0);
         skillList.forEach(skill => {
-            similarity += Math.abs((player1[skill as keyof Player] as number) - (player2[skill as keyof Player] as number));
+            similarity += Math.abs((player1[skill as keyof Player] as number) - (player2[skill as keyof Player] as number)) * (playerPropertyWeightMap.get(skill) ?? 0);
         });
 
         // Aggregate the similarity scores (lower is more similar)

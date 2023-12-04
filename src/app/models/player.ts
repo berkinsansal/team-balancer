@@ -34,3 +34,11 @@ export class Player {
         this.overall = this.overall / skillList.length;
     }
 }
+
+export const playerPropertyWeightMap = new Map<string, number>([
+    ['gender', 5],
+    ['serving', 3],
+    ['hitting', 3],
+    ['blocking', 1],
+    ['defense', 3],
+]);
