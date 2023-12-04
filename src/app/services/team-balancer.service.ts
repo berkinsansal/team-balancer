@@ -43,14 +43,14 @@ export class TeamBalancerService {
 
             if (bestPair && bestPairIndex) {
                 const betterPlayer = bestPair[0].overall > bestPair[1].overall ? bestPair[0] : bestPair[1];
-                const otherPlayer = bestPair[0].overall > bestPair[1].overall ? bestPair[1] : bestPair[0];
-                if (this.team1.length % 2 === 0) {
-                    this.team1.push(betterPlayer);
-                    this.team2.push(otherPlayer);
-                } else {
-                    this.team2.push(betterPlayer);
-                    this.team1.push(otherPlayer);
-                }
+                const worsePlayer = bestPair[0].overall > bestPair[1].overall ? bestPair[1] : bestPair[0];
+                const team1overall = Player.getTeamOverall(this.team1);
+                const team2overall = Player.getTeamOverall(this.team2);
+                const betterTeam = team1overall > team2overall ? this.team1 : this.team2;
+                const worseTeam = team1overall > team2overall ? this.team2 : this.team1;
+                worseTeam.push(betterPlayer);
+                betterTeam.push(worsePlayer);
+                
                 remainingPlayers.splice(bestPairIndex[1], 1);
                 remainingPlayers.splice(bestPairIndex[0], 1);
             }

@@ -14,14 +14,8 @@ export class TeamDisplayComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['teamPlayers']) {
-            this.calculateTeamOverall();
+            this.teamOverall = Player.getTeamOverall(this.teamPlayers);
         }
-    }
-
-    calculateTeamOverall() {
-        this.teamOverall = this.teamPlayers.reduce((accumulator, player) => {
-            return accumulator + player.overall;
-        }, 0) / this.teamPlayers.length;
     }
 
 }

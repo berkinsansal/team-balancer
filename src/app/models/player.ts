@@ -26,6 +26,12 @@ export class Player {
         return playerProperties.slice(2, playerProperties.length - 1); // remove name and gender properties from beginning and overall property from the end
     }
 
+    static getTeamOverall(teamPlayers: Player[]) {
+        return teamPlayers.reduce((accumulator, player) => {
+            return accumulator + player.overall;
+        }, 0) / teamPlayers.length;
+    }
+
     calculateOverall() {
         this.overall = 0;
         const skillList = Player.getPlayerClassSkillProperties();
