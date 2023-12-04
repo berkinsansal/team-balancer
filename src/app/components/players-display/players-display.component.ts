@@ -9,6 +9,7 @@ import { TeamBalancerService } from '../../services/team-balancer.service';
 })
 export class PlayersDisplayComponent {
 
+    @Input() title: string = '';
     @Input() players: Player[] = [];
     @Input() isSelectionEnabled = false;
 

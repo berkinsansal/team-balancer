@@ -1,4 +1,9 @@
 <p-table [columns]="playerProperties" [value]="players" [(selection)]="selectedPlayers" [rowHover]="true" [styleClass]="'p-datatable-sm p-datatable-striped'" (selectionChange)="selectionChanged()">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <span>{{title}}</span>
+        </div>
+    </ng-template>
     <ng-template pTemplate="header" let-properties>
         <tr>
             <th *ngIf="isSelectionEnabled">

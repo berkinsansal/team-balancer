@@ -10,11 +10,12 @@ export class TeamDisplayComponent implements OnChanges {
     @Input() teamTitle: string = 'Team';
     @Input() teamPlayers: Player[] = [];
 
-    teamOverall = 0; // 0-10
+    teamTitleWithOverall = this.teamTitle;
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['teamPlayers']) {
-            this.teamOverall = Player.getTeamOverall(this.teamPlayers);
+            const teamOverall = Number(Player.getTeamOverall(this.teamPlayers).toFixed(2));
+            this.teamTitleWithOverall = this.teamTitle + ' (' + teamOverall + ')';
         }
     }
 
