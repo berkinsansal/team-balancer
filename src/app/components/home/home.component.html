@@ -3,7 +3,7 @@
         <app-player-input></app-player-input>
     </div>
     <div class="col-fixed">
-        <app-players-display [title]="'Players'" [players]="teamBalancerService.players" [isSelectionEnabled]="true"></app-players-display>
+        <app-players-display [title]="'Players'" [players]="teamBalancerService.players" [isSelectionEnabled]="true" [isFilterEnabled]="true"></app-players-display>
     
         <button pButton (click)="balanceTeams()">Balance Teams</button>
         <button pButton (click)="balanceTeamsOLD()">Balance Teams (OLD)</button>

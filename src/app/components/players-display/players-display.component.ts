@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Table } from 'primeng/table';
 import { Player } from '../../models/player';
 import { TeamBalancerService } from '../../services/team-balancer.service';
 
@@ -12,6 +13,7 @@ export class PlayersDisplayComponent implements OnInit {
     @Input() title: string = '';
     @Input() players: Player[] = [];
     @Input() isSelectionEnabled = false;
+    @Input() isFilterEnabled = false;
 
     selectedPlayers: Player[] = [];
     playerProperties: string[];
@@ -28,6 +30,17 @@ export class PlayersDisplayComponent implements OnInit {
 
     selectionChanged() {
         this.teamBalancerService.selectedPlayers = this.selectedPlayers;
+    }
+
+    filterPlayers(table: Table, input: EventTarget | null) {
+        if (input) {
+            table.filterGlobal((input as HTMLInputElement).value, 'contains');
+        }
+    }
+
+    clearFilter(table: Table, input: HTMLInputElement) {
+        table.clear();
+        input.value = '';
     }
 
 }
