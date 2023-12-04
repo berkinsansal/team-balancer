@@ -11,7 +11,9 @@ export class Player {
         public blocking: number, // 0-10
         public defense: number, // 0-10
     ) {
-        this.calculateOverall();
+        if (name) {
+            this.calculateOverall();
+        }
     }
 
     static getPlayerClassAllProperties() {
@@ -24,6 +26,11 @@ export class Player {
     }
 
     calculateOverall() {
-        this.overall = (this.serving + this.hitting + this.blocking + this.defense) / 4;
+        this.overall = 0;
+        const skillList = Player.getPlayerClassSkillProperties();
+        skillList.forEach(skill => {
+            this.overall += (this[skill as keyof Player] as number);
+        });
+        this.overall = this.overall / skillList.length;
     }
 }
