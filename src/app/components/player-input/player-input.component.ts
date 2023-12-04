@@ -55,6 +55,7 @@ export class PlayerInputComponent {
                 newPlayerPropValues.push(this.playerForm.value[prop]);
             });
             this.teamBalancerService.players.push(new Player(...newPlayerPropValues));
+            this.teamBalancerService.sortPlayers();
             // const playerFormData: any = {
             //     name: null,
             //     gender: Gender.Male,

@@ -10,9 +10,17 @@ import { TeamBalancerService } from '../../services/team-balancer.service';
 })
 export class HomeComponent {
 
+    readonly totalPlayerCount = 12;
+
     constructor(public teamBalancerService: TeamBalancerService) {
         this.addTestPlayers(); // for development
+        this.initialSetup();
         this.balanceTeams(); // for development
+    }
+
+    initialSetup() {
+        this.teamBalancerService.sortPlayers();
+        this.teamBalancerService.selectedPlayers = this.teamBalancerService.players.slice(0, this.teamBalancerService.players.length >= this.totalPlayerCount ? this.totalPlayerCount : this.teamBalancerService.players.length);
     }
 
     balanceTeams() {

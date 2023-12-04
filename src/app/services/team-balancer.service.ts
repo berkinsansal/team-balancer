@@ -6,21 +6,24 @@ import { Player, playerPropertyWeightMap } from '../models/player';
 })
 export class TeamBalancerService {
     players: Player[] = [];
+    selectedPlayers: Player[] = [];
     team1: Player[] = [];
     team2: Player[] = [];
 
     constructor() { }
 
+    // Sort players based on their skill levels
+    sortPlayers() {
+        this.players.sort((a, b) => this.calculateSkillLevel(b) - this.calculateSkillLevel(a));
+    }
+
     // Find the two most similar players and put them each team
     balanceTeams() {
-        // Sort players based on their skill levels
-        this.players.sort((a, b) => this.calculateSkillLevel(b) - this.calculateSkillLevel(a));
-
         // Split into two teams
         this.team1 = [];
         this.team2 = [];
 
-        const remainingPlayers = this.players.map(p => Object.assign({}, p));
+        const remainingPlayers = this.selectedPlayers.map(p => Object.assign({}, p));
 
         while (remainingPlayers.length >= 2) {
             let bestPair: [Player, Player] | null = null;
@@ -82,25 +85,22 @@ export class TeamBalancerService {
 
     // OLD CALCULATION
     balanceTeamsOLD() {
-        // Sort players based on their skill levels
-        this.players.sort((a, b) => this.calculateSkillLevel(b) - this.calculateSkillLevel(a));
-
         // Split into two teams
         this.team1 = [];
         this.team2 = [];
 
-        for (let i = 0; i < this.players.length / 2; i++) {
+        for (let i = 0; i < this.selectedPlayers.length / 2; i++) {
             if (i % 2 === 0) {
                 // one round put better player to team 1
-                this.team1.push(this.players[i * 2]);
-                if (i + 1 < this.players.length) {
-                    this.team2.push(this.players[i * 2 + 1]);
+                this.team1.push(this.selectedPlayers[i * 2]);
+                if (i + 1 < this.selectedPlayers.length) {
+                    this.team2.push(this.selectedPlayers[i * 2 + 1]);
                 }
             } else {
                 // other round put better player to team 2
-                this.team2.push(this.players[i * 2]);
-                if (i + 1 < this.players.length) {
-                    this.team1.push(this.players[i * 2 + 1]);
+                this.team2.push(this.selectedPlayers[i * 2]);
+                if (i + 1 < this.selectedPlayers.length) {
+                    this.team1.push(this.selectedPlayers[i * 2 + 1]);
                 }
             }
         }

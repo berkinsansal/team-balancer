@@ -1,6 +1,9 @@
-<p-table [columns]="playerProperties" [value]="players" [rowHover]="true" [styleClass]="'p-datatable-sm p-datatable-striped'">
+<p-table [columns]="playerProperties" [value]="players" [(selection)]="selectedPlayers" [rowHover]="true" [styleClass]="'p-datatable-sm p-datatable-striped'" (selectionChange)="selectionChanged()">
     <ng-template pTemplate="header" let-properties>
         <tr>
+            <th *ngIf="isSelectionEnabled">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
             <th>#</th>
             <th *ngFor="let prop of properties" class="text-center">
                 {{ prop | titlecase }}
@@ -9,6 +12,9 @@
     </ng-template>
     <ng-template pTemplate="body" let-player let-rowIndex="rowIndex" let-properties="columns">
         <tr>
+            <td *ngIf="isSelectionEnabled">
+                <p-tableCheckbox [value]="player"></p-tableCheckbox>
+            </td>
             <td>{{ rowIndex + 1 }}</td>
             <ng-container *ngFor="let prop of properties; let i = index">
                 <!-- player properties start with name(0), gender(1), and skills(2,...,n) one by one -->
