@@ -3,6 +3,7 @@ import { Gender } from './enums/gender.enum';
 export class Player {
     overall = 0; // 0-10
 
+    constructor(...args: any[]);
     constructor(
         public name: string, // name has to be first in order, it has special logic according to that
         public gender: Gender, // gender has to be second in order, it has special logic according to that

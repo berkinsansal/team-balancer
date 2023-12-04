@@ -48,8 +48,13 @@ export class PlayerInputComponent {
 
     addPlayer() {
         if (this.playerForm.valid) {
-            const { name, gender, serving, hitting, blocking, defense } = this.playerForm.value;
-            this.teamBalancerService.players.push(new Player(name, gender, serving, hitting, blocking, defense));
+            let playerProperties = Player.getPlayerClassAllProperties();
+            playerProperties = playerProperties.slice(0, playerProperties.length - 1);
+            const newPlayerPropValues: any[] = [];
+            playerProperties.forEach(prop => {
+                newPlayerPropValues.push(this.playerForm.value[prop]);
+            });
+            this.teamBalancerService.players.push(new Player(...newPlayerPropValues));
             // const playerFormData: any = {
             //     name: null,
             //     gender: Gender.Male,
