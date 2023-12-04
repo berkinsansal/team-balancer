@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Player } from '../../models/player';
 import { TeamBalancerService } from '../../services/team-balancer.service';
 
@@ -7,7 +7,7 @@ import { TeamBalancerService } from '../../services/team-balancer.service';
     templateUrl: './players-display.component.html',
     styleUrls: ['./players-display.component.scss']
 })
-export class PlayersDisplayComponent {
+export class PlayersDisplayComponent implements OnInit {
 
     @Input() title: string = '';
     @Input() players: Player[] = [];
@@ -17,10 +17,13 @@ export class PlayersDisplayComponent {
     playerProperties: string[];
 
     constructor(public teamBalancerService: TeamBalancerService) {
-        if (this.isSelectionEnabled) {
-            this.selectedPlayers = teamBalancerService.selectedPlayers;
-        }
         this.playerProperties = Player.getPlayerClassAllProperties();
+    }
+
+    ngOnInit(): void {
+        if (this.isSelectionEnabled) {
+            this.selectedPlayers = this.teamBalancerService.selectedPlayers;
+        }
     }
 
     selectionChanged() {
