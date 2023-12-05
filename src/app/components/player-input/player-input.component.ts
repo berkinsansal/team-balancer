@@ -1,19 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
+import { enumToKeyArray } from '../../models/enums/enum-helper';
 import { Gender } from '../../models/enums/gender.enum';
 import { Player } from '../../models/player';
 import { TeamBalancerService } from '../../services/team-balancer.service';
-import { enumToKeyArray, enumToValueArray } from '../../models/enums/enum-helper';
+
+// TODO: bugs: (when bugs are fixed, open add & edit buttons in players-display.component.html)
+// 1- when player updated with all props, gender doesnot change
+// 2- new player somehow has same id(there is no id currently), selection from table select both new players
+// 3- when player updated, table doesnt update record
 
 @Component({
     selector: 'app-player-input',
     templateUrl: './player-input.component.html',
     styleUrls: ['./player-input.component.scss']
 })
-export class PlayerInputComponent {
+export class PlayerInputComponent implements OnInit {
+    @Input() selectedPlayer: Player | null = null;
+    @Output() playerUpdated: EventEmitter<Player | null> = new EventEmitter();
+
     playerForm: FormGroup;
-    // genderList: string[];
     genderList: SelectItem[] = [];
     skillList: string[];
 
@@ -28,47 +35,68 @@ export class PlayerInputComponent {
 
         this.skillList = Player.getPlayerClassSkillProperties();
 
-        // this.playerForm = new FormGroup({
-        //     name: new FormControl(null, Validators.required),
-        //     gender: new FormControl(Gender.Male, Validators.required),
-        // });
-        // this.skillList.forEach(x => {
-        //     this.playerForm.addControl(x, new FormControl(null, [Validators.required, Validators.min(0), Validators.max(10)]));
-        // });
-
-        // for development
         this.playerForm = new FormGroup({
-            name: new FormControl('player xxx', Validators.required),
+            name: new FormControl(null, Validators.required),
             gender: new FormControl(Gender.Male, Validators.required),
         });
         this.skillList.forEach(x => {
-            this.playerForm.addControl(x, new FormControl(5, [Validators.required, Validators.min(0), Validators.max(10)]));
+            this.playerForm.addControl(x, new FormControl(null, [Validators.required, Validators.min(0), Validators.max(10)]));
         });
     }
 
-    addPlayer() {
-        if (this.playerForm.valid) {
-            let playerProperties = Player.getPlayerClassAllProperties();
-            playerProperties = playerProperties.slice(0, playerProperties.length - 1);
-            const newPlayerPropValues: any[] = [];
-            playerProperties.forEach(prop => {
-                newPlayerPropValues.push(this.playerForm.value[prop]);
+    ngOnInit(): void {
+        this.resetForm();
+    }
+
+    resetForm() {
+        let playerFormData: any;
+        if (this.selectedPlayer) {
+            playerFormData = {
+                name: this.selectedPlayer.name,
+                gender: this.selectedPlayer.gender,
+            };
+            this.skillList.forEach(skill => {
+                if (this.selectedPlayer) {
+                    playerFormData[skill] = this.selectedPlayer[skill as keyof Player];
+                }
             });
-            this.teamBalancerService.players.push(new Player(...newPlayerPropValues));
-            this.teamBalancerService.sortPlayers();
-            // const playerFormData: any = {
+        } else {
+            // playerFormData = {
             //     name: null,
             //     gender: Gender.Male,
             // };
             // this.skillList.forEach(x => playerFormData[x] = null);
 
             // for development
-            const playerFormData: any = {
+            playerFormData = {
                 name: 'player yyy',
                 gender: Gender.Male,
             };
             this.skillList.forEach(x => playerFormData[x] = 8);
-            this.playerForm.reset(playerFormData);
+        }
+        this.playerForm.reset(playerFormData);
+    }
+
+    addOrUpdatePlayer() {
+        if (this.playerForm.valid) {
+            let playerProperties = Player.getPlayerClassAllProperties();
+            playerProperties = playerProperties.slice(0, playerProperties.length - 1);
+            if (this.selectedPlayer) {
+                playerProperties.forEach(prop => {
+                    if (this.selectedPlayer) {
+                        const aaa = prop as keyof Player;
+                        (this.selectedPlayer as any)[prop as keyof Player] = this.playerForm.value[prop];
+                    }
+                });
+            } else {
+                const playerPropValuesFromForm: any[] = [];
+                playerProperties.forEach(prop => {
+                    playerPropValuesFromForm.push(this.playerForm.value[prop]);
+                });
+                this.teamBalancerService.players.push(new Player(...playerPropValuesFromForm));
+            }
+            this.teamBalancerService.sortPlayers();
+            this.playerUpdated.emit(this.selectedPlayer);
         }
     }
 

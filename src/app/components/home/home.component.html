@@ -1,20 +1,14 @@
 <div class="grid">
-    <div class="col-6">
-        <app-player-input></app-player-input>
-    </div>
-    <div class="col-fixed">
-        <app-players-display [title]="'Players'" [players]="teamBalancerService.players" [isSelectionEnabled]="true" [isFilterEnabled]="true"></app-players-display>
+    <div class="col">
+        <app-players-display [title]="'Players'" [players]="teamBalancerService.players" [isAllPlayersTable]="true"></app-players-display>
     
         <button pButton (click)="balanceTeams()">Balance Teams</button>
         <button pButton (click)="balanceTeamsOLD()">Balance Teams (OLD)</button>
     </div>
-</div>
-
-<div class="grid">
-    <div class="col-fixed">
+    <div class="col">
         <app-team-display [teamTitle]="'Team 1'" [teamPlayers]="teamBalancerService.team1"></app-team-display>
     </div>
-    <div class="col-fixed">
+    <div class="col">
         <app-team-display [teamTitle]="'Team 2'" [teamPlayers]="teamBalancerService.team2"></app-team-display>
     </div>
 </div>

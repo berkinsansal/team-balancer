@@ -1,17 +1,29 @@
-<h2>Add Player</h2>
-<form [formGroup]="playerForm" (ngSubmit)="addPlayer()">
-    <div class="grid">
-        <span class="col-3">
+<form [formGroup]="playerForm" (ngSubmit)="addOrUpdatePlayer()">
+    <div class="formgrid grid">
+        <div class="field col-fixed">
+            <label for="name">Name</label>
             <input pInputText id="name" type="text" formControlName="name" placeholder="Name" class="w-full">
-        </span>
-        <span class="col-9">
-            <p-selectButton [options]="genderList" formControlName="gender" optionLabel="label" optionValue="value"></p-selectButton>
-        </span>
-        <span *ngFor="let skill of skillList" class="col-3">
-            <p-inputNumber [inputId]="skill" [formControlName]="skill" [placeholder]="skill | titlecase" inputStyleClass="w-full"></p-inputNumber>
-        </span>
-        <span class="col-12">
-            <button pButton type="submit" [disabled]="!playerForm.valid">Add Player</button>
-        </span>
+        </div>
+        <div class="field col-fixed">
+            <label>Gender</label>
+            <!-- formControlName="gender" didn't work, so onChange is used as workaround -->
+            <p-selectButton [options]="genderList" formControlName="gender" optionLabel="label" optionValue="value" (onChange)="playerForm.value.gender = $event.value">
+                <ng-template let-item pTemplate>
+                    <div class="grid -my-2">
+                        <div class="col py-2">{{item.label}}</div>
+                        <div class="col py-2">
+                            <i class="fa-solid" [ngClass]="item.value === 0 ? 'fa-mars' : 'fa-venus'" [ngStyle]="{'color': item.value === 0 ? 'deepskyblue' : 'deeppink'}"></i>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-selectButton>
+        </div>
+        <div *ngFor="let skill of skillList" class="field col-fixed">
+            <label [for]="skill">{{skill | titlecase}}</label>
+            <p-inputNumber [inputId]="skill" [formControlName]="skill" [placeholder]="skill | titlecase" class="inline" styleClass="inline" inputStyleClass="w-full"></p-inputNumber>
+        </div>
+        <div class="col-12">
+            <button pButton type="submit" [disabled]="!playerForm.valid">{{selectedPlayer ? 'Update' : 'Add'}}</button>
+        </div>
     </div>
 </form>

@@ -12,18 +12,19 @@ export class PlayersDisplayComponent implements OnInit {
 
     @Input() title: string = '';
     @Input() players: Player[] = [];
-    @Input() isSelectionEnabled = false;
-    @Input() isFilterEnabled = false;
+    @Input() isAllPlayersTable = false;
 
+    selectedPlayer: Player | null = null;
     selectedPlayers: Player[] = [];
     playerProperties: string[];
+    playerInputVisible: boolean = false;
 
     constructor(public teamBalancerService: TeamBalancerService) {
         this.playerProperties = Player.getPlayerClassAllProperties();
     }
 
     ngOnInit(): void {
-        if (this.isSelectionEnabled) {
+        if (this.isAllPlayersTable) {
             this.selectedPlayers = this.teamBalancerService.selectedPlayers;
         }
     }
@@ -41,6 +42,15 @@ export class PlayersDisplayComponent implements OnInit {
     clearFilter(table: Table, input: HTMLInputElement) {
         table.clear();
         input.value = '';
+    }
+
+    showPlayerInputDialog(player: Player | null) {
+        this.selectedPlayer = player;
+        this.playerInputVisible = true;
+    }
+
+    playerUpdated(player: Player | null) {
+        this.playerInputVisible = false;
     }
 
 }

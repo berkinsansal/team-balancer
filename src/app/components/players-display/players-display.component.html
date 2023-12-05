@@ -1,9 +1,9 @@
-<p-table #playersTable [columns]="playerProperties" [value]="players" [(selection)]="selectedPlayers" [rowHover]="true" [globalFilterFields]="['name']" [styleClass]="'p-datatable-sm p-datatable-striped p-datatable-gridlines'"
+<p-table *ngIf="!playerInputVisible" #playersTable [columns]="playerProperties" [value]="players" [(selection)]="selectedPlayers" [rowHover]="true" selectionMode="multiple" [globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
     (selectionChange)="selectionChanged()">
     <ng-template pTemplate="caption">
         <div class="flex align-items-center">
             <span>{{title}}</span>
-            <div *ngIf="isFilterEnabled" class="p-inputgroup w-auto ml-auto">
+            <div *ngIf="isAllPlayersTable" class="p-inputgroup w-auto ml-auto">
                 <span class="p-inputgroup-addon">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
@@ -14,18 +14,21 @@
     </ng-template>
     <ng-template pTemplate="header" let-properties>
         <tr>
-            <th *ngIf="isSelectionEnabled">
+            <th *ngIf="isAllPlayersTable">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th>#</th>
-            <th *ngFor="let prop of properties" class="text-center">
-                {{ prop | titlecase }}
+            <th class="text-center">#</th>
+            <th *ngFor="let prop of properties" [pSortableColumn]="prop" class="text-center">
+                {{ prop | titlecase }} <p-sortIcon [field]="prop"></p-sortIcon>
             </th>
+            <!-- <th *ngIf="isAllPlayersTable" class="p-0">
+                <button pButton pRipple type="button" pTooltip="Add Player" icon="fa-solid fa-plus" (click)="showPlayerInputDialog(null)" class=" p-button-sm"></button>
+            </th> -->
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-player let-rowIndex="rowIndex" let-properties="columns">
         <tr>
-            <td *ngIf="isSelectionEnabled">
+            <td *ngIf="isAllPlayersTable">
                 <p-tableCheckbox [value]="player"></p-tableCheckbox>
             </td>
             <td>{{ rowIndex + 1 }}</td>
@@ -46,6 +49,9 @@
                     </ng-container>
                 </ng-container>
             </ng-container>
+            <!-- <td *ngIf="isAllPlayersTable" class="p-0">
+                <button pButton pRipple type="button" pTooltip="Edit Player" icon="fa-solid fa-pen" (click)="showPlayerInputDialog(player)" class="p-button-text p-button-sm"></button>
+            </td> -->
         </tr>
     </ng-template>
 </p-table>
@@ -67,3 +73,7 @@
         {{ value | number: '1.0-2' }}
     </td>
 </ng-template>
+
+<p-dialog [header]="selectedPlayer ? 'Edit Player' : 'Add Player'" [(visible)]="playerInputVisible" [modal]="true" [draggable]="false" [resizable]="false">
+    <app-player-input *ngIf="playerInputVisible" [selectedPlayer]="selectedPlayer" (playerUpdated)="playerUpdated($event)"></app-player-input>
+</p-dialog>

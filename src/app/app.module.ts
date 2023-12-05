@@ -3,11 +3,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -32,10 +33,11 @@ import { PlayerSkillValuePipe } from './pipes/player-skill-value.pipe';
         ReactiveFormsModule,
         InputTextModule,
         InputNumberModule,
-        DropdownModule,
         ButtonModule,
         SelectButtonModule,
         TableModule,
+        DialogModule,
+        TooltipModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
