@@ -1,6 +1,8 @@
 import { Gender } from './enums/gender.enum';
 
 export class Player {
+    static maxId = -1;
+    id = -1;
 
     constructor(...args: any[]);
     constructor(
@@ -10,7 +12,11 @@ export class Player {
         public hitting: number, // 0-10
         public blocking: number, // 0-10
         public defense: number, // 0-10
-    ) { }
+    ) {
+        if (name) {
+            this.id = ++Player.maxId;
+        }
+    }
 
     static getPlayerClassAllProperties() {
         return Object.keys(Reflect.construct(Player, []));
@@ -18,7 +24,7 @@ export class Player {
 
     static getPlayerClassSkillProperties() {
         const playerProperties = Player.getPlayerClassAllProperties();
-        return playerProperties.slice(2, playerProperties.length); // remove name and gender properties from beginning
+        return playerProperties.slice(2, playerProperties.length - 1); // remove name and gender properties from beginning and id property from the end
     }
 
     static getPlayerOverall(player: Player) {
