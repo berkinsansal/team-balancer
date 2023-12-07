@@ -42,8 +42,10 @@ export class TeamBalancerService {
             }
 
             if (bestPair && bestPairIndex) {
-                const betterPlayer = bestPair[0].overall > bestPair[1].overall ? bestPair[0] : bestPair[1];
-                const worsePlayer = bestPair[0].overall > bestPair[1].overall ? bestPair[1] : bestPair[0];
+                const player1overall = Player.getPlayerOverall(bestPair[0]);
+                const player2overall = Player.getPlayerOverall(bestPair[1]);
+                const betterPlayer = player1overall > player2overall ? bestPair[0] : bestPair[1];
+                const worsePlayer = player1overall > player2overall ? bestPair[1] : bestPair[0];
                 const team1overall = Player.getTeamOverall(this.team1);
                 const team2overall = Player.getTeamOverall(this.team2);
                 const betterTeam = team1overall > team2overall ? this.team1 : this.team2;
@@ -66,7 +68,7 @@ export class TeamBalancerService {
     private calculateSkillLevel(player: Player): number {
         // Implement the logic to calculate the player's overall skill level
         // For example, a simple average of the skills:
-        return player.overall;
+        return Player.getPlayerOverall(player);
     }
 
     // Function to calculate the similarity between two players

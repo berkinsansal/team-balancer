@@ -1,7 +1,6 @@
 import { Gender } from './enums/gender.enum';
 
 export class Player {
-    overall = 0; // 0-10
 
     constructor(...args: any[]);
     constructor(
@@ -11,11 +10,7 @@ export class Player {
         public hitting: number, // 0-10
         public blocking: number, // 0-10
         public defense: number, // 0-10
-    ) {
-        if (name) {
-            this.calculateOverall();
-        }
-    }
+    ) { }
 
     static getPlayerClassAllProperties() {
         return Object.keys(Reflect.construct(Player, []));
@@ -23,22 +18,23 @@ export class Player {
 
     static getPlayerClassSkillProperties() {
         const playerProperties = Player.getPlayerClassAllProperties();
-        return playerProperties.slice(2, playerProperties.length - 1); // remove name and gender properties from beginning and overall property from the end
+        return playerProperties.slice(2, playerProperties.length); // remove name and gender properties from beginning
+    }
+
+    static getPlayerOverall(player: Player) {
+        let overall = 0;
+        const skillList = Player.getPlayerClassSkillProperties();
+        skillList.forEach(skill => {
+            overall += (player[skill as keyof Player] as number);
+        });
+        overall = overall / skillList.length;
+        return overall;
     }
 
     static getTeamOverall(teamPlayers: Player[]) {
         return teamPlayers.reduce((accumulator, player) => {
-            return accumulator + player.overall;
+            return accumulator + Player.getPlayerOverall(player);
         }, 0) / teamPlayers.length;
-    }
-
-    calculateOverall() {
-        this.overall = 0;
-        const skillList = Player.getPlayerClassSkillProperties();
-        skillList.forEach(skill => {
-            this.overall += (this[skill as keyof Player] as number);
-        });
-        this.overall = this.overall / skillList.length;
     }
 }
 

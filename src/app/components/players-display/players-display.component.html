@@ -1,4 +1,4 @@
-<p-table *ngIf="!playerInputVisible" #playersTable [columns]="playerProperties" [value]="players" [(selection)]="selectedPlayers" [rowHover]="true" selectionMode="multiple" [globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
+<p-table *ngIf="!playerInputVisible" #playersTable [columns]="skillList" [value]="players" [(selection)]="selectedPlayers" [rowHover]="true" selectionMode="multiple" [globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
     (selectionChange)="selectionChanged()">
     <ng-template pTemplate="caption">
         <div class="flex align-items-center">
@@ -18,8 +18,14 @@
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
             <th class="text-center">#</th>
+            <th pSortableColumn="name" width="130" class="text-center">
+                Name <p-sortIcon field="name"></p-sortIcon>
+            </th>
             <th *ngFor="let prop of properties" [pSortableColumn]="prop" class="text-center">
                 {{ prop | titlecase }} <p-sortIcon [field]="prop"></p-sortIcon>
+            </th>
+            <th pSortableColumn="overall" class="text-center">
+                Overall <p-sortIcon field="overall"></p-sortIcon>
             </th>
             <!-- <th *ngIf="isAllPlayersTable" class="p-0">
                 <button pButton pRipple type="button" pTooltip="Add Player" icon="fa-solid fa-plus" (click)="showPlayerInputDialog(null)" class=" p-button-sm"></button>
@@ -32,22 +38,15 @@
                 <p-tableCheckbox [value]="player"></p-tableCheckbox>
             </td>
             <td>{{ rowIndex + 1 }}</td>
-            <ng-container *ngFor="let prop of properties; let i = index">
-                <!-- player properties start with name(0), gender(1), and skills(2,...,n) one by one -->
-                <ng-container [ngSwitch]="i">
-                    <ng-container *ngSwitchCase="0">
-                        <ng-container *ngTemplateOutlet="namePropTemplate; context:{$implicit: player | playerSkillValue : prop}">
-                        </ng-container>
-                    </ng-container>
-                    <ng-container *ngSwitchCase="1">
-                        <ng-container *ngTemplateOutlet="genderPropTemplate; context:{$implicit: player | playerSkillValue : prop}">
-                        </ng-container>
-                    </ng-container>
-                    <ng-container *ngSwitchDefault>
-                        <ng-container *ngTemplateOutlet="skillPropTemplate; context:{$implicit: player | playerSkillValue : prop}">
-                        </ng-container>
-                    </ng-container>
+            <td>
+                <i class="fa-solid" [ngClass]="player.gender === 0 ? 'fa-mars' : 'fa-venus'" [ngStyle]="{'color': player.gender === 0 ? 'deepskyblue' : 'deeppink'}"></i>
+                {{ player.name }}
+            </td>
+            <ng-container *ngFor="let prop of properties">
+                <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerPropertyValue : prop}">
                 </ng-container>
+            </ng-container>
+            <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerOverallValue}">
             </ng-container>
             <!-- <td *ngIf="isAllPlayersTable" class="p-0">
                 <button pButton pRipple type="button" pTooltip="Edit Player" icon="fa-solid fa-pen" (click)="showPlayerInputDialog(player)" class="p-button-text p-button-sm"></button>
@@ -56,19 +55,7 @@
     </ng-template>
 </p-table>
 
-<ng-template #namePropTemplate let-value>
-    <td>
-        {{ value }}
-    </td>
-</ng-template>
-
-<ng-template #genderPropTemplate let-value>
-    <td class="text-center">
-        <i class="fa-solid" [ngClass]="value === 0 ? 'fa-mars' : 'fa-venus'" [ngStyle]="{'color': value === 0 ? 'deepskyblue' : 'deeppink'}"></i>
-    </td>
-</ng-template>
-
-<ng-template #skillPropTemplate let-value>
+<ng-template #numericPropTemplate let-value>
     <td class="text-center" [ngStyle]="{'background-color': value > 8 ? '#3ab449' : value > 6 ? '#92ca61' : value > 3 ? '#fcb041' : value > 1 ? '#f57951' : '#e22026'}">
         {{ value | number: '1.0-2' }}
     </td>

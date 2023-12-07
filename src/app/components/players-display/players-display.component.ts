@@ -16,11 +16,11 @@ export class PlayersDisplayComponent implements OnInit {
 
     selectedPlayer: Player | null = null;
     selectedPlayers: Player[] = [];
-    playerProperties: string[];
+    skillList: string[];
     playerInputVisible: boolean = false;
 
     constructor(public teamBalancerService: TeamBalancerService) {
-        this.playerProperties = Player.getPlayerClassAllProperties();
+        this.skillList = Player.getPlayerClassSkillProperties();
     }
 
     ngOnInit(): void {
