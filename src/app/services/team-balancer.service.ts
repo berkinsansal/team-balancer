@@ -20,8 +20,8 @@ export class TeamBalancerService {
     // Find the two most similar players and put them each team
     balanceTeams() {
         // Split into two teams
-        this.team1 = [];
-        this.team2 = [];
+        this.team1.splice(0, this.team1.length);
+        this.team2.splice(0, this.team2.length);
 
         const remainingPlayers = this.selectedPlayers.map(p => Object.assign({}, p));
 
@@ -88,8 +88,8 @@ export class TeamBalancerService {
     // OLD CALCULATION
     balanceTeamsOLD() {
         // Split into two teams
-        this.team1 = [];
-        this.team2 = [];
+        this.team1.splice(0, this.team1.length);
+        this.team2.splice(0, this.team2.length);
 
         for (let i = 0; i < this.selectedPlayers.length / 2; i++) {
             if (i % 2 === 0) {

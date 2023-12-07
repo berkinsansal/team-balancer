@@ -12,6 +12,10 @@ export class HomeComponent {
 
     readonly totalPlayerCount = 12;
 
+    allPlayers: Player[] = [];
+    team1: Player[] = [];
+    team2: Player[] = [];
+
     constructor(public teamBalancerService: TeamBalancerService) {
         this.addTestPlayers(); // for development
         this.initialSetup();
@@ -19,6 +23,9 @@ export class HomeComponent {
     }
 
     initialSetup() {
+        this.allPlayers = this.teamBalancerService.players;
+        this.team1 = this.teamBalancerService.team1;
+        this.team2 = this.teamBalancerService.team2;
         this.teamBalancerService.sortPlayers();
         this.teamBalancerService.selectedPlayers = this.teamBalancerService.players.slice(0, this.teamBalancerService.players.length >= this.totalPlayerCount ? this.totalPlayerCount : this.teamBalancerService.players.length);
     }

@@ -1,14 +1,19 @@
 <div class="grid">
     <div class="col">
-        <app-players-display [title]="'Players'" [players]="teamBalancerService.players" [isAllPlayersTable]="true"></app-players-display>
-    
-        <button pButton (click)="balanceTeams()">Balance Teams</button>
-        <button pButton (click)="balanceTeamsOLD()">Balance Teams (OLD)</button>
+        <div class="grid">
+            <div class="col-12">
+                <app-players-display [title]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true"></app-players-display>
+            </div>
+            <div class="col-12">
+                <button pButton (click)="balanceTeams()">Balance Teams</button>
+                <button pButton class="ml-3" (click)="balanceTeamsOLD()">Balance Teams (OLD)</button>
+            </div>
+        </div>
     </div>
     <div class="col">
-        <app-team-display [teamTitle]="'Team 1'" [teamPlayers]="teamBalancerService.team1"></app-team-display>
+        <app-team-display *ngIf="team1 && team1.length > 0" [teamTitle]="'Team 1'" [teamPlayers]="team1"></app-team-display>
     </div>
     <div class="col">
-        <app-team-display [teamTitle]="'Team 2'" [teamPlayers]="teamBalancerService.team2"></app-team-display>
+        <app-team-display *ngIf="team2 && team2.length > 0" [teamTitle]="'Team 2'" [teamPlayers]="team2"></app-team-display>
     </div>
 </div>
