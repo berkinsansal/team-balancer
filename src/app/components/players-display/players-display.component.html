@@ -3,6 +3,8 @@
     <ng-template pTemplate="caption">
         <div class="flex align-items-center">
             <span>{{title}}</span>
+
+            <!-- START: GLOBAL FILTER -->
             <div *ngIf="isAllPlayersTable" class="p-inputgroup w-auto ml-auto">
                 <span class="p-inputgroup-addon">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -10,47 +12,82 @@
                 <input #tableFilter pInputText type="text" (input)="filterPlayers(playersTable, $event.target)" placeholder="Search keyword"/>
                 <button type="button" pButton icon="fa-solid fa-xmark" (click)="clearFilter(playersTable, tableFilter)"></button>
             </div>
+            <!-- END: GLOBAL FILTER -->
         </div>
     </ng-template>
     <ng-template pTemplate="header" let-properties>
         <tr>
+            <!-- START: SELECTION ALL CHECKBOX -->
             <th *ngIf="isAllPlayersTable">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
+            <!-- END: SELECTION ALL CHECKBOX -->
+
+            <!-- START: NUMBER -->
             <th class="text-center">#</th>
+            <!-- END: NUMBER -->
+
+            <!-- START: NAME -->
             <th pSortableColumn="name" width="130" class="text-center">
                 Name <p-sortIcon field="name"></p-sortIcon>
             </th>
+            <!-- END: NAME -->
+
+            <!-- START: SKILL PROPERTY -->
             <th *ngFor="let prop of properties" [pSortableColumn]="prop" class="text-center">
                 {{ prop | titlecase }} <p-sortIcon [field]="prop"></p-sortIcon>
             </th>
+            <!-- END: SKILL PROPERTY -->
+
+            <!-- START: OVERALL -->
             <th pSortableColumn="overall" class="text-center">
                 Overall <p-sortIcon field="overall"></p-sortIcon>
             </th>
+            <!-- END: OVERALL -->
+
+            <!-- START: ADD BUTTON -->
             <!-- <th *ngIf="isAllPlayersTable" class="p-0">
                 <button pButton pRipple type="button" pTooltip="Add Player" icon="fa-solid fa-plus" (click)="showPlayerInputDialog(null)" class=" p-button-sm"></button>
             </th> -->
+            <!-- END: ADD BUTTON -->
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-player let-rowIndex="rowIndex" let-properties="columns">
         <tr>
+            <!-- START: SELECTION CHECKBOX -->
             <td *ngIf="isAllPlayersTable">
                 <p-tableCheckbox [value]="player"></p-tableCheckbox>
             </td>
+            <!-- END: SELECTION CHECKBOX -->
+            
+            <!-- START: NUMBER -->
             <td>{{ rowIndex + 1 }}</td>
+            <!-- END: NUMBER -->
+            
+            <!-- START: GENDER & NAME -->
             <td>
                 <i class="fa-solid" [ngClass]="player.gender === 0 ? 'fa-mars' : 'fa-venus'" [ngStyle]="{'color': player.gender === 0 ? 'deepskyblue' : 'deeppink'}"></i>
                 {{ player.name }}
             </td>
+            <!-- END: GENDER & NAME -->
+            
+            <!-- START: SKILL PROPERTY -->
             <ng-container *ngFor="let prop of properties">
                 <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerPropertyValue : prop}">
                 </ng-container>
             </ng-container>
+            <!-- END: SKILL PROPERTY -->
+            
+            <!-- START: OVERALL -->
             <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerOverallValue}">
             </ng-container>
+            <!-- END: OVERALL -->
+            
+            <!-- START: EDIT BUTTON -->
             <!-- <td *ngIf="isAllPlayersTable" class="p-0">
                 <button pButton pRipple type="button" pTooltip="Edit Player" icon="fa-solid fa-pen" (click)="showPlayerInputDialog(player)" class="p-button-text p-button-sm"></button>
             </td> -->
+            <!-- END: EDIT BUTTON -->
         </tr>
     </ng-template>
 </p-table>
