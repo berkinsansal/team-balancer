@@ -12,6 +12,7 @@ export class Player {
         public hitting: number, // 0-10
         public blocking: number, // 0-10
         public defense: number, // 0-10
+        public passing: number, // 0-10
     ) {
         if (name) {
             this.id = ++Player.maxId;
@@ -44,10 +45,13 @@ export class Player {
     }
 }
 
+// 0-5
 export const playerPropertyWeightMap = new Map<string, number>([
     ['gender', 5],
     ['serving', 3],
     ['hitting', 3],
     ['blocking', 1],
     ['defense', 3],
+    ['passing', 5],
+    ['overall', 5],
 ]);

@@ -1,19 +1,20 @@
 <div class="grid">
-    <div class="col">
+    <div class="col-4">
         <div class="grid">
             <div class="col-12">
                 <app-players-display [title]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true"></app-players-display>
             </div>
             <div class="col-12">
-                <button pButton (click)="balanceTeams()">Balance Teams</button>
-                <button pButton class="ml-3" (click)="balanceTeamsOLD()">Balance Teams (OLD)</button>
+                <button pButton (click)="balanceTeamsBy6vs6()">Balance Teams (6vs6)</button>
+                <button pButton class="ml-3" (click)="balanceTeamsBy1vs1()">Balance Teams (1vs1)</button>
+                <button pButton class="ml-3" (click)="balanceTeamsByOverall()">Balance Teams (Overall)</button>
+                <button pButton class="ml-3" (click)="balanceTeamsByAll()">All</button>
             </div>
         </div>
     </div>
-    <div class="col">
-        <app-team-display *ngIf="team1 && team1.length > 0" [teamTitle]="'Team 1'" [teamPlayers]="team1"></app-team-display>
-    </div>
-    <div class="col">
-        <app-team-display *ngIf="team2 && team2.length > 0" [teamTitle]="'Team 2'" [teamPlayers]="team2"></app-team-display>
+    <div class="col-8">
+        <app-teams-display title="Algorithm: The team's skills one by one (6vs6)" [team1]="team1By6" [team2]="team2By6"></app-teams-display>
+        <app-teams-display title="Algorithm: The player's skills one by one (1vs1)" [team1]="team1By1" [team2]="team2By1"></app-teams-display>
+        <app-teams-display title="Algorithm: The player's overall" [team1]="team1ByOverall" [team2]="team2ByOverall"></app-teams-display>
     </div>
 </div>
