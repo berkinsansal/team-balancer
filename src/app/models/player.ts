@@ -29,12 +29,15 @@ export class Player {
     }
 
     static getPlayerOverall(player: Player) {
+        let totalSkillWeight = 0;
         let overall = 0;
         const skillList = Player.getPlayerClassSkillProperties();
         skillList.forEach(skill => {
-            overall += (player[skill as keyof Player] as number);
+            const skillWeight =  playerPropertyWeightMap.get(skill) ?? 0;
+            totalSkillWeight += skillWeight;
+            overall += (player[skill as keyof Player] as number) * skillWeight;
         });
-        overall = overall / skillList.length;
+        overall = overall / skillList.length / (totalSkillWeight / skillList.length);
         return overall;
     }
 
