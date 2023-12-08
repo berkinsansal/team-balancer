@@ -28,7 +28,7 @@
             <!-- END: NUMBER -->
 
             <!-- START: NAME -->
-            <th pSortableColumn="name" width="130" class="text-center">
+            <th pSortableColumn="name" class="text-center">
                 Name <p-sortIcon field="name"></p-sortIcon>
             </th>
             <!-- END: NAME -->
@@ -65,7 +65,7 @@
             <!-- END: NUMBER -->
             
             <!-- START: GENDER & NAME -->
-            <td>
+            <td class="name-cell">
                 <i class="fa-solid" [ngClass]="player.gender === 0 ? 'fa-mars' : 'fa-venus'" [ngStyle]="{'color': player.gender === 0 ? 'deepskyblue' : 'deeppink'}"></i>
                 {{ player.name }}
             </td>

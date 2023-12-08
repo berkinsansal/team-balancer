@@ -1,0 +1,10 @@
+.name-cell {
+    max-width: 130px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    &:hover {
+        overflow: visible;
+    }
+}
