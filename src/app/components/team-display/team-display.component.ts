@@ -8,13 +8,13 @@ import { Player } from '../../models/player';
 })
 export class TeamDisplayComponent implements OnChanges {
     @Input() teamTitle: string = 'Team';
-    @Input() teamPlayers: Player[] = [];
+    @Input() team: Player[] = [];
 
     teamTitleWithOverall = this.teamTitle;
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['teamPlayers']) {
-            const teamOverall = Number(Player.getTeamOverall(this.teamPlayers).toFixed(2));
+        if (changes['team']) {
+            const teamOverall = Number(Player.getTeamOverall(this.team).toFixed(2));
             this.teamTitleWithOverall = this.teamTitle + ' (' + teamOverall + ')';
         }
     }
