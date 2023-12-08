@@ -3,6 +3,7 @@
     <ng-template pTemplate="caption">
         <div class="flex align-items-center">
             <span>{{title}}</span>
+            <span *ngIf="isAllPlayersTable">(Selected: {{selectedPlayers.length}})</span>
 
             <!-- START: GLOBAL FILTER -->
             <div *ngIf="isAllPlayersTable" class="p-inputgroup w-auto ml-auto">

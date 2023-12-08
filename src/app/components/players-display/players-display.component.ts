@@ -19,7 +19,7 @@ export class PlayersDisplayComponent implements OnInit {
     skillList: string[];
     playerInputVisible: boolean = false;
 
-    constructor(public teamBalancerService: TeamBalancerService) {
+    constructor(private teamBalancerService: TeamBalancerService) {
         this.skillList = Player.getPlayerClassSkillProperties();
     }
 
