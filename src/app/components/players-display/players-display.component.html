@@ -93,7 +93,7 @@
 </p-table>
 
 <ng-template #numericPropTemplate let-value>
-    <td class="text-center" [ngStyle]="{'background-color': value > 8 ? '#3ab449' : value > 6 ? '#92ca61' : value > 3 ? '#fcb041' : value > 1 ? '#f57951' : '#e22026'}">
+    <td class="text-center" [ngStyle]="{'background-color': value | rateColor}">
         {{ value | number: '1.0-2' }}
     </td>
 </ng-template>

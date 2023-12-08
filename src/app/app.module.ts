@@ -15,6 +15,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PlayerInputComponent } from './components/player-input/player-input.component';
 import { PlayersDisplayComponent } from './components/players-display/players-display.component';
 import { TeamDisplayComponent } from './components/team-display/team-display.component';
+import { RateColorPipe } from './pipes/rate-color.pipe';
 import { PlayerOverallPipe } from './pipes/player-overall.pipe';
 import { PlayerPropertyValuePipe } from './pipes/player-property-value.pipe';
 
@@ -27,6 +28,7 @@ import { PlayerPropertyValuePipe } from './pipes/player-property-value.pipe';
         PlayersDisplayComponent,
         PlayerPropertyValuePipe,
         PlayerOverallPipe,
+        RateColorPipe,
     ],
     imports: [
         BrowserModule,
