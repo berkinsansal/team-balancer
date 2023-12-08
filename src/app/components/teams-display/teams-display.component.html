@@ -1,0 +1,11 @@
+<div>
+    <span class="text-xl font-bold bg-cyan-300">{{title}}</span>
+    <div class="grid" *ngIf="(team1 && team1.length > 0) || (team2 && team2.length > 0)">
+        <div class="col" *ngIf="team1 && team1.length > 0">
+            <app-team-display [teamTitle]="team1Title" [team]="team1"></app-team-display>
+        </div>
+        <div class="col" *ngIf="team2 && team2.length > 0">
+            <app-team-display [teamTitle]="team2Title" [team]="team2"></app-team-display>
+        </div>
+    </div>
+</div>

@@ -15,15 +15,17 @@ import { HomeComponent } from './components/home/home.component';
 import { PlayerInputComponent } from './components/player-input/player-input.component';
 import { PlayersDisplayComponent } from './components/players-display/players-display.component';
 import { TeamDisplayComponent } from './components/team-display/team-display.component';
-import { RateColorPipe } from './pipes/rate-color.pipe';
+import { TeamsDisplayComponent } from './components/teams-display/teams-display.component';
 import { PlayerOverallPipe } from './pipes/player-overall.pipe';
 import { PlayerPropertyValuePipe } from './pipes/player-property-value.pipe';
+import { RateColorPipe } from './pipes/rate-color.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
         PlayerInputComponent,
         TeamDisplayComponent,
+        TeamsDisplayComponent,
         HomeComponent,
         PlayersDisplayComponent,
         PlayerPropertyValuePipe,
