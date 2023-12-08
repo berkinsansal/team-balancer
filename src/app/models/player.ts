@@ -41,10 +41,10 @@ export class Player {
         return overall;
     }
 
-    static getTeamOverall(teamPlayers: Player[]) {
-        return teamPlayers.reduce((accumulator, player) => {
+    static getTeamOverall(team: Player[]) {
+        return team.reduce((accumulator, player) => {
             return accumulator + Player.getPlayerOverall(player);
-        }, 0) / teamPlayers.length;
+        }, 0) / team.length;
     }
 }
 
