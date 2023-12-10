@@ -13,12 +13,12 @@ export class HomeComponent {
     readonly totalPlayerCount = 12;
 
     allPlayers: Player[] = [];
-    team1By6: Player[] = [];
-    team2By6: Player[] = [];
-    team1By1: Player[] = [];
-    team2By1: Player[] = [];
-    team1ByOverall: Player[] = [];
-    team2ByOverall: Player[] = [];
+    team1ByTeamSkills: Player[] = [];
+    team2ByTeamSkills: Player[] = [];
+    team1ByPlayerSkills: Player[] = [];
+    team2ByPlayerSkills: Player[] = [];
+    team1ByPlayerOverall: Player[] = [];
+    team2ByPlayerOverall: Player[] = [];
 
     constructor(public teamBalancerService: TeamBalancerService) {
         this.addTestPlayers(); // for development
@@ -28,12 +28,12 @@ export class HomeComponent {
 
     initialSetup() {
         this.allPlayers = this.teamBalancerService.players;
-        this.team1By6 = this.teamBalancerService.team1By6;
-        this.team2By6 = this.teamBalancerService.team2By6;
-        this.team1By1 = this.teamBalancerService.team1By1;
-        this.team2By1 = this.teamBalancerService.team2By1;
-        this.team1ByOverall = this.teamBalancerService.team1ByOverall;
-        this.team2ByOverall = this.teamBalancerService.team2ByOverall;
+        this.team1ByTeamSkills = this.teamBalancerService.team1ByTeamSkills;
+        this.team2ByTeamSkills = this.teamBalancerService.team2ByTeamSkills;
+        this.team1ByPlayerSkills = this.teamBalancerService.team1ByPlayerSkills;
+        this.team2ByPlayerSkills = this.teamBalancerService.team2ByPlayerSkills;
+        this.team1ByPlayerOverall = this.teamBalancerService.team1ByPlayerOverall;
+        this.team2ByPlayerOverall = this.teamBalancerService.team2ByPlayerOverall;
         this.teamBalancerService.sortPlayers(this.teamBalancerService.players);
         this.teamBalancerService.selectedPlayers = this.teamBalancerService.players.slice(0, this.teamBalancerService.players.length >= this.totalPlayerCount ? this.totalPlayerCount : this.teamBalancerService.players.length);
     }

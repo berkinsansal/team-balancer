@@ -7,6 +7,7 @@ import { Player } from '../../models/player';
     styleUrls: ['./teams-display.component.scss']
 })
 export class TeamsDisplayComponent {
+    @Input() caption: string = '';
     @Input() title: string = '';
     @Input() team1Title: string = 'Team 1';
     @Input() team2Title: string = 'Team 2';

@@ -8,12 +8,12 @@ import { Player, playerPropertyWeightMap } from '../models/player';
 export class TeamBalancerService {
     players: Player[] = [];
     selectedPlayers: Player[] = [];
-    team1By6: Player[] = [];
-    team2By6: Player[] = [];
-    team1By1: Player[] = [];
-    team2By1: Player[] = [];
-    team1ByOverall: Player[] = [];
-    team2ByOverall: Player[] = [];
+    team1ByTeamSkills: Player[] = [];
+    team2ByTeamSkills: Player[] = [];
+    team1ByPlayerSkills: Player[] = [];
+    team2ByPlayerSkills: Player[] = [];
+    team1ByPlayerOverall: Player[] = [];
+    team2ByPlayerOverall: Player[] = [];
 
     constructor(private ref: ApplicationRef) { }
 
@@ -24,7 +24,7 @@ export class TeamBalancerService {
 
     // Find the most similar teams by comparing 6vs6 players each skill
     balanceTeamsBy6vs6() {
-        this.emptyTeams(this.team1By6, this.team2By6);
+        this.emptyTeams(this.team1ByTeamSkills, this.team2ByTeamSkills);
 
         let bestDifference = Infinity;
         let bestTeams: [Player[], Player[]] = [[], []];
@@ -69,19 +69,19 @@ export class TeamBalancerService {
             }
         }
 
-        this.team1By6.push(...bestTeams[0]);
-        this.team2By6.push(...bestTeams[1]);
+        this.team1ByTeamSkills.push(...bestTeams[0]);
+        this.team2ByTeamSkills.push(...bestTeams[1]);
 
         // add single player if selected players is odd number
-        if (this.selectedPlayers.length - (this.team1By6.length + this.team2By6.length) === 1) {
-            const bestPair: [Player, Player | undefined] = [this.selectedPlayers.find(p => !this.team1By6.includes(p) && !this.team2By6.includes(p))!, undefined];
-            this.putBestPairPlayersToTeams(bestPair, this.team1By6, this.team2By6);
+        if (this.selectedPlayers.length - (this.team1ByTeamSkills.length + this.team2ByTeamSkills.length) === 1) {
+            const bestPair: [Player, Player | undefined] = [this.selectedPlayers.find(p => !this.team1ByTeamSkills.includes(p) && !this.team2ByTeamSkills.includes(p))!, undefined];
+            this.putBestPairPlayersToTeams(bestPair, this.team1ByTeamSkills, this.team2ByTeamSkills);
         }
     }
 
     // Find the two most similar players by comparing 1vs1 players each skill
     balanceTeamsBy1vs1() {
-        this.emptyTeams(this.team1By1, this.team2By1);
+        this.emptyTeams(this.team1ByPlayerSkills, this.team2ByPlayerSkills);
 
         const addedPlayers: number[] = []; // players id
         while (addedPlayers.length + 1 < this.selectedPlayers.length) { // "addedPlayers.length + 1" to handle odd number of players
@@ -109,7 +109,7 @@ export class TeamBalancerService {
             }
 
             if (bestPair) {
-                this.putBestPairPlayersToTeams(bestPair, this.team1By1, this.team2By1);
+                this.putBestPairPlayersToTeams(bestPair, this.team1ByPlayerSkills, this.team2ByPlayerSkills);
                 addedPlayers.push(bestPair[0].id, bestPair[1].id);
             }
         }
@@ -117,18 +117,18 @@ export class TeamBalancerService {
         // add single player if selected players is odd number
         if (this.selectedPlayers.length - addedPlayers.length === 1) {
             const bestPair: [Player, Player | undefined] = [this.selectedPlayers.find(p => !addedPlayers.includes(p.id))!, undefined];
-            this.putBestPairPlayersToTeams(bestPair, this.team1By1, this.team2By1);
+            this.putBestPairPlayersToTeams(bestPair, this.team1ByPlayerSkills, this.team2ByPlayerSkills);
         }
     }
 
     // Put one by one each sorted player according to their overall 
     balanceTeamsByOverall() {
-        this.emptyTeams(this.team1ByOverall, this.team2ByOverall);
+        this.emptyTeams(this.team1ByPlayerOverall, this.team2ByPlayerOverall);
         this.sortPlayers(this.selectedPlayers);
 
         for (let i = 0; i < this.selectedPlayers.length / 2; i++) {
             const bestPair: [Player, Player | undefined] = [this.selectedPlayers[i * 2], this.selectedPlayers[i * 2 + 1]];
-            this.putBestPairPlayersToTeams(bestPair, this.team1ByOverall, this.team2ByOverall);
+            this.putBestPairPlayersToTeams(bestPair, this.team1ByPlayerOverall, this.team2ByPlayerOverall);
         }
     }
 
