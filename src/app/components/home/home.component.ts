@@ -23,7 +23,6 @@ export class HomeComponent {
     constructor(public teamBalancerService: TeamBalancerService) {
         this.addTestPlayers(); // for development
         this.initialSetup();
-        this.balanceTeamsByAll(); // for development
     }
 
     initialSetup() {
@@ -36,24 +35,25 @@ export class HomeComponent {
         this.team2ByPlayerOverall = this.teamBalancerService.team2ByPlayerOverall;
         this.teamBalancerService.sortPlayers(this.teamBalancerService.players);
         this.teamBalancerService.selectedPlayers = this.teamBalancerService.players.slice(0, this.teamBalancerService.players.length >= this.totalPlayerCount ? this.totalPlayerCount : this.teamBalancerService.players.length);
+        this.balanceTeamsByAll();
     }
 
     balanceTeamsByAll() {
-        this.teamBalancerService.balanceTeamsBy6vs6();
-        this.teamBalancerService.balanceTeamsBy1vs1();
-        this.teamBalancerService.balanceTeamsByOverall();
+        this.teamBalancerService.balanceTeamsByTeamSkills();
+        this.teamBalancerService.balanceTeamsByPlayerSkills();
+        this.teamBalancerService.balanceTeamsByPlayerOverall();
     }
 
-    balanceTeamsBy6vs6() {
-        this.teamBalancerService.balanceTeamsBy6vs6();
+    balanceTeamsByTeamSkills() {
+        this.teamBalancerService.balanceTeamsByTeamSkills();
     }
 
-    balanceTeamsBy1vs1() {
-        this.teamBalancerService.balanceTeamsBy1vs1();
+    balanceTeamsByPlayerSkills() {
+        this.teamBalancerService.balanceTeamsByPlayerSkills();
     }
 
-    balanceTeamsByOverall() {
-        this.teamBalancerService.balanceTeamsByOverall();
+    balanceTeamsByPlayerOverall() {
+        this.teamBalancerService.balanceTeamsByPlayerOverall();
     }
 
     addTestPlayers() {

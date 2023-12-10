@@ -22,8 +22,8 @@ export class TeamBalancerService {
         players.sort((a, b) => Player.getPlayerOverall(b) - Player.getPlayerOverall(a));
     }
 
-    // Find the most similar teams by comparing 6vs6 players each skill
-    balanceTeamsBy6vs6() {
+    // Find the most similar teams by comparing team players each skill
+    balanceTeamsByTeamSkills() {
         this.emptyTeams(this.team1ByTeamSkills, this.team2ByTeamSkills);
 
         let bestDifference = Infinity;
@@ -80,7 +80,7 @@ export class TeamBalancerService {
     }
 
     // Find the two most similar players by comparing 1vs1 players each skill
-    balanceTeamsBy1vs1() {
+    balanceTeamsByPlayerSkills() {
         this.emptyTeams(this.team1ByPlayerSkills, this.team2ByPlayerSkills);
 
         const addedPlayers: number[] = []; // players id
@@ -122,7 +122,7 @@ export class TeamBalancerService {
     }
 
     // Put one by one each sorted player according to their overall 
-    balanceTeamsByOverall() {
+    balanceTeamsByPlayerOverall() {
         this.emptyTeams(this.team1ByPlayerOverall, this.team2ByPlayerOverall);
         this.sortPlayers(this.selectedPlayers);
 

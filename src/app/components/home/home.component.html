@@ -5,9 +5,9 @@
                 <app-players-display [title]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true"></app-players-display>
             </div>
             <div class="col-12">
-                <button pButton (click)="balanceTeamsBy6vs6()">Balance Teams (6vs6)</button>
-                <button pButton class="ml-3" (click)="balanceTeamsBy1vs1()">Balance Teams (1vs1)</button>
-                <button pButton class="ml-3" (click)="balanceTeamsByOverall()">Balance Teams (Overall)</button>
+                <button pButton (click)="balanceTeamsByTeamSkills()">Balance Teams (6vs6)</button>
+                <button pButton class="ml-3" (click)="balanceTeamsByPlayerSkills()">Balance Teams (1vs1)</button>
+                <button pButton class="ml-3" (click)="balanceTeamsByPlayerOverall()">Balance Teams (Overall)</button>
                 <button pButton class="ml-3" (click)="balanceTeamsByAll()">All</button>
             </div>
         </div>
