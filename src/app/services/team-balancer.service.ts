@@ -18,131 +18,117 @@ export class TeamBalancerService {
     constructor(private ref: ApplicationRef) { }
 
     // Sort players based on their skill levels
-    sortPlayers() {
-        this.players.sort((a, b) => Player.getPlayerOverall(b) - Player.getPlayerOverall(a));
+    sortPlayers(players: Player[]) {
+        players.sort((a, b) => Player.getPlayerOverall(b) - Player.getPlayerOverall(a));
     }
 
     // Find the most similar teams by comparing 6vs6 players each skill
     balanceTeamsBy6vs6() {
         this.emptyTeams(this.team1By6, this.team2By6);
 
-        function* combinations<T>(elements: T[], k: number): IterableIterator<T[]> {
-            if (k > elements.length || k <= 0) {
-                yield [];
-            } else if (k === elements.length) {
-                yield elements.slice();
-            } else if (k === 1) {
-                for (let i = 0; i < elements.length; i++) {
-                    yield [elements[i]];
-                }
-            } else {
-                for (let i = 0; i < elements.length - k + 1; i++) {
-                    let head = elements.slice(i, i + 1);
-                    let tailcombs = combinations(elements.slice(i + 1), k - 1);
-                    for (let tail of tailcombs) {
-                        yield head.concat(tail);
-                    }
-                }
-            }
-        }
-
         let bestDifference = Infinity;
         let bestTeams: [Player[], Player[]] = [[], []];
 
-        for (let playerCombination of combinations<Player>(this.selectedPlayers, 12)) {
-            for (let i = 0; i < playerCombination.length; i++) {
-                for (let j = i + 1; j < playerCombination.length; j++) {
-                    for (let k = j + 1; k < playerCombination.length; k++) {
-                        for (let l = k + 1; l < playerCombination.length; l++) {
-                            for (let m = l + 1; m < playerCombination.length; m++) {
-                                for (let n = m + 1; n < playerCombination.length; n++) {
-                                    let team1 = [playerCombination[i], playerCombination[j], playerCombination[k], playerCombination[l], playerCombination[m], playerCombination[n]];
-                                    let team2 = playerCombination.filter(p => p !== playerCombination[i] && p !== playerCombination[j] && p !== playerCombination[k] && p !== playerCombination[l] && p !== playerCombination[m] && p !== playerCombination[n]);
+        const allTeamCombinations: Player[][] = [];
+        this.generateTeamCombinations(Math.floor(this.selectedPlayers.length / 2), 0, [], allTeamCombinations);
 
-                                    let difference = this.calculateTeamSimilarity(team1, team2);
+        const combinationMap = new Map<string, Player[]>();
 
-                                    if (difference < bestDifference) {
-                                        bestDifference = difference;
-                                        bestTeams = [team1, team2];
-                                    }
-                                }
-                            }
-                        }
-                    }
+        // Populate the map with unique combinations
+        allTeamCombinations.forEach(combination => {
+            const key = combination.map(player => player.id).sort().join("-");
+            combinationMap.set(key, combination);
+        });
+
+        // Iterate through the combinations to find unique pairings
+        const uniquePairings: [any[], any[]][] = [];
+
+        combinationMap.forEach((teamA, keyA) => {
+            combinationMap.forEach((teamB, keyB) => {
+                if (keyA === keyB) return; // Skip if it's the same team
+
+                const idsTeamA = new Set(teamA.map(player => player.id));
+                const isUniquePair = teamB.every(player => !idsTeamA.has(player.id));
+
+                if (isUniquePair) {
+                    uniquePairings.push([teamA, teamB]);
                 }
+            });
+        });
+
+        // Pair teams
+        for (let i = 0; i < uniquePairings.length; i++) {
+            let team1 = uniquePairings[i][0];
+            let team2 = uniquePairings[i][1];
+
+            let difference = this.calculateTeamSimilarity(team1, team2);
+
+            if (difference < bestDifference) {
+                bestDifference = difference;
+                bestTeams = [team1, team2];
             }
         }
 
         this.team1By6.push(...bestTeams[0]);
         this.team2By6.push(...bestTeams[1]);
+
+        // add single player if selected players is odd number
+        if (this.selectedPlayers.length - (this.team1By6.length + this.team2By6.length) === 1) {
+            const bestPair: [Player, Player | undefined] = [this.selectedPlayers.find(p => !this.team1By6.includes(p) && !this.team2By6.includes(p))!, undefined];
+            this.putBestPairPlayersToTeams(bestPair, this.team1By6, this.team2By6);
+        }
     }
 
     // Find the two most similar players by comparing 1vs1 players each skill
     balanceTeamsBy1vs1() {
         this.emptyTeams(this.team1By1, this.team2By1);
 
-        const remainingPlayers = this.selectedPlayers.map(p => Object.assign({}, p));
-        while (remainingPlayers.length >= 2) {
-        // if (remainingPlayers.length === 2) {
+        const addedPlayers: number[] = []; // players id
+        while (addedPlayers.length + 1 < this.selectedPlayers.length) { // "addedPlayers.length + 1" to handle odd number of players
             let bestPair: [Player, Player] | null = null;
-            let bestPairIndex: [number, number] | null = null;
             let bestScore = Number.MAX_VALUE;
 
-            for (let i = 0; i < remainingPlayers.length; i++) {
-                for (let j = i + 1; j < remainingPlayers.length; j++) {
-                    let score = this.calculatePlayerSimilarity(remainingPlayers[i], remainingPlayers[j]);
+            for (let i = 0; i < this.selectedPlayers.length; i++) {
+                const pair1 = this.selectedPlayers[i];
+                if (addedPlayers.includes(pair1.id)) {
+                    continue;
+                }
+
+                for (let j = i + 1; j < this.selectedPlayers.length; j++) {
+                    const pair2 = this.selectedPlayers[j];
+                    if (addedPlayers.includes(pair2.id)) {
+                        continue;
+                    }
+
+                    let score = this.calculatePlayerSimilarity(pair1, pair2);
                     if (score < bestScore) {
                         bestScore = score;
-                        bestPair = [remainingPlayers[i], remainingPlayers[j]];
-                        bestPairIndex = [i, j];
+                        bestPair = [pair1, pair2];
                     }
                 }
             }
 
-            /// bunu 6vs 6 olarak yapabilir miyiz
-            if (bestPair && bestPairIndex) {
-                const player1overall = Player.getPlayerOverall(bestPair[0]);
-                const player2overall = Player.getPlayerOverall(bestPair[1]);
-                const betterPlayer = player1overall > player2overall ? bestPair[0] : bestPair[1];
-                const worsePlayer = player1overall > player2overall ? bestPair[1] : bestPair[0];
-                const team1overall = Player.getTeamOverall(this.team1By1);
-                const team2overall = Player.getTeamOverall(this.team2By1);
-                const betterTeam = team1overall > team2overall ? this.team1By1 : this.team2By1;
-                const worseTeam = team1overall > team2overall ? this.team2By1 : this.team1By1;
-                worseTeam.push(betterPlayer);
-                betterTeam.push(worsePlayer);
-
-                remainingPlayers.splice(bestPairIndex[1], 1);
-                remainingPlayers.splice(bestPairIndex[0], 1);
+            if (bestPair) {
+                this.putBestPairPlayersToTeams(bestPair, this.team1By1, this.team2By1);
+                addedPlayers.push(bestPair[0].id, bestPair[1].id);
             }
         }
 
-        if (remainingPlayers.length === 1) {
-            const team1overall = Player.getTeamOverall(this.team1By1);
-            const team2overall = Player.getTeamOverall(this.team2By1);
-            const worseTeam = team1overall > team2overall ? this.team2By1 : this.team1By1;
-            worseTeam.push(remainingPlayers[0]);
+        // add single player if selected players is odd number
+        if (this.selectedPlayers.length - addedPlayers.length === 1) {
+            const bestPair: [Player, Player | undefined] = [this.selectedPlayers.find(p => !addedPlayers.includes(p.id))!, undefined];
+            this.putBestPairPlayersToTeams(bestPair, this.team1By1, this.team2By1);
         }
     }
 
     // Put one by one each sorted player according to their overall 
     balanceTeamsByOverall() {
         this.emptyTeams(this.team1ByOverall, this.team2ByOverall);
+        this.sortPlayers(this.selectedPlayers);
 
         for (let i = 0; i < this.selectedPlayers.length / 2; i++) {
-            if (i % 2 === 0) {
-                // one round put better player to team 1
-                this.team1ByOverall.push(this.selectedPlayers[i * 2]);
-                if (i + 1 < this.selectedPlayers.length) {
-                    this.team2ByOverall.push(this.selectedPlayers[i * 2 + 1]);
-                }
-            } else {
-                // other round put better player to team 2
-                this.team2ByOverall.push(this.selectedPlayers[i * 2]);
-                if (i + 1 < this.selectedPlayers.length) {
-                    this.team1ByOverall.push(this.selectedPlayers[i * 2 + 1]);
-                }
-            }
+            const bestPair: [Player, Player | undefined] = [this.selectedPlayers[i * 2], this.selectedPlayers[i * 2 + 1]];
+            this.putBestPairPlayersToTeams(bestPair, this.team1ByOverall, this.team2ByOverall);
         }
     }
 
@@ -151,6 +137,20 @@ export class TeamBalancerService {
         team1.splice(0, team1.length);
         team2.splice(0, team2.length);
         this.ref.tick();
+    }
+
+    // Generate team combinations from selected players
+    private generateTeamCombinations(teamSize: number, startIndex: number, currentCombination: Player[], allCombinations: Player[][]) {
+        if (currentCombination.length === teamSize) {
+            allCombinations.push([...currentCombination]);
+            return;
+        }
+
+        for (let i = startIndex; i < this.selectedPlayers.length; i++) {
+            currentCombination.push(this.selectedPlayers[i]);
+            this.generateTeamCombinations(teamSize, i + 1, currentCombination, allCombinations);
+            currentCombination.pop();
+        }
     }
 
     // Calculate the similarity between two teams
@@ -180,5 +180,56 @@ export class TeamBalancerService {
 
         // Aggregate the similarity scores (lower is more similar)
         return similarity;
+    }
+
+    private putBestPairPlayersToTeams(bestPair: [Player, Player | undefined] | null, team1: Player[], team2: Player[]) {
+        if (bestPair) {
+            const team1overall = Player.getTeamOverall(team1);
+            const team2overall = Player.getTeamOverall(team2);
+            const betterTeam = team1overall > team2overall ? team1 : team2;
+            const worseTeam = team1overall > team2overall ? team2 : team1;
+            if (bestPair[0] && bestPair[1]) {
+                const player1overall = Player.getPlayerOverall(bestPair[0]);
+                const player2overall = Player.getPlayerOverall(bestPair[1]);
+                const betterPlayer = player1overall >= player2overall ? bestPair[0] : bestPair[1];
+                const worsePlayer = player1overall >= player2overall ? bestPair[1] : bestPair[0];
+                worseTeam.push(betterPlayer);
+                betterTeam.push(worsePlayer);
+            } else {
+                const singlePlayer = bestPair[0] ?? bestPair[1];
+                worseTeam.push(singlePlayer);
+            }
+        }
+    }
+
+    // Generator function to generate players combinations from all players
+    // For example: if you have 13 players but you want to choose combinations of 12 (k = 12)
+    private * getSelectedPlayersCombinations<T>(elements: T[], k: number): IterableIterator<T[]> {
+        if (k > elements.length || k <= 0) {
+            yield [];
+        } else if (k === elements.length) {
+            yield elements.slice();
+        } else if (k === 1) {
+            for (let i = 0; i < elements.length; i++) {
+                yield [elements[i]];
+            }
+        } else {
+            for (let i = 0; i < elements.length - k + 1; i++) {
+                let head = elements.slice(i, i + 1);
+                let tailcombs = this.getSelectedPlayersCombinations(elements.slice(i + 1), k - 1);
+                for (let tail of tailcombs) {
+                    yield head.concat(tail);
+                }
+            }
+        }
+
+        // USAGE:
+        /*
+        const selectedPlayersCombinations = this.getSelectedPlayersCombinations<Player>(this.selectedPlayers, 12)
+        for (let selectedPlayersCombination of selectedPlayersCombinations) {
+            // balance teams from player
+        }
+        */
+
     }
 }

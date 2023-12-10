@@ -95,7 +95,7 @@ export class PlayerInputComponent implements OnInit {
                 });
                 this.teamBalancerService.players.push(new Player(...playerPropValuesFromForm));
             }
-            this.teamBalancerService.sortPlayers();
+            this.teamBalancerService.sortPlayers(this.teamBalancerService.players);
             this.playerUpdated.emit(this.selectedPlayer);
         }
     }

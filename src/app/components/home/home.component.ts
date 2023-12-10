@@ -34,7 +34,7 @@ export class HomeComponent {
         this.team2By1 = this.teamBalancerService.team2By1;
         this.team1ByOverall = this.teamBalancerService.team1ByOverall;
         this.team2ByOverall = this.teamBalancerService.team2ByOverall;
-        this.teamBalancerService.sortPlayers();
+        this.teamBalancerService.sortPlayers(this.teamBalancerService.players);
         this.teamBalancerService.selectedPlayers = this.teamBalancerService.players.slice(0, this.teamBalancerService.players.length >= this.totalPlayerCount ? this.totalPlayerCount : this.teamBalancerService.players.length);
     }
 
