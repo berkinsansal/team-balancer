@@ -25,7 +25,9 @@
             <!-- END: SELECTION ALL CHECKBOX -->
 
             <!-- START: NUMBER -->
-            <th class="text-center">#</th>
+            <th class="text-center">
+                #
+            </th>
             <!-- END: NUMBER -->
 
             <!-- START: NAME -->
@@ -41,12 +43,17 @@
             <!-- END: SKILL PROPERTY -->
 
             <!-- START: OVERALL -->
-            <th pSortableColumn="overall" class="text-center">
+            <!-- TODO: buggy right now, you need to implement custom sort for overall -->
+            <!-- <th pSortableColumn="overall" class="text-center">
                 Overall <p-sortIcon field="overall"></p-sortIcon>
+            </th> -->
+            <th class="text-center">
+                Overall
             </th>
             <!-- END: OVERALL -->
 
             <!-- START: ADD BUTTON -->
+            <!-- TODO: buggy right now -->
             <!-- <th *ngIf="isAllPlayersTable" class="p-0">
                 <button pButton pRipple type="button" pTooltip="Add Player" icon="fa-solid fa-plus" (click)="showPlayerInputDialog(null)" class=" p-button-sm"></button>
             </th> -->
@@ -85,6 +92,7 @@
             <!-- END: OVERALL -->
             
             <!-- START: EDIT BUTTON -->
+            <!-- TODO: buggy right now -->
             <!-- <td *ngIf="isAllPlayersTable" class="p-0">
                 <button pButton pRipple type="button" pTooltip="Edit Player" icon="fa-solid fa-pen" (click)="showPlayerInputDialog(player)" class="p-button-text p-button-sm"></button>
             </td> -->
