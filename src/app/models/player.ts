@@ -8,6 +8,7 @@ import { Gender } from './enums/gender.enum';
 export class Player {
     static maxId = -1;
     id = -1;
+    documentId?: string;
 
     constructor(...args: any[]);
     constructor(

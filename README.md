@@ -1,3 +1,21 @@
+# !!! Secrets !!!
+
+Add environment.local.ts to your environments folder
+```
+export const environment = {
+  production: false,
+  firebaseConfig: {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  }
+};
+```
+https://www.chrisjmendez.com/2017/05/24/using-dotenv-with-angular/
+
 # TeamBalancer
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.9.

@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 import { Gender } from '../../models/enums/gender.enum';
 import { Player } from '../../models/player';
+import { DatabaseService } from '../../services/database.service';
 import { TeamBalancerService } from '../../services/team-balancer.service';
 
 @Component({
@@ -8,7 +11,7 @@ import { TeamBalancerService } from '../../services/team-balancer.service';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
 
     readonly totalPlayerCount = 12;
 
@@ -20,9 +23,31 @@ export class HomeComponent {
     team1ByPlayerOverall: Player[] = [];
     team2ByPlayerOverall: Player[] = [];
 
-    constructor(public teamBalancerService: TeamBalancerService) {
-        this.addTestPlayers(); // for development
-        this.initialSetup();
+    private playersSubscription: Subscription | undefined;
+
+    constructor(private teamBalancerService: TeamBalancerService,
+        private messageService: MessageService,
+        private databaseService: DatabaseService) {
+
+        // this.addTestPlayers(); // for development
+        this.getPlayers();
+    }
+
+    getPlayers() {
+        this.playersSubscription = this.databaseService.players$
+            .subscribe({
+                next: items => {
+                    console.log(items);
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info',
+                        detail: 'Player list is fetched',
+                    });
+                    this.teamBalancerService.players = items;
+                    this.initialSetup();
+                },
+                error: error => console.error('Error fetching items:', error)
+            });
     }
 
     initialSetup() {
@@ -39,6 +64,14 @@ export class HomeComponent {
     }
 
     balanceTeamsByAll() {
+        if (this.teamBalancerService.selectedPlayers.length === 0) {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'You need to select players to generate teams',
+            });
+            return;
+        }
         this.teamBalancerService.balanceTeamsByTeamSkills();
         this.teamBalancerService.balanceTeamsByPlayerSkills();
         this.teamBalancerService.balanceTeamsByPlayerOverall();
@@ -54,6 +87,12 @@ export class HomeComponent {
 
     balanceTeamsByPlayerOverall() {
         this.teamBalancerService.balanceTeamsByPlayerOverall();
+    }
+
+    ngOnDestroy(): void {
+        if (this.playersSubscription) {
+            this.playersSubscription.unsubscribe();
+        }
     }
 
     addTestPlayers() {
@@ -78,6 +117,16 @@ export class HomeComponent {
         ));
 
         this.teamBalancerService.players.push(new Player(
+            'Şeyda',
+            Gender.Female,
+            6,
+            6,
+            8,
+            6,
+            7,
+        ));
+
+        this.teamBalancerService.players.push(new Player(
             'Barış',
             Gender.Male,
             10,
@@ -95,16 +144,6 @@ export class HomeComponent {
             2,
             10,
             10,
-        ));
-
-        this.teamBalancerService.players.push(new Player(
-            'Şeyda',
-            Gender.Female,
-            6,
-            6,
-            8,
-            6,
-            7,
         ));
 
         this.teamBalancerService.players.push(new Player(
@@ -237,35 +276,35 @@ export class HomeComponent {
             9,
         ));
 
-        this.teamBalancerService.players.push(new Player(
-            'BAD PLAYER',
-            Gender.Male,
-            0,
-            1,
-            2,
-            3,
-            4,
-        ));
+        // this.teamBalancerService.players.push(new Player(
+        //     'BAD PLAYER',
+        //     Gender.Male,
+        //     0,
+        //     1,
+        //     2,
+        //     3,
+        //     4,
+        // ));
 
-        this.teamBalancerService.players.push(new Player(
-            'NORMAL PLAYER',
-            Gender.Male,
-            3,
-            4,
-            5,
-            6,
-            7,
-        ));
+        // this.teamBalancerService.players.push(new Player(
+        //     'NORMAL PLAYER',
+        //     Gender.Male,
+        //     3,
+        //     4,
+        //     5,
+        //     6,
+        //     7,
+        // ));
 
-        this.teamBalancerService.players.push(new Player(
-            'GOOD PLAYER',
-            Gender.Male,
-            6,
-            7,
-            8,
-            9,
-            10,
-        ));
+        // this.teamBalancerService.players.push(new Player(
+        //     'GOOD PLAYER',
+        //     Gender.Male,
+        //     6,
+        //     7,
+        //     8,
+        //     9,
+        //     10,
+        // ));
 
         // this.teamBalancerService.players.push(new Player(
         //     'G B',
@@ -327,6 +366,8 @@ export class HomeComponent {
         //     5,
         //     5,
         // ));
+
+        this.initialSetup();
     }
 
 }
