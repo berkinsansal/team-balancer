@@ -25,7 +25,7 @@ export class PlayerInputComponent implements OnInit {
     skillList: string[];
 
     constructor(private fb: FormBuilder,
-        public teamBalancerService: TeamBalancerService) {
+        private teamBalancerService: TeamBalancerService) {
 
         const genderEnumKeys: string[] = enumToKeyArray(Gender);
         genderEnumKeys.forEach(genderKey => this.genderList.push({
@@ -79,8 +79,7 @@ export class PlayerInputComponent implements OnInit {
 
     addOrUpdatePlayer() {
         if (this.playerForm.valid) {
-            let playerProperties = Player.getPlayerClassAllProperties();
-            playerProperties = playerProperties.slice(0, playerProperties.length - 1);
+            let playerProperties = Player.getPlayerClassPropertiesExceptId();
             if (this.selectedPlayer) {
                 playerProperties.forEach(prop => {
                     if (this.selectedPlayer) {
