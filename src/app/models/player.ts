@@ -1,5 +1,10 @@
 import { Gender } from './enums/gender.enum';
 
+// type Player = {
+//     gender: string;
+//     [skill: string]: any;
+// };
+
 export class Player {
     static maxId = -1;
     id = -1;
