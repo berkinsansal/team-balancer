@@ -53,9 +53,10 @@ export class Player {
     }
 
     static getTeamOverall(team: Player[]) {
-        return team.reduce((accumulator, player) => {
+        const overall = team.reduce((accumulator, player) => {
             return accumulator + Player.getPlayerOverall(player);
         }, 0) / team.length;
+        return isNaN(overall) ? 0 : overall;
     }
 }
 
