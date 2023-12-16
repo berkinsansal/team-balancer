@@ -98,7 +98,8 @@
                             "browserTarget": "team-balancer:build:development"
                         },
                         "local-development": {
-                          "browserTarget": "team-balancer:build:local-development"
+                          "browserTarget": "team-balancer:build:local-development",
+                          "port": 4201
                         }
                     },
                     "defaultConfiguration": "local-development"
