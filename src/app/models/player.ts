@@ -14,6 +14,7 @@ export class Player {
     constructor(
         public name: string, // name has to be first in order, it has special logic according to that
         public gender: Gender, // gender has to be second in order, it has special logic according to that
+        public height: number, // 0-10 (150cm = 0, each 5cm += 1, 200cm = 10)
         public serving: number, // 0-10
         public hitting: number, // 0-10
         public blocking: number, // 0-10
@@ -44,7 +45,7 @@ export class Player {
         let overall = 0;
         const skillList = Player.getPlayerClassSkillProperties();
         skillList.forEach(skill => {
-            const skillWeight =  playerPropertyWeightMap.get(skill) ?? 0;
+            const skillWeight =  playerPropertyWeightForPlayerMap.get(skill) ?? 0;
             totalSkillWeight += skillWeight;
             overall += (player[skill as keyof Player] as number) * skillWeight;
         });
@@ -61,12 +62,24 @@ export class Player {
 }
 
 // 0-5
-export const playerPropertyWeightMap = new Map<string, number>([
+export const playerPropertyWeightForPlayerMap = new Map<string, number>([
     ['gender', 5],
+    ['height', 5],
     ['serving', 3],
     ['hitting', 3],
     ['blocking', 1],
     ['defense', 3],
+    ['passing', 5],
+    ['overall', 5],
+]);
+
+// 0-5
+export const playerPropertyWeightForTeamMap = new Map<string, number>([
+    ['height', 3],
+    ['serving', 3],
+    ['hitting', 4],
+    ['blocking', 3],
+    ['defense', 5],
     ['passing', 5],
     ['overall', 5],
 ]);
