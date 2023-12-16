@@ -1,1 +1,1 @@
-<app-players-display [title]="teamTitleWithOverall" [players]="team"></app-players-display>
+<app-players-display title="{{teamTitle}} ({{(team | teamOverall) | number: '1.0-2'}} / 10)" [players]="team"></app-players-display>

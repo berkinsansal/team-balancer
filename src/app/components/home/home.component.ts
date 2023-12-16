@@ -74,7 +74,7 @@ export class HomeComponent implements OnDestroy {
         }
         this.teamBalancerService.balanceTeamsByTeamSkills();
         this.teamBalancerService.balanceTeamsByPlayerSkills();
-        this.teamBalancerService.balanceTeamsByPlayerOverall();
+        // this.teamBalancerService.balanceTeamsByPlayerOverall();
     }
 
     balanceTeamsByTeamSkills() {

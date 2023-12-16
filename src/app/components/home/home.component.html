@@ -1,20 +1,20 @@
 <div class="grid">
-    <div class="col-4">
+    <div class="col-12">
         <div *ngIf="allPlayers" class="grid">
             <div class="col-12">
                 <app-players-display [title]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true"></app-players-display>
             </div>
             <div class="col-12">
-                <button pButton (click)="balanceTeamsByTeamSkills()">Balance Teams (TvsT)</button>
-                <button pButton class="ml-3" (click)="balanceTeamsByPlayerSkills()">Balance Teams (1vs1)</button>
-                <button pButton class="ml-3" (click)="balanceTeamsByPlayerOverall()">Balance Teams (Overall)</button>
-                <button pButton class="ml-3" (click)="balanceTeamsByAll()">All</button>
+                <p-button label="Balance Teams (ALL)" (click)="balanceTeamsByAll()"></p-button>
+                <p-button label="Balance Teams (TvsT)" severity="secondary" class="ml-3" (click)="balanceTeamsByTeamSkills()"></p-button>
+                <p-button label="Balance Teams (1vs1)" severity="secondary" class="ml-3" (click)="balanceTeamsByPlayerSkills()"></p-button>
+                <!-- <p-button label="Balance Teams (Overall)" severity="secondary" class="ml-3" (click)="balanceTeamsByPlayerOverall()"></p-button> -->
             </div>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-12">
         <app-teams-display caption="Comparison Algorithm:" title="Team's skills one by one" [team1]="team1ByTeamSkills" [team2]="team2ByTeamSkills"></app-teams-display>
         <app-teams-display caption="Comparison Algorithm:" title="Player's skills one by one" [team1]="team1ByPlayerSkills" [team2]="team2ByPlayerSkills"></app-teams-display>
-        <app-teams-display caption="Comparison Algorithm:" title="Player's overall" [team1]="team1ByPlayerOverall" [team2]="team2ByPlayerOverall"></app-teams-display>
+        <!-- <app-teams-display caption="Comparison Algorithm:" title="Player's overall" [team1]="team1ByPlayerOverall" [team2]="team2ByPlayerOverall"></app-teams-display> -->
     </div>
 </div>

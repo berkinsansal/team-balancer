@@ -70,13 +70,15 @@
     <ng-template pTemplate="body" let-player let-rowIndex="rowIndex" let-properties="columns">
         <tr>
             <!-- START: SELECTION CHECKBOX -->
-            <td *ngIf="isAllPlayersTable">
+            <td *ngIf="isAllPlayersTable" class="checkbox-cell">
                 <p-tableCheckbox [value]="player"></p-tableCheckbox>
             </td>
             <!-- END: SELECTION CHECKBOX -->
             
             <!-- START: NUMBER -->
-            <td>{{ player.id }}</td>
+            <td class="id-cell">
+                {{ player.id }}
+            </td>
             <!-- END: NUMBER -->
             
             <!-- START: GENDER & NAME -->
