@@ -29,12 +29,26 @@ export class TeamBalancerService {
         let bestDifference = Infinity;
         let bestTeams: [Player[], Player[]] = [[], []];
 
-        const allTeamCombinations: Player[][] = [];
-        this.generateTeamCombinations(Math.floor(this.selectedPlayers.length / 2), 0, [], allTeamCombinations);
+        let allTeamCombinations: Player[][] = [];
+        const teamSize = Math.floor(this.selectedPlayers.length / 2);
+        this.generateTeamCombinations(teamSize, 0, [], allTeamCombinations);
 
-        const combinationMap = new Map<string, Player[]>();
+        // Remove teams with unbalanced genders
+        const femaleCountInSelectedPlayers = this.selectedPlayers.reduce((accumulator, player) => {
+            return accumulator + (player.gender === Gender.Female ? 1 : 0);
+        }, 0);
+        allTeamCombinations = allTeamCombinations.filter(team => {
+            const femaleCountInTeam = team.reduce((accumulator, player) => {
+                return accumulator + (player.gender === Gender.Female ? 1 : 0);
+            }, 0);
+            if (Math.floor(femaleCountInSelectedPlayers / 2) === femaleCountInTeam || Math.ceil(femaleCountInSelectedPlayers / 2) === femaleCountInTeam) {
+                return true;
+            }
+            return false;
+        });
 
         // Populate the map with unique combinations
+        const combinationMap = new Map<string, Player[]>();
         allTeamCombinations.forEach(combination => {
             const key = combination.map(player => player.id).sort().join("-");
             combinationMap.set(key, combination);
@@ -42,7 +56,6 @@ export class TeamBalancerService {
 
         // Iterate through the combinations to find unique pairings
         const uniquePairings: [any[], any[]][] = [];
-
         combinationMap.forEach((teamA, keyA) => {
             combinationMap.forEach((teamB, keyB) => {
                 if (keyA === keyB) return; // Skip if it's the same team
@@ -69,8 +82,37 @@ export class TeamBalancerService {
             }
         }
 
-        this.team1ByTeamSkills.push(...bestTeams[0]);
-        this.team2ByTeamSkills.push(...bestTeams[1]);
+        const addedPlayers: number[] = []; // players id
+        while (addedPlayers.length < teamSize * 2) {
+            let bestPair: [Player, Player] | null = null;
+            let bestScore = Number.MAX_VALUE;
+
+            for (let i = 0; i < teamSize; i++) {
+                const pair1 = bestTeams[0][i];
+                if (addedPlayers.includes(pair1.id)) {
+                    continue;
+                }
+
+                for (let j = 0; j < teamSize; j++) {
+                    const pair2 = bestTeams[1][j];
+                    if (addedPlayers.includes(pair2.id)) {
+                        continue;
+                    }
+
+                    let score = this.calculatePlayerSimilarity(pair1, pair2);
+                    if (score < bestScore) {
+                        bestScore = score;
+                        bestPair = [pair1, pair2];
+                    }
+                }
+            }
+
+            if (bestPair) {
+                this.team1ByTeamSkills.push(bestPair[0]);
+                this.team2ByTeamSkills.push(bestPair[1]);
+                addedPlayers.push(bestPair[0].id, bestPair[1].id);
+            }
+        }
 
         // add single player if selected players is odd number
         if (this.selectedPlayers.length - (this.team1ByTeamSkills.length + this.team2ByTeamSkills.length) === 1) {
