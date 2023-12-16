@@ -15,7 +15,7 @@ export class HomeComponent implements OnDestroy {
 
     readonly totalPlayerCount = 12;
 
-    allPlayers: Player[] = [];
+    allPlayers: Player[] | undefined;
     team1ByTeamSkills: Player[] = [];
     team2ByTeamSkills: Player[] = [];
     team1ByPlayerSkills: Player[] = [];

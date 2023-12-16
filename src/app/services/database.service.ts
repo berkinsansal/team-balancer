@@ -29,5 +29,11 @@ export class DatabaseService {
         const playerDocRef = doc(this.firestore, `players/${playerId}`);
         const { documentId, ...playerData } = player;
         return updateDoc(playerDocRef, playerData);
+
+
+        // Example usage
+        // this.updatePlayer('playerId123', { name: 'Updated Name', age: 25 })
+        // .then(() => console.log('Player updated successfully'))
+        // .catch(error => console.error('Error updating player:', error));
     }
 }
