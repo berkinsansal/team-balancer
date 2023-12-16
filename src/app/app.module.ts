@@ -24,6 +24,8 @@ import { TeamsDisplayComponent } from './components/teams-display/teams-display.
 import { PlayerOverallPipe } from './pipes/player-overall.pipe';
 import { PlayerPropertyValuePipe } from './pipes/player-property-value.pipe';
 import { RateColorPipe } from './pipes/rate-color.pipe';
+import { TeamOverallPipe } from './pipes/team-overall.pipe';
+import { TeamSkillOverallPipe } from './pipes/team-skill-overall.pipe';
 
 @NgModule({
     declarations: [
@@ -36,6 +38,8 @@ import { RateColorPipe } from './pipes/rate-color.pipe';
         PlayerPropertyValuePipe,
         PlayerOverallPipe,
         RateColorPipe,
+        TeamSkillOverallPipe,
+        TeamOverallPipe,
     ],
     imports: [
         BrowserModule,

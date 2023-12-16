@@ -38,7 +38,11 @@
 
             <!-- START: SKILL PROPERTY -->
             <th *ngFor="let prop of properties" [pSortableColumn]="prop" class="text-center">
-                {{ prop | titlecase }} <p-sortIcon [field]="prop"></p-sortIcon>
+                {{ prop | titlecase }}
+                <ng-container *ngIf="!isAllPlayersTable">
+                    ({{ (players | teamSkillOverall: prop) | number: '1.0-1' }})
+                </ng-container>
+                <p-sortIcon [field]="prop"></p-sortIcon>
             </th>
             <!-- END: SKILL PROPERTY -->
 
@@ -49,6 +53,9 @@
             </th> -->
             <th class="text-center">
                 Overall
+                <ng-container *ngIf="!isAllPlayersTable">
+                    ({{ (players | teamOverall) | number: '1.0-1' }})
+                </ng-container>
             </th>
             <!-- END: OVERALL -->
 
@@ -87,7 +94,7 @@
             <!-- END: SKILL PROPERTY -->
             
             <!-- START: OVERALL -->
-            <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerOverallValue}">
+            <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerOverall}">
             </ng-container>
             <!-- END: OVERALL -->
             
