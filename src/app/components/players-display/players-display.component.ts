@@ -26,6 +26,8 @@ export class PlayersDisplayComponent implements OnInit {
     ngOnInit(): void {
         if (this.isAllPlayersTable) {
             this.selectedPlayers = this.teamBalancerService.selectedPlayers;
+        } else {
+            this.skillList = [];
         }
     }
 
