@@ -8,7 +8,7 @@ import { Player } from '../../models/player';
 })
 export class TeamsDisplayComponent {
     @Input() caption: string = '';
-    @Input() title: string = '';
+    @Input() header: string = '';
     @Input() team1Title: string = 'Team 1';
     @Input() team2Title: string = 'Team 2';
     @Input() team1: Player[] = [];

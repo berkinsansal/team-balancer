@@ -10,7 +10,7 @@ import { TeamBalancerService } from '../../services/team-balancer.service';
 })
 export class PlayersDisplayComponent implements OnInit {
 
-    @Input() title: string = '';
+    @Input() header: string = '';
     @Input() players: Player[] = [];
     @Input() isAllPlayersTable = false;
 

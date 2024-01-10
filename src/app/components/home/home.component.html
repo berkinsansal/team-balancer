@@ -2,7 +2,7 @@
     <div class="col-12">
         <div *ngIf="allPlayers" class="grid">
             <div class="col-12">
-                <app-players-display [title]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true"></app-players-display>
+                <app-players-display [header]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true"></app-players-display>
             </div>
             <div class="col-12">
                 <p-button label="Balance Teams (ALL)" (click)="balanceTeamsByAll()"></p-button>
@@ -13,8 +13,8 @@
         </div>
     </div>
     <div class="col-12">
-        <app-teams-display caption="Comparison Algorithm:" title="Team's skills one by one" [team1]="team1ByTeamSkills" [team2]="team2ByTeamSkills"></app-teams-display>
-        <app-teams-display caption="Comparison Algorithm:" title="Player's skills one by one" [team1]="team1ByPlayerSkills" [team2]="team2ByPlayerSkills"></app-teams-display>
-        <!-- <app-teams-display caption="Comparison Algorithm:" title="Player's overall" [team1]="team1ByPlayerOverall" [team2]="team2ByPlayerOverall"></app-teams-display> -->
+        <app-teams-display caption="Comparison Algorithm:" header="Team's skills one by one" [team1]="team1ByTeamSkills" [team2]="team2ByTeamSkills"></app-teams-display>
+        <app-teams-display caption="Comparison Algorithm:" header="Player's skills one by one" [team1]="team1ByPlayerSkills" [team2]="team2ByPlayerSkills"></app-teams-display>
+        <!-- <app-teams-display caption="Comparison Algorithm:" header="Player's overall" [team1]="team1ByPlayerOverall" [team2]="team2ByPlayerOverall"></app-teams-display> -->
     </div>
 </div>
