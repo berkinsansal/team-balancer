@@ -7,7 +7,7 @@ import { Player } from '../models/player';
 export class PlayerOverallPipe implements PipeTransform {
 
     transform(player: Player): number {
-        return Player.getPlayerOverall(player);
+        return player.getPlayerOverall();
     }
 
 }

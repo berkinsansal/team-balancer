@@ -40,24 +40,28 @@ export class Player {
         return playerProperties.slice(2, playerProperties.length - 1); // remove name and gender properties from beginning and id property from the end
     }
 
-    static getPlayerOverall(player: Player) {
+    static getTeamOverall(team: Player[]) {
+        const overall = team.reduce((accumulator, player) => {
+            return accumulator + player.getPlayerOverall();
+        }, 0) / team.length;
+        return isNaN(overall) ? 0 : overall;
+    }
+
+    getPlayerOverall() {
         let totalSkillWeight = 0;
         let overall = 0;
         const skillList = Player.getPlayerClassSkillProperties();
         skillList.forEach(skill => {
             const skillWeight =  playerPropertyWeightForPlayerMap.get(skill) ?? 0;
             totalSkillWeight += skillWeight;
-            overall += (player[skill as keyof Player] as number) * skillWeight;
+            overall += this.getSkillValue(skill as keyof Player) * skillWeight;
         });
         overall = overall / skillList.length / (totalSkillWeight / skillList.length);
         return overall;
     }
 
-    static getTeamOverall(team: Player[]) {
-        const overall = team.reduce((accumulator, player) => {
-            return accumulator + Player.getPlayerOverall(player);
-        }, 0) / team.length;
-        return isNaN(overall) ? 0 : overall;
+    getSkillValue(skill: keyof Player) {
+        return this[skill] as number ?? 0;
     }
 }
 

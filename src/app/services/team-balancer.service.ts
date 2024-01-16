@@ -19,7 +19,7 @@ export class TeamBalancerService {
 
     // Sort players based on their skill levels
     sortPlayers(players: Player[]) {
-        players.sort((a, b) => Player.getPlayerOverall(b) - Player.getPlayerOverall(a));
+        players.sort((a, b) => b.getPlayerOverall() - a.getPlayerOverall());
     }
 
     // Find the most similar teams by comparing team players each skill
@@ -201,9 +201,9 @@ export class TeamBalancerService {
 
         let similarity = 0;
         skillList.forEach(skill => {
-            similarity += Math.abs(team1.reduce((acc, p) => acc + (p[skill as keyof Player] as number), 0) - team2.reduce((acc, p) => acc + (p[skill as keyof Player] as number), 0)) * (playerPropertyWeightForTeamMap.get(skill) ?? 0);
+            similarity += Math.abs(team1.reduce((acc, p) => acc + p.getSkillValue(skill as keyof Player), 0) - team2.reduce((acc, p) => acc + p.getSkillValue(skill as keyof Player), 0)) * (playerPropertyWeightForTeamMap.get(skill) ?? 0);
         });
-        similarity += Math.abs(team1.reduce((acc, p) => acc + Player.getPlayerOverall(p), 0) - team2.reduce((acc, p) => acc + Player.getPlayerOverall(p), 0)) * (playerPropertyWeightForTeamMap.get('overall') ?? 0);
+        similarity += Math.abs(team1.reduce((acc, p) => acc + p.getPlayerOverall(), 0) - team2.reduce((acc, p) => acc + p.getPlayerOverall(), 0)) * (playerPropertyWeightForTeamMap.get('overall') ?? 0);
 
         // Aggregate the similarity scores (lower is more similar)
         return similarity;
@@ -216,7 +216,7 @@ export class TeamBalancerService {
         let similarity = 0;
         similarity += (player1.gender === player2.gender ? 0 : 10) * (playerPropertyWeightForPlayerMap.get('gender') ?? 0);
         skillList.forEach(skill => {
-            similarity += Math.abs((player1[skill as keyof Player] as number) - (player2[skill as keyof Player] as number)) * (playerPropertyWeightForPlayerMap.get(skill) ?? 0);
+            similarity += Math.abs(player1.getSkillValue(skill as keyof Player) - player2.getSkillValue(skill as keyof Player)) * (playerPropertyWeightForPlayerMap.get(skill) ?? 0);
         });
 
         // Aggregate the similarity scores (lower is more similar)
@@ -230,8 +230,8 @@ export class TeamBalancerService {
             const betterTeam = team1overall > team2overall ? team1 : team2;
             const worseTeam = team1overall > team2overall ? team2 : team1;
             if (bestPair[0] && bestPair[1]) {
-                const player1overall = Player.getPlayerOverall(bestPair[0]);
-                const player2overall = Player.getPlayerOverall(bestPair[1]);
+                const player1overall = bestPair[0].getPlayerOverall();
+                const player2overall = bestPair[1].getPlayerOverall();
                 const betterPlayer = player1overall >= player2overall ? bestPair[0] : bestPair[1];
                 const worsePlayer = player1overall >= player2overall ? bestPair[1] : bestPair[0];
                 worseTeam.push(betterPlayer);
