@@ -96,185 +96,374 @@ export class HomeComponent implements OnDestroy {
     }
 
     addTestPlayers() {
-        this.teamBalancerService.players.push(new Player(
-            'Berkin',
-            Gender.Male,
-            8,
-            8,
-            8,
-            8,
-            7,
-        ));
+
+        // this.teamBalancerService.players.push(new Player(
+        //     'Anıl',
+        //     Gender.Male,
+        //     4,
+        //     3,
+        //     5,
+        //     5,
+        //     2,
+        //     2,
+        //     2,
+        //     2,
+        //     5,
+        //     3,
+        //     2,
+        // ));
 
         this.teamBalancerService.players.push(new Player(
             'Ayça',
             Gender.Female,
-            6,
-            6,
-            6,
-            9,
-            8,
+            3,
+            3,
+            3,
+            0,
+            5,
+            4,
+            5,
+            4,
+            5,
+            5,
+            4,
         ));
 
         this.teamBalancerService.players.push(new Player(
-            'Şeyda',
+            'Aysu',
             Gender.Female,
-            6,
-            6,
-            8,
-            6,
-            7,
+            3,
+            2,
+            3,
+            0,
+            4,
+            4,
+            4,
+            4,
+            2,
+            4,
+            4,
         ));
 
         this.teamBalancerService.players.push(new Player(
             'Barış',
             Gender.Male,
-            10,
-            10,
-            10,
-            10,
-            10,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            4,
+            4,
+            5,
         ));
+
+        // this.teamBalancerService.players.push(new Player(
+        //     'Baturalp',
+        //     Gender.Male,
+        //     3,
+        //     5,
+        //     5,
+        //     3,
+        //     4,
+        //     5,
+        //     4,
+        //     4,
+        //     5,
+        //     5,
+        //     4,
+        // ));
 
         this.teamBalancerService.players.push(new Player(
             'Begüm',
             Gender.Female,
-            9,
-            9,
-            2,
-            10,
-            10,
+            1,
+            5,
+            5,
+            0,
+            5,
+            5,
+            5,
+            5,
+            5,
+            4,
+            5,
         ));
 
         this.teamBalancerService.players.push(new Player(
-            'Burçe',
+            'Berkin',
+            Gender.Male,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            4,
+            5,
+            4,
+            4,
+            4,
+        ));
+
+        this.teamBalancerService.players.push(new Player(
+            'Burak Gökalp',
+            Gender.Male,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            4,
+            5,
+        ));
+
+        // this.teamBalancerService.players.push(new Player(
+        //     'Burçe',
+        //     Gender.Female,
+        //     1,
+        //     5,
+        //     4,
+        //     0,
+        //     5,
+        //     5,
+        //     5,
+        //     5,
+        //     5,
+        //     5,
+        //     5,
+        // ));
+
+        this.teamBalancerService.players.push(new Player(
+            'Duygu',
             Gender.Female,
-            8,
-            8,
+            2,
+            5,
+            5,
             0,
-            10,
-            10,
+            5,
+            5,
+            5,
+            4,
+            5,
+            5,
+            5,
+        ));
+
+        this.teamBalancerService.players.push(new Player(
+            'Emrah',
+            Gender.Male,
+            4,
+            4,
+            4,
+            5,
+            3,
+            3,
+            4,
+            3,
+            4,
+            4,
+            4,
         ));
 
         this.teamBalancerService.players.push(new Player(
             'Emre',
             Gender.Male,
-            10,
-            10,
-            10,
-            10,
-            10,
-        ));
-
-        this.teamBalancerService.players.push(new Player(
-            'Ozan',
-            Gender.Male,
-            10,
-            10,
-            10,
-            10,
-            9,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            4,
+            4,
+            5,
         ));
 
         this.teamBalancerService.players.push(new Player(
             'Görkem',
             Gender.Male,
-            8,
-            8,
-            8,
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            4,
+            4,
             5,
-            5,
+            4,
+            3,
         ));
+
+        // this.teamBalancerService.players.push(new Player(
+        //     'Güçlü',
+        //     Gender.Male,
+        //     3,
+        //     5,
+        //     5,
+        //     5,
+        //     5,
+        //     4,
+        //     4,
+        //     4,
+        //     5,
+        //     5,
+        //     4,
+        // ));
+
+        // this.teamBalancerService.players.push(new Player(
+        //     'İpek',
+        //     Gender.Female,
+        //     2,
+        //     4,
+        //     4,
+        //     0,
+        //     4,
+        //     4,
+        //     4,
+        //     3,
+        //     4,
+        //     5,
+        //     5,
+        // ));
+
+        // this.teamBalancerService.players.push(new Player(
+        //     'Mehmet',
+        //     Gender.Male,
+        //     2,
+        //     4,
+        //     2,
+        //     0,
+        //     3,
+        //     3,
+        //     3,
+        //     3,
+        //     5,
+        //     4,
+        //     3,
+        // ));
+
+        // this.teamBalancerService.players.push(new Player(
+        //     'Oğuzhan',
+        //     Gender.Male,
+        //     4,
+        //     5,
+        //     5,
+        //     3,
+        //     5,
+        //     5,
+        //     4,
+        //     3,
+        //     5,
+        //     4,
+        //     4,
+        // ));
+
+        // this.teamBalancerService.players.push(new Player(
+        //     'Ozan',
+        //     Gender.Male,
+        //     4,
+        //     5,
+        //     5,
+        //     5,
+        //     5,
+        //     5,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     5,
+        // ));
+
+        // this.teamBalancerService.players.push(new Player(
+        //     'Serkan',
+        //     Gender.Male,
+        //     3,
+        //     5,
+        //     5,
+        //     5,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     5,
+        //     4,
+        //     4,
+        // ));
 
         this.teamBalancerService.players.push(new Player(
             'Şahap',
             Gender.Male,
-            9,
-            9,
-            10,
-            8,
-            9,
-        ));
-
-        this.teamBalancerService.players.push(new Player(
-            'Güçlü',
-            Gender.Male,
-            9,
-            10,
-            10,
-            9,
-            7,
-        ));
-
-        this.teamBalancerService.players.push(new Player(
-            'Serkan',
-            Gender.Male,
-            9,
-            10,
-            10,
-            8,
-            7,
-        ));
-
-        this.teamBalancerService.players.push(new Player(
-            'Ziya',
-            Gender.Male,
-            7,
-            7,
-            8,
-            8,
-            7,
-        ));
-
-        this.teamBalancerService.players.push(new Player(
-            'İpek',
-            Gender.Female,
-            7,
-            8,
-            0,
-            8,
-            8,
-        ));
-
-        this.teamBalancerService.players.push(new Player(
-            'Mehmet',
-            Gender.Male,
-            7,
             5,
-            2,
             5,
-            6,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
         ));
 
+        // this.teamBalancerService.players.push(new Player(
+        //     'Şeyda',
+        //     Gender.Female,
+        //     3,
+        //     3,
+        //     3,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     5,
+        //     5,
+        //     4,
+        // ));
+
         this.teamBalancerService.players.push(new Player(
-            'Anıl',
+            'Yoldaş',
             Gender.Male,
-            6,
-            10,
-            10,
+            4,
+            4,
+            4,
+            5,
+            3,
+            3,
+            4,
+            4,
+            4,
             4,
             4,
         ));
 
-        this.teamBalancerService.players.push(new Player(
-            'Duygu',
-            Gender.Female,
-            9,
-            9,
-            4,
-            10,
-            10,
-        ));
-
-        this.teamBalancerService.players.push(new Player(
-            'Baturalp',
-            Gender.Male,
-            9,
-            9,
-            6,
-            8,
-            9,
-        ));
+        // this.teamBalancerService.players.push(new Player(
+        //     'Ziya',
+        //     Gender.Male,
+        //     3,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        //     4,
+        // ));
 
         // this.teamBalancerService.players.push(new Player(
         //     'BAD PLAYER',
@@ -366,6 +555,261 @@ export class HomeComponent implements OnDestroy {
         //     5,
         //     5,
         // ));
+
+        
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Anıl',
+        // // //     Gender.Male,
+        // // //     8,
+        // // //     6,
+        // // //     10,
+        // // //     10,
+        // // //     4,
+        // // //     4,
+        // // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Ayça',
+        // //     Gender.Female,
+        // //     5,
+        // //     6,
+        // //     6,
+        // //     0,
+        // //     9,
+        // //     8,
+        // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Aysu',
+        // //     Gender.Female,
+        // //     7,
+        // //     5,
+        // //     6,
+        // //     0,
+        // //     8,
+        // //     8,
+        // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Barış',
+        // //     Gender.Male,
+        // //     7,
+        // //     10,
+        // //     10,
+        // //     10,
+        // //     10,
+        // //     10,
+        // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Baturalp',
+        // // //     Gender.Male,
+        // // //     6,
+        // // //     9,
+        // // //     9,
+        // // //     6,
+        // // //     8,
+        // // //     9,
+        // // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Begüm',
+        // //     Gender.Female,
+        // //     2,
+        // //     9,
+        // //     9,
+        // //     0,
+        // //     10,
+        // //     10,
+        // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Berkin',
+        // //     Gender.Male,
+        // //     8,
+        // //     8,
+        // //     8,
+        // //     8,
+        // //     7,
+        // //     7,
+        // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Burak Gökalp',
+        // //     Gender.Male,
+        // //     7,
+        // //     9,
+        // //     10,
+        // //     10,
+        // //     10,
+        // //     10,
+        // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Burçe',
+        // // //     Gender.Female,
+        // // //     1,
+        // // //     9,
+        // // //     8,
+        // // //     0,
+        // // //     10,
+        // // //     10,
+        // // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Duygu',
+        // //     Gender.Female,
+        // //     5,
+        // //     9,
+        // //     10,
+        // //     0,
+        // //     10,
+        // //     10,
+        // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Emrah',
+        // //     Gender.Male,
+        // //     7,
+        // //     9,
+        // //     10,
+        // //     10,
+        // //     10,
+        // //     10,
+        // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Emre',
+        // //     Gender.Male,
+        // //     7,
+        // //     9,
+        // //     10,
+        // //     10,
+        // //     10,
+        // //     10,
+        // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Görkem',
+        // //     Gender.Male,
+        // //     6,
+        // //     8,
+        // //     7,
+        // //     8,
+        // //     5,
+        // //     5,
+        // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Güçlü',
+        // // //     Gender.Male,
+        // // //     6,
+        // // //     10,
+        // // //     10,
+        // // //     10,
+        // // //     9,
+        // // //     8,
+        // // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'İpek',
+        // // //     Gender.Female,
+        // // //     4,
+        // // //     8,
+        // // //     8,
+        // // //     0,
+        // // //     8,
+        // // //     8,
+        // // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Mehmet',
+        // // //     Gender.Male,
+        // // //     4,
+        // // //     7,
+        // // //     4,
+        // // //     0,
+        // // //     5,
+        // // //     6,
+        // // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Oğuzhan',
+        // // //     Gender.Male,
+        // // //     7,
+        // // //     9,
+        // // //     10,
+        // // //     6,
+        // // //     10,
+        // // //     10,
+        // // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Ozan',
+        // // //     Gender.Male,
+        // // //     7,
+        // // //     10,
+        // // //     10,
+        // // //     10,
+        // // //     10,
+        // // //     9,
+        // // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Serkan',
+        // // //     Gender.Male,
+        // // //     6,
+        // // //     10,
+        // // //     10,
+        // // //     10,
+        // // //     7,
+        // // //     8,
+        // // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Şahap',
+        // //     Gender.Male,
+        // //     8,
+        // //     10,
+        // //     10,
+        // //     10,
+        // //     10,
+        // //     10,
+        // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Şeyda',
+        // // //     Gender.Female,
+        // // //     5,
+        // // //     5,
+        // // //     6,
+        // // //     7,
+        // // //     7,
+        // // //     7,
+        // // // ));
+
+        // // this.teamBalancerService.players.push(new Player(
+        // //     'Yoldaş',
+        // //     Gender.Male,
+        // //     8,
+        // //     7,
+        // //     8,
+        // //     9,
+        // //     6,
+        // //     6,
+        // // ));
+
+        // // // this.teamBalancerService.players.push(new Player(
+        // // //     'Ziya',
+        // // //     Gender.Male,
+        // // //     6,
+        // // //     8,
+        // // //     8,
+        // // //     8,
+        // // //     8,
+        // // //     8,
+        // // // ));
 
         this.initialSetup();
     }

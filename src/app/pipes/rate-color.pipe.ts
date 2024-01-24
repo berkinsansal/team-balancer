@@ -21,7 +21,7 @@ export class RateColorPipe implements PipeTransform {
         let colorFadeStart: rgbColor = { r: 0, g: 0, b: 0 }; // #000000 // black
         let colorFadeEnd: rgbColor = { r: 0, g: 0, b: 0 }; // #000000 // black
 
-        let fade = value / 10; // fade should be between 0-1
+        let fade = value / 5; // fade should be between 0-1
         fade = fade * (rgbColors.length - 1); // for many colors, we need this adjustment
 
         // find which interval to use and adjust the fade percentage

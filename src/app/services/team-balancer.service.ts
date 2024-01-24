@@ -1,6 +1,6 @@
 import { ApplicationRef, Injectable } from '@angular/core';
 import { Gender } from '../models/enums/gender.enum';
-import { Player, playerPropertyWeightForPlayerMap, playerPropertyWeightForTeamMap } from '../models/player';
+import { Player, playerPropertyWeightMap } from '../models/player';
 
 @Injectable({
     providedIn: 'root'
@@ -201,9 +201,9 @@ export class TeamBalancerService {
 
         let similarity = 0;
         skillList.forEach(skill => {
-            similarity += Math.abs(team1.reduce((acc, p) => acc + p.getSkillValue(skill as keyof Player), 0) - team2.reduce((acc, p) => acc + p.getSkillValue(skill as keyof Player), 0)) * (playerPropertyWeightForTeamMap.get(skill) ?? 0);
+            similarity += Math.abs(team1.reduce((acc, p) => acc + p.getSkillValue(skill as keyof Player), 0) - team2.reduce((acc, p) => acc + p.getSkillValue(skill as keyof Player), 0)) * (playerPropertyWeightMap.get(skill) ?? 1);
         });
-        similarity += Math.abs(team1.reduce((acc, p) => acc + p.getPlayerOverall(), 0) - team2.reduce((acc, p) => acc + p.getPlayerOverall(), 0)) * (playerPropertyWeightForTeamMap.get('overall') ?? 0);
+        similarity += Math.abs(team1.reduce((acc, p) => acc + p.getPlayerOverall(), 0) - team2.reduce((acc, p) => acc + p.getPlayerOverall(), 0)) * (playerPropertyWeightMap.get('overall') ?? 1);
 
         // Aggregate the similarity scores (lower is more similar)
         return similarity;
@@ -214,9 +214,9 @@ export class TeamBalancerService {
         const skillList = Player.getPlayerClassSkillProperties();
 
         let similarity = 0;
-        similarity += (player1.gender === player2.gender ? 0 : 10) * (playerPropertyWeightForPlayerMap.get('gender') ?? 0);
+        similarity += (player1.gender === player2.gender ? 0 : 10) * (playerPropertyWeightMap.get('gender') ?? 1);
         skillList.forEach(skill => {
-            similarity += Math.abs(player1.getSkillValue(skill as keyof Player) - player2.getSkillValue(skill as keyof Player)) * (playerPropertyWeightForPlayerMap.get(skill) ?? 0);
+            similarity += Math.abs(player1.getSkillValue(skill as keyof Player) - player2.getSkillValue(skill as keyof Player)) * (playerPropertyWeightMap.get(skill) ?? 1);
         });
 
         // Aggregate the similarity scores (lower is more similar)

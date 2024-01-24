@@ -40,7 +40,7 @@ export class PlayerInputComponent implements OnInit {
             gender: new FormControl(Gender.Male, Validators.required),
         });
         this.skillList.forEach(x => {
-            this.playerForm.addControl(x, new FormControl(null, [Validators.required, Validators.min(0), Validators.max(10)]));
+            this.playerForm.addControl(x, new FormControl(null, [Validators.required, Validators.min(0), Validators.max(5)]));
         });
     }
 
