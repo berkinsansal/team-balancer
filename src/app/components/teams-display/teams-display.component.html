@@ -1,6 +1,6 @@
 <div *ngIf="(team1 && team1.length > 0) || (team2 && team2.length > 0)">
-    <span class="text-sm font-bold mr-1">{{caption}}</span>
-    <span class="text-xl font-bold bg-cyan-300">{{header}}</span>
+    <div class="text-sm font-bold mr-1">{{caption}}</div>
+    <div class="text-xl font-bold bg-cyan-300">{{header}}</div>
     <div class="grid">
         <div class="col-fixed" *ngIf="team1">
             <app-team-display [teamTitle]="team1Title" [team]="team1"></app-team-display>
