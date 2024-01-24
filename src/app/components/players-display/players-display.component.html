@@ -48,10 +48,10 @@
 
             <!-- START: OVERALL -->
             <!-- TODO: buggy right now, you need to implement custom sort for overall -->
-            <!-- <th pSortableColumn="overall" class="text-center">
+            <!-- <th *ngIf="isAllPlayersTable" pSortableColumn="overall" class="text-center">
                 Overall <p-sortIcon field="overall"></p-sortIcon>
             </th> -->
-            <th class="text-center">
+            <th *ngIf="isAllPlayersTable" class="text-center">
                 Overall
                 <ng-container *ngIf="!isAllPlayersTable">
                     ({{ (players | teamOverall) | number: '1.0-1' }})
@@ -96,7 +96,9 @@
             <!-- END: SKILL PROPERTY -->
             
             <!-- START: OVERALL -->
-            <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerOverall}">
+            <ng-container *ngIf="isAllPlayersTable">
+                <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerOverall}">
+                </ng-container>
             </ng-container>
             <!-- END: OVERALL -->
             
