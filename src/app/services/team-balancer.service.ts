@@ -6,16 +6,29 @@ import { Player, playerPropertyWeightMap } from '../models/player';
     providedIn: 'root'
 })
 export class TeamBalancerService {
-    players: Player[] = [];
-    selectedPlayers: Player[] = [];
-    team1ByTeamSkills: Player[] = [];
-    team2ByTeamSkills: Player[] = [];
-    team1ByPlayerSkills: Player[] = [];
-    team2ByPlayerSkills: Player[] = [];
-    team1ByPlayerOverall: Player[] = [];
-    team2ByPlayerOverall: Player[] = [];
+    players!: Player[];
+    selectedPlayers!: Player[];
+    team1ByTeamSkills!: Player[];
+    team2ByTeamSkills!: Player[];
+    team1ByPlayerSkills!: Player[];
+    team2ByPlayerSkills!: Player[];
+    team1ByPlayerOverall!: Player[];
+    team2ByPlayerOverall!: Player[];
 
-    constructor(private ref: ApplicationRef) { }
+    constructor(private ref: ApplicationRef) {
+        this.initializeData();
+    }
+
+    initializeData() {
+        this.players = [];
+        this.selectedPlayers = [];
+        this.team1ByTeamSkills = [];
+        this.team2ByTeamSkills = [];
+        this.team1ByPlayerSkills = [];
+        this.team2ByPlayerSkills = [];
+        this.team1ByPlayerOverall = [];
+        this.team2ByPlayerOverall = [];
+    }
 
     // Sort players based on their skill levels
     sortPlayers(players: Player[]) {
@@ -174,7 +187,7 @@ export class TeamBalancerService {
         }
     }
 
-    // Empty teams
+    // Empty given teams
     private emptyTeams(team1: Player[], team2: Player[]) {
         team1.splice(0, team1.length);
         team2.splice(0, team2.length);

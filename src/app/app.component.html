@@ -1,3 +1,7 @@
 <p-toast></p-toast>
 
 <router-outlet></router-outlet>
+
+<p-blockUI [blocked]="(isBlocked | async) || false" [baseZIndex]="9999">
+  <p-progressSpinner></p-progressSpinner>
+</p-blockUI>

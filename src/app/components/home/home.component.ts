@@ -1,10 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { Gender } from '../../models/enums/gender.enum';
 import { Player } from '../../models/player';
 import { DatabaseService } from '../../services/database.service';
 import { TeamBalancerService } from '../../services/team-balancer.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-home',
@@ -15,6 +17,8 @@ export class HomeComponent implements OnDestroy {
 
     readonly totalPlayerCount = 12;
 
+    sidebarVisible = false;
+    user: User | null = null;
     allPlayers: Player[] | undefined;
     team1ByTeamSkills: Player[] = [];
     team2ByTeamSkills: Player[] = [];
@@ -27,10 +31,10 @@ export class HomeComponent implements OnDestroy {
 
     constructor(private teamBalancerService: TeamBalancerService,
         private messageService: MessageService,
-        private databaseService: DatabaseService) {
+        private databaseService: DatabaseService,
+        private userService: UserService) {
 
-        // this.addTestPlayers(); // for development
-        this.getPlayers();
+        this.userService.user.subscribe(x => this.user = x);
     }
 
     getPlayers() {
@@ -87,6 +91,14 @@ export class HomeComponent implements OnDestroy {
 
     balanceTeamsByPlayerOverall() {
         this.teamBalancerService.balanceTeamsByPlayerOverall();
+    }
+
+    openSidebar() {
+        this.sidebarVisible = true;
+    }
+
+    signOut() {
+        this.userService.signOut();
     }
 
     ngOnDestroy(): void {

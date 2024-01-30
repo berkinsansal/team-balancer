@@ -1,14 +1,17 @@
 <div class="grid">
     <div class="col-12">
         <div *ngIf="allPlayers" class="grid">
-            <div class="col-12">
-                <app-players-display [header]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true"></app-players-display>
-            </div>
-            <div class="col-12">
+            <div class="col-10">
                 <p-button label="Balance Teams (ALL)" (click)="balanceTeamsByAll()"></p-button>
                 <p-button label="Balance Teams (TvsT)" severity="secondary" class="ml-3" (click)="balanceTeamsByTeamSkills()"></p-button>
                 <p-button label="Balance Teams (1vs1)" severity="secondary" class="ml-3" (click)="balanceTeamsByPlayerSkills()"></p-button>
                 <!-- <p-button label="Balance Teams (Overall)" severity="secondary" class="ml-3" (click)="balanceTeamsByPlayerOverall()"></p-button> -->
+            </div>
+            <div class="col-2 flex flex-row-reverse">
+                <p-button icon="fa-solid fa-bars" (click)="openSidebar()"></p-button>
+            </div>
+            <div class="col-12">
+                <app-players-display [header]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true"></app-players-display>
             </div>
         </div>
     </div>
@@ -26,3 +29,24 @@
         </div>
     </div>
 </div>
+
+<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-25rem">
+    <ng-template pTemplate="header">
+        Team Balancer
+    </ng-template>
+    <ng-template pTemplate="content">
+        <div *ngIf="user" class="grid mt-5">
+            <div class="col-12">
+                <p-avatar shape="circle" size="large" icon="fa-regular fa-user" />
+                <span class="ml-2">{{ user.email }}</span>
+            </div>
+            <div class="col-12">
+                <p-button label="Sign Out" severity="danger" (click)="signOut()"></p-button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        developed by
+        <a href="https://github.com/berkinsansal" target="_blank">Berkin Sansal</a>
+    </ng-template>
+</p-sidebar>
