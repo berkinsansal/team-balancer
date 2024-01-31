@@ -38,7 +38,7 @@
 
             <!-- START: SKILL PROPERTY -->
             <th *ngFor="let prop of properties" [pSortableColumn]="prop" class="text-center">
-                {{ prop | titlecase }}
+                {{ prop | camelCaseToTitle }}
                 <ng-container *ngIf="!isAllPlayersTable">
                     ({{ (players | teamSkillOverall: prop) | number: '1.0-1' }})
                 </ng-container>

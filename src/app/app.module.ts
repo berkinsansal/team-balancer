@@ -27,6 +27,7 @@ import { PlayerInputComponent } from './components/player-input/player-input.com
 import { PlayersDisplayComponent } from './components/players-display/players-display.component';
 import { TeamDisplayComponent } from './components/team-display/team-display.component';
 import { TeamsDisplayComponent } from './components/teams-display/teams-display.component';
+import { CamelCaseToTitlePipe } from './pipes/camel-case-to-title.pipe';
 import { PlayerOverallPipe } from './pipes/player-overall.pipe';
 import { PlayerPropertyValuePipe } from './pipes/player-property-value.pipe';
 import { RateColorPipe } from './pipes/rate-color.pipe';
@@ -47,6 +48,7 @@ import { TeamSkillOverallPipe } from './pipes/team-skill-overall.pipe';
         TeamSkillOverallPipe,
         TeamOverallPipe,
         LoginComponent,
+        CamelCaseToTitlePipe,
     ],
     imports: [
         BrowserModule,
