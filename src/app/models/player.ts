@@ -14,17 +14,17 @@ export class Player {
     constructor(
         public name: string, // name has to be first in order, it has special logic according to that
         public gender: Gender, // gender has to be second in order, it has special logic according to that
-        public height: number, // 0-5 (150cm = 1, each 10cm += 1, 190cm = 5)
-        public serving: number, // 0-5
-        public hitting: number, // 0-5
-        public blocking: number, // 0-5
-        public defense: number, // 0-5
-        public passing: number, // 0-5
-        public teamPlayer: number, // 0-5
-        public nonQuitter: number, // 0-5
-        public servingSuccess: number, // 0-5
-        public hittingSuccess: number, // 0-5
-        public passingSuccess: number, // 0-5
+        public height: number, // 1-5 (150cm = 1, each 10cm += 1, 190cm = 5)
+        public serving: number, // 1-5
+        public hitting: number, // 1-5
+        public blocking: number, // 1-5
+        public defense: number, // 1-5
+        public passing: number, // 1-5
+        public teamPlayer: number, // 1-5
+        public nonQuitter: number, // 1-5
+        public servingSuccess: number, // 1-5
+        public hittingSuccess: number, // 1-5
+        public passingSuccess: number, // 1-5
     ) {
         if (name) {
             this.id = ++Player.maxId;
@@ -70,7 +70,7 @@ export class Player {
     }
 }
 
-// 0-5
+// 1-5
 export const playerPropertyWeightMap = new Map<string, number>([
     ['overall', 5],
     ['gender', 5],
@@ -87,6 +87,7 @@ export const playerPropertyWeightMap = new Map<string, number>([
     ['passingSuccess', 5],
 ]);
 
+// TODO: Use these to calibrate skills and calculate overall
 export const skillSuccessMap = new Map<string, string>([
     ['serving', 'servingSuccess'],
     ['hitting', 'hittingSuccess'],
