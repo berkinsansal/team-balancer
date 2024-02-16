@@ -69,15 +69,15 @@ export class TeamBalancerService {
 
         // Iterate through the combinations to find unique pairings
         const uniquePairings: [any[], any[]][] = [];
-        combinationMap.forEach((teamA, keyA) => {
-            combinationMap.forEach((teamB, keyB) => {
-                if (keyA === keyB) return; // Skip if it's the same team
+        combinationMap.forEach((team1, key1) => {
+            combinationMap.forEach((team2, key2) => {
+                if (key1 === key2) return; // Skip if it's the same team
 
-                const idsTeamA = new Set(teamA.map(player => player.id));
-                const isUniquePair = teamB.every(player => !idsTeamA.has(player.id));
+                const idsTeam1 = new Set(team1.map(player => player.id));
+                const isUniquePair = team2.every(player => !idsTeam1.has(player.id));
 
                 if (isUniquePair) {
-                    uniquePairings.push([teamA, teamB]);
+                    uniquePairings.push([team1, team2]);
                 }
             });
         });
