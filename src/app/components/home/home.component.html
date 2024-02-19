@@ -1,33 +1,22 @@
-<div class="grid">
-    <div class="col-12">
-        <div *ngIf="allPlayers" class="grid">
-            <div class="col-10">
-                <p-button label="Balance Teams (ALL)" (click)="balanceTeamsByAll()"></p-button>
-                <p-button label="Balance Teams (TvsT)" severity="secondary" class="ml-3" (click)="balanceTeamsByTeamSkills()"></p-button>
-                <p-button label="Balance Teams (1vs1)" severity="secondary" class="ml-3" (click)="balanceTeamsByPlayerSkills()"></p-button>
-                <!-- <p-button label="Balance Teams (Overall)" severity="secondary" class="ml-3" (click)="balanceTeamsByPlayerOverall()"></p-button> -->
-            </div>
-            <div class="col-2 flex flex-row-reverse">
-                <p-button icon="fa-solid fa-bars" (click)="openSidebar()"></p-button>
-            </div>
-            <div class="col-12">
-                <app-players-display [header]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true"></app-players-display>
-            </div>
-        </div>
+<div *ngIf="allPlayers" class="grid justify-content-evenly">
+    <div class="col-10">
+        <p-button label="Balance Teams" (click)="balanceTeamsByAll()"></p-button>
     </div>
-    <div class="col-12">
-        <div class="grid justify-content-evenly">
-            <div class="col-fixed">
-                <app-teams-display caption="Comparison Algorithm:" header="Team's skills one by one" [team1]="team1ByTeamSkills" [team2]="team2ByTeamSkills"></app-teams-display>
-            </div>
-            <div class="col-fixed">
-                <app-teams-display caption="Comparison Algorithm:" header="Player's skills one by one" [team1]="team1ByPlayerSkills" [team2]="team2ByPlayerSkills"></app-teams-display>
-            </div>
-            <!-- <div class="col-fixed">
-                <app-teams-display caption="Comparison Algorithm:" header="Player's overall" [team1]="team1ByPlayerOverall" [team2]="team2ByPlayerOverall"></app-teams-display>
-            </div> -->
-        </div>
+    <div class="col-2 flex flex-row-reverse">
+        <p-button icon="fa-solid fa-bars" (click)="openSidebar()"></p-button>
     </div>
+    <div class="col-fixed">
+        <app-players-display [header]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true" [showSkills]="showSkills"></app-players-display>
+    </div>
+    <div class="col-fixed">
+        <app-teams-display caption="Comparison Algorithm:" header="Team's skills one by one" [team1]="team1ByTeamSkills" [team2]="team2ByTeamSkills"></app-teams-display>
+    </div>
+    <div class="col-fixed">
+        <app-teams-display caption="Comparison Algorithm:" header="Player's skills one by one" [team1]="team1ByPlayerSkills" [team2]="team2ByPlayerSkills"></app-teams-display>
+    </div>
+    <!-- <div class="col-fixed">
+        <app-teams-display caption="Comparison Algorithm:" header="Player's overall" [team1]="team1ByPlayerOverall" [team2]="team2ByPlayerOverall"></app-teams-display>
+    </div> -->
 </div>
 
 <p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-25rem">
@@ -35,15 +24,25 @@
         Team Balancer
     </ng-template>
     <ng-template pTemplate="content">
-        <div *ngIf="user" class="grid mt-5">
-            <div class="col-12">
+        <!-- USER -->
+        <fieldset class="border-left-none border-right-none border-bottom-none px-0 mt-5">
+            <legend class="font-bold px-1 ml-3 mb-1">
                 <p-avatar shape="circle" size="large" icon="fa-regular fa-user" />
-                <span class="ml-2">{{ user.email }}</span>
-            </div>
-            <div class="col-12">
+            </legend>
+            <div *ngIf="user" class="flex flex-column align-items-end gap-3">
+                <span>{{ user.email }}</span>
                 <p-button label="Sign Out" severity="danger" (click)="signOut()"></p-button>
             </div>
-        </div>
+        </fieldset>
+        <!-- SETTINGS -->
+        <fieldset class="border-left-none border-right-none border-bottom-none px-0 mt-5">
+            <legend class="font-bold px-1 ml-3 mb-1">
+                <p-avatar shape="circle" size="large" icon="fa-solid fa-gear" />
+            </legend>
+            <div class="flex flex-column align-items-end gap-3">
+                <p-selectButton [options]="showSkillsOptions" [(ngModel)]="showSkills" optionLabel="label" optionValue="value"></p-selectButton>
+            </div>
+        </fieldset>
     </ng-template>
     <ng-template pTemplate="footer">
         developed by

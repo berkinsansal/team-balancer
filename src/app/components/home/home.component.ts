@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { User } from '@angular/fire/auth';
-import { MessageService } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { Gender } from '../../models/enums/gender.enum';
 import { Player } from '../../models/player';
@@ -17,8 +17,10 @@ export class HomeComponent implements OnDestroy {
 
     readonly totalPlayerCount = 12;
 
-    sidebarVisible = false;
     user: User | null = null;
+    sidebarVisible = false;
+    showSkillsOptions: SelectItem[] = [{ label: 'Show Skills', value: true }, { label: 'Hide Skills', value: false }];
+    showSkills = true;
     allPlayers: Player[] | undefined;
     team1ByTeamSkills: Player[] = [];
     team2ByTeamSkills: Player[] = [];
@@ -79,18 +81,6 @@ export class HomeComponent implements OnDestroy {
         this.teamBalancerService.balanceTeamsByTeamSkills();
         this.teamBalancerService.balanceTeamsByPlayerSkills();
         // this.teamBalancerService.balanceTeamsByPlayerOverall();
-    }
-
-    balanceTeamsByTeamSkills() {
-        this.teamBalancerService.balanceTeamsByTeamSkills();
-    }
-
-    balanceTeamsByPlayerSkills() {
-        this.teamBalancerService.balanceTeamsByPlayerSkills();
-    }
-
-    balanceTeamsByPlayerOverall() {
-        this.teamBalancerService.balanceTeamsByPlayerOverall();
     }
 
     openSidebar() {

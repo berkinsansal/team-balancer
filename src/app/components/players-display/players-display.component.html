@@ -3,7 +3,7 @@
     <ng-template pTemplate="caption">
         <div class="flex align-items-center">
             <span>{{header}}</span>
-            <span *ngIf="isAllPlayersTable">(Selected: {{selectedPlayers.length}})</span>
+            <span *ngIf="isAllPlayersTable" class="mr-2">(Selected: {{selectedPlayers.length}})</span>
 
             <!-- START: GLOBAL FILTER -->
             <div *ngIf="isAllPlayersTable" class="p-inputgroup w-auto ml-auto">
@@ -37,13 +37,15 @@
             <!-- END: NAME -->
 
             <!-- START: SKILL PROPERTY -->
-            <th *ngFor="let prop of properties" [pSortableColumn]="prop" class="text-center">
-                {{ prop | camelCaseToTitle }}
-                <ng-container *ngIf="!isAllPlayersTable">
-                    ({{ (players | teamSkillOverall: prop) | number: '1.0-1' }})
-                </ng-container>
-                <p-sortIcon [field]="prop"></p-sortIcon>
-            </th>
+            <ng-container *ngIf="showSkills && isAllPlayersTable">
+                <th *ngFor="let prop of properties" [pSortableColumn]="prop" class="text-center">
+                    {{ prop | camelCaseToTitle }}
+                    <ng-container *ngIf="!isAllPlayersTable">
+                        ({{ (players | teamSkillOverall: prop) | number: '1.0-1' }})
+                    </ng-container>
+                    <p-sortIcon [field]="prop"></p-sortIcon>
+                </th>
+            </ng-container>
             <!-- END: SKILL PROPERTY -->
 
             <!-- START: OVERALL -->
@@ -51,7 +53,7 @@
             <!-- <th *ngIf="isAllPlayersTable" pSortableColumn="overall" class="text-center">
                 Overall <p-sortIcon field="overall"></p-sortIcon>
             </th> -->
-            <th *ngIf="isAllPlayersTable" class="text-center">
+            <th *ngIf="showSkills && isAllPlayersTable" class="text-center">
                 Overall
                 <ng-container *ngIf="!isAllPlayersTable">
                     ({{ (players | teamOverall) | number: '1.0-1' }})
@@ -89,14 +91,16 @@
             <!-- END: GENDER & NAME -->
             
             <!-- START: SKILL PROPERTY -->
-            <ng-container *ngFor="let prop of properties">
-                <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerPropertyValue : prop}">
+            <ng-container *ngIf="showSkills && isAllPlayersTable">
+                <ng-container *ngFor="let prop of properties">
+                    <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerPropertyValue : prop}">
+                    </ng-container>
                 </ng-container>
             </ng-container>
             <!-- END: SKILL PROPERTY -->
             
             <!-- START: OVERALL -->
-            <ng-container *ngIf="isAllPlayersTable">
+            <ng-container *ngIf="showSkills && isAllPlayersTable">
                 <ng-container *ngTemplateOutlet="numericPropTemplate; context:{$implicit: player | playerOverall}">
                 </ng-container>
             </ng-container>

@@ -13,6 +13,7 @@ export class PlayersDisplayComponent implements OnInit {
     @Input() header: string = '';
     @Input() players: Player[] = [];
     @Input() isAllPlayersTable = false;
+    @Input() showSkills = true;
 
     selectedPlayer: Player | null = null;
     selectedPlayers: Player[] = [];
@@ -26,8 +27,6 @@ export class PlayersDisplayComponent implements OnInit {
     ngOnInit(): void {
         if (this.isAllPlayersTable) {
             this.selectedPlayers = this.teamBalancerService.selectedPlayers;
-        } else {
-            this.skillList = [];
         }
     }
 
