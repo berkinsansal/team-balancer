@@ -1,6 +1,6 @@
 <div *ngIf="(team1 && team1.length > 0) || (team2 && team2.length > 0)">
-    <div class="text-sm font-bold mr-1">{{caption}}</div>
-    <div class="text-xl font-bold bg-cyan-300">{{header}}</div>
+    <div class="text-sm font-bold bg-gray-200">{{caption}}</div>
+    <div class="text-xl font-bold bg-gray-100">{{header}}</div>
     <div class="grid">
         <div class="col-fixed" *ngIf="team1">
             <app-team-display [teamTitle]="team1Title" [team]="team1"></app-team-display>
@@ -9,4 +9,48 @@
             <app-team-display [teamTitle]="team2Title" [team]="team2"></app-team-display>
         </div>
     </div>
+
+    <p-table [value]="skillList" [rowHover]="true" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="w-6 p-0 pr-2 text-right">
+                    Overall
+                </th>
+                <th class="w-6 p-0 pl-2">
+                    <ng-container *ngTemplateOutlet="skillCompareTemplate; context:{$implicit: team1 | teamOverall, t2Skill: team2 | teamOverall}">
+                    </ng-container>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-skill>
+            <tr>
+                <td class="ellipsis-cell w-6 p-0 pr-2 text-right">
+                    <ng-container *ngTemplateOutlet="skillNameTemplate; context:{$implicit: skill | camelCaseToTitle}">
+                    </ng-container>
+                </td>
+                <td class="w-6 p-0 pl-2">
+                    <ng-container *ngTemplateOutlet="skillCompareTemplate; context:{$implicit: team1 | teamSkillOverall: skill, t2Skill: team2 | teamSkillOverall: skill}">
+                    </ng-container>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
+
+<ng-template #skillNameTemplate let-skill>
+    <span [title]="skill">
+        {{ skill }}
+    </span>
+</ng-template>
+
+<ng-template #skillCompareTemplate let-t1Skill let-t2Skill="t2Skill">
+    <span [ngStyle]="{'background-color': t1Skill | rateColor: t2Skill}">
+        {{ t1Skill | number: '1.2-2' }}
+    </span>
+    <span>
+        /
+    </span>
+    <span [ngStyle]="{'background-color': t2Skill | rateColor: t1Skill}">
+        {{ t2Skill | number: '1.2-2' }}
+    </span>
+</ng-template>

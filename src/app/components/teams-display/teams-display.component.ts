@@ -13,5 +13,11 @@ export class TeamsDisplayComponent {
     @Input() team2Title: string = 'Team 2';
     @Input() team1: Player[] = [];
     @Input() team2: Player[] = [];
+    
+    skillList: string[];
+
+    constructor() {
+        this.skillList = Player.getPlayerClassSkillProperties();
+    }
 
 }

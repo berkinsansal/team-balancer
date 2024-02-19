@@ -7,15 +7,3 @@
     width: 40px;
     max-width: 40px;
 }
-
-.name-cell {
-    width: 130px;
-    max-width: 130px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-
-    &:hover {
-        overflow: visible;
-    }
-}

@@ -1,4 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
 // Include firebaseui css
-@import 'firebaseui/dist/firebaseui.css';
+:root {
+  --font-family: "Roboto";
+  font-family: "Roboto";
+}
+
+.ellipsis-cell {
+  width: 130px;
+  max-width: 130px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
+  &:hover {
+    overflow: visible;
+  }
+}
