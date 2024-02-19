@@ -22,9 +22,9 @@ export class Player {
         public passing: number, // 1-5
         public teamPlayer: number, // 1-5
         public nonQuitter: number, // 1-5
-        public servingSuccess: number, // 1-5
-        public hittingSuccess: number, // 1-5
-        public passingSuccess: number, // 1-5
+        public servingFlawless: number, // 1-5
+        public hittingFlawless: number, // 1-5
+        public passingFlawless: number, // 1-5
     ) {
         if (name) {
             this.id = ++Player.maxId;
@@ -74,22 +74,22 @@ export class Player {
 export const playerPropertyWeightMap = new Map<string, number>([
     ['overall', 5],
     ['gender', 5],
-    ['height', 4],
+    ['height', 5],
     ['serving', 5],
     ['hitting', 4],
     ['blocking', 3],
     ['defense', 4],
     ['passing', 4],
-    ['teamPlayer', 5],
-    ['nonQuitter', 4],
-    ['servingSuccess', 5],
-    ['hittingSuccess', 5],
-    ['passingSuccess', 5],
+    ['teamPlayer', 3],
+    ['nonQuitter', 3],
+    ['servingFlawless', 5],
+    ['hittingFlawless', 5],
+    ['passingFlawless', 5],
 ]);
 
 // TODO: Use these to calibrate skills and calculate overall
-export const skillSuccessMap = new Map<string, string>([
-    ['serving', 'servingSuccess'],
-    ['hitting', 'hittingSuccess'],
-    ['passing', 'passingSuccess'],
+export const skillFlawlessMap = new Map<string, string>([
+    ['serving', 'servingFlawless'],
+    ['hitting', 'hittingFlawless'],
+    ['passing', 'passingFlawless'],
 ]);
