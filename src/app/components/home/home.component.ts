@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, isDevMode } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -37,6 +37,12 @@ export class HomeComponent implements OnDestroy {
         private userService: UserService) {
 
         this.userService.user.subscribe(x => this.user = x);
+
+        if (isDevMode()) {
+            this.addTestPlayers();
+        } else {
+            // this.getPlayers();
+        }
     }
 
     getPlayers() {
@@ -590,7 +596,7 @@ export class HomeComponent implements OnDestroy {
         //     5,
         // ));
 
-        
+
 
         // // // this.teamBalancerService.players.push(new Player(
         // // //     'Anıl',
