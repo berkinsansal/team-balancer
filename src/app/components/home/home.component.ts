@@ -20,7 +20,7 @@ export class HomeComponent implements OnDestroy {
     user: User | null = null;
     sidebarVisible = false;
     showSkillsOptions: SelectItem[] = [{ label: 'Show Skills', value: true }, { label: 'Hide Skills', value: false }];
-    showSkills = true;
+    showSkills = false;
     allPlayers: Player[] | undefined;
     team1ByTeamSkills: Player[] = [];
     team2ByTeamSkills: Player[] = [];
