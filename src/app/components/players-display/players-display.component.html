@@ -19,19 +19,20 @@
     <ng-template pTemplate="header" let-properties>
         <tr>
             <!-- START: SELECTION ALL CHECKBOX -->
-            <th *ngIf="isAllPlayersTable">
+            <th *ngIf="isAllPlayersTable" class="w-1">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
             <!-- END: SELECTION ALL CHECKBOX -->
 
             <!-- START: NUMBER -->
-            <th class="text-center">
+            <!-- id is not required to be shown -->
+            <!-- <th class="text-center">
                 #
-            </th>
+            </th> -->
             <!-- END: NUMBER -->
 
             <!-- START: NAME -->
-            <th pSortableColumn="name" class="text-center">
+            <th *ngIf="isAllPlayersTable" pSortableColumn="name" class="text-center">
                 Name <p-sortIcon field="name"></p-sortIcon>
             </th>
             <!-- END: NAME -->
@@ -78,9 +79,10 @@
             <!-- END: SELECTION CHECKBOX -->
             
             <!-- START: NUMBER -->
-            <td class="id-cell">
+            <!-- id is not required to be shown -->
+            <!-- <td class="id-cell">
                 {{ player.id + 1 }}
-            </td>
+            </td> -->
             <!-- END: NUMBER -->
             
             <!-- START: GENDER & NAME -->
