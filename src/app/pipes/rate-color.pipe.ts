@@ -4,44 +4,51 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'rateColor'
 })
 export class RateColorPipe implements PipeTransform {
-    rgbColors: rgbColor[] = [
-        { r: 226, g: 32, b: 38 }, // #e22026 // red
-        { r: 245, g: 121, b: 81 }, // #f57951
-        { r: 252, g: 176, b: 65 }, // #fcb041
-        { r: 146, g: 202, b: 97 }, // #92ca61
-        { r: 58, g: 180, b: 73 }, // #3ab449 // green
-    ];
 
     transform(value: number, valueToCompare?: number): string {
         if (valueToCompare != null) {
             return this.compareValues(value, valueToCompare);
         } else {
-            return this.colorGradient(value);
+            return this.colorGradient(value, false);
         }
     }
 
     private compareValues(value: number, valueToCompare: number) {
-        if (value > valueToCompare) {
-            const greenColor = this.rgbColors[this.rgbColors.length - 1];
-            return this.colorToString(greenColor, true);
-        } else {
+        if (value === valueToCompare) {
             return 'transparent';
+        } else if (value > valueToCompare) {
+            const percentageDiff = (value - valueToCompare) / valueToCompare;
+            if (percentageDiff < 0.1) {
+                return this.colorGradient(3, true);
+            } else {
+                return this.colorGradient(5, true);
+            }
+        } else {
+            return this.colorGradient(1, true);
         }
     }
 
-    private colorGradient(value: number) {
+    private colorGradient(value: number, isSemiTransparent: boolean) {
+        const rgbColors: rgbColor[] = [
+            { r: 226, g: 32, b: 38 }, // #e22026 // red
+            { r: 245, g: 121, b: 81 }, // #f57951
+            { r: 252, g: 176, b: 65 }, // #fcb041
+            { r: 146, g: 202, b: 97 }, // #92ca61
+            { r: 58, g: 180, b: 73 }, // #3ab449 // green
+        ];
+
         let colorFadeStart: rgbColor = { r: 0, g: 0, b: 0 }; // #000000 // black
         let colorFadeEnd: rgbColor = { r: 0, g: 0, b: 0 }; // #000000 // black
 
         let fade = value / 5; // fade should be between 0-1
-        fade = fade * (this.rgbColors.length - 1); // for many colors, we need this adjustment
+        fade = fade * (rgbColors.length - 1); // for many colors, we need this adjustment
 
         // find which interval to use and adjust the fade percentage
-        for (let i = 0; i < this.rgbColors.length - 1; i++) {
+        for (let i = 0; i < rgbColors.length - 1; i++) {
             if (fade <= i + 1) {
                 fade -= i;
-                colorFadeStart = this.rgbColors[i];
-                colorFadeEnd = this.rgbColors[i + 1];
+                colorFadeStart = rgbColors[i];
+                colorFadeEnd = rgbColors[i + 1];
                 break;
             }
         }
@@ -56,10 +63,10 @@ export class RateColorPipe implements PipeTransform {
             b: parseInt(Math.floor(colorFadeStart.b + (diffBlue * fade)).toString(), 10),
         };
 
-        return this.colorToString(gradient);
+        return this.colorToString(gradient, isSemiTransparent);
     }
 
-    private colorToString(color: rgbColor, isSemiTransparent = false) {
+    private colorToString(color: rgbColor, isSemiTransparent: boolean) {
         return 'rgb(' + color.r + ',' + color.g + ',' + color.b + (isSemiTransparent ? ',0.5' : ',0.9') + ')';
     }
 
