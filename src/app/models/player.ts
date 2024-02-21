@@ -37,7 +37,7 @@ export class Player {
 
     static getPlayerClassPropertiesExceptId() {
         const playerProperties = Player.getPlayerClassAllProperties();
-        return playerProperties.slice(0, playerProperties.length - 1); // remove name and gender properties from beginning and id property from the end
+        return playerProperties.slice(0, playerProperties.length - 1); // remove id property from the end
     }
 
     static getPlayerClassSkillProperties() {
