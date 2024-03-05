@@ -16,15 +16,15 @@ export class RateColorPipe implements PipeTransform {
     private compareValues(value: number, valueToCompare: number) {
         if (value === valueToCompare) {
             return 'transparent';
-        } else if (value > valueToCompare) {
-            const percentageDiff = (value - valueToCompare) / valueToCompare;
+        } else if (value < valueToCompare) {
+            const percentageDiff = (valueToCompare - value) / value;
             if (percentageDiff < 0.1) {
                 return this.colorGradient(3, true);
             } else {
-                return this.colorGradient(5, true);
+                return this.colorGradient(1, true);
             }
         } else {
-            return this.colorGradient(1, true);
+            return this.colorGradient(5, true);
         }
     }
 
