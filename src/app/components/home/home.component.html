@@ -1,22 +1,29 @@
-<div *ngIf="allPlayers" class="grid justify-content-evenly">
-    <div class="col-10">
+<div class="grid">
+    <div *ngIf="allPlayers" class="col-10">
         <p-button label="Balance Teams" (click)="balanceTeamsByAll()"></p-button>
     </div>
     <div class="col-2 flex flex-row-reverse">
         <p-button icon="fa-solid fa-bars" (click)="openSidebar()"></p-button>
     </div>
+</div>
+
+<div *ngIf="allPlayers" class="grid justify-content-evenly">
     <div class="col-fixed">
         <app-players-display [header]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true" [showSkills]="showSkills"></app-players-display>
     </div>
     <div class="col-fixed">
-        <app-teams-display caption="Comparison Algorithm:" header="Team's skills one by one" [team1]="team1ByTeamSkills" [team2]="team2ByTeamSkills"></app-teams-display>
+        <div class="grid">
+            <div class="col-fixed">
+                <app-teams-display caption="Comparison Algorithm:" header="Team's skills one by one" [team1]="team1ByTeamSkills" [team2]="team2ByTeamSkills"></app-teams-display>
+            </div>
+            <div class="col-fixed">
+                <app-teams-display caption="Comparison Algorithm:" header="Player's skills one by one" [team1]="team1ByPlayerSkills" [team2]="team2ByPlayerSkills"></app-teams-display>
+            </div>
+            <!-- <div class="col-fixed">
+                <app-teams-display caption="Comparison Algorithm:" header="Player's overall" [team1]="team1ByPlayerOverall" [team2]="team2ByPlayerOverall"></app-teams-display>
+            </div> -->
+        </div>
     </div>
-    <div class="col-fixed">
-        <app-teams-display caption="Comparison Algorithm:" header="Player's skills one by one" [team1]="team1ByPlayerSkills" [team2]="team2ByPlayerSkills"></app-teams-display>
-    </div>
-    <!-- <div class="col-fixed">
-        <app-teams-display caption="Comparison Algorithm:" header="Player's overall" [team1]="team1ByPlayerOverall" [team2]="team2ByPlayerOverall"></app-teams-display>
-    </div> -->
 </div>
 
 <p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-25rem">
