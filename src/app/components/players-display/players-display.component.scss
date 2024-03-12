@@ -7,3 +7,9 @@
     width: 40px;
     max-width: 40px;
 }
+
+:host ::ng-deep {
+    [draggable] {
+        cursor: move;
+    }
+}

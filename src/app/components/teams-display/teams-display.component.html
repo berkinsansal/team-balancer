@@ -3,10 +3,10 @@
     <div class="text-xl font-bold bg-gray-100">{{header}}</div>
     <div class="grid">
         <div class="col-fixed" *ngIf="team1">
-            <app-team-display [teamTitle]="team1Title" [team]="team1"></app-team-display>
+            <app-team-display [teamTitle]="team1Title" [team]="team1" [dragDropDisabled]="dragDropDisabled"></app-team-display>
         </div>
         <div class="col-fixed" *ngIf="team2">
-            <app-team-display [teamTitle]="team2Title" [team]="team2"></app-team-display>
+            <app-team-display [teamTitle]="team2Title" [team]="team2" [dragDropDisabled]="dragDropDisabled"></app-team-display>
         </div>
     </div>
 
@@ -17,7 +17,7 @@
                     Overall
                 </th>
                 <th class="w-6 p-0 pl-2">
-                    <ng-container *ngTemplateOutlet="skillCompareTemplate; context:{$implicit: team1 | teamOverall, t2Skill: team2 | teamOverall}">
+                    <ng-container *ngTemplateOutlet="skillCompareTemplate; context:{$implicit: team1 | teamOverall: ([team1.length, team2.length] | max), t2Skill: team2 | teamOverall: ([team1.length, team2.length] | max)}">
                     </ng-container>
                 </th>
             </tr>
@@ -29,7 +29,7 @@
                     </ng-container>
                 </td>
                 <td class="w-6 p-0 pl-2">
-                    <ng-container *ngTemplateOutlet="skillCompareTemplate; context:{$implicit: team1 | teamSkillOverall: skill, t2Skill: team2 | teamSkillOverall: skill}">
+                    <ng-container *ngTemplateOutlet="skillCompareTemplate; context:{$implicit: team1 | teamSkillOverall: skill: ([team1.length, team2.length] | max), t2Skill: team2 | teamSkillOverall: skill: ([team1.length, team2.length] | max)}">
                     </ng-container>
                 </td>
             </tr>

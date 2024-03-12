@@ -45,10 +45,10 @@ export class Player {
         return playerProperties.slice(2, playerProperties.length - 1); // remove name and gender properties from beginning and id property from the end
     }
 
-    static getTeamOverall(team: Player[]) {
+    static getTeamOverall(team: Player[], teamSize?: number) {
         const overall = team.reduce((accumulator, player) => {
             return accumulator + player.getPlayerOverall();
-        }, 0) / team.length;
+        }, 0) / (teamSize ? teamSize : team.length);
         return isNaN(overall) ? 0 : overall;
     }
 

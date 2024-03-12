@@ -10,6 +10,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { BlockUIModule } from 'primeng/blockui';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { DragDropModule } from 'primeng/dragdrop';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -28,6 +29,7 @@ import { PlayersDisplayComponent } from './components/players-display/players-di
 import { TeamDisplayComponent } from './components/team-display/team-display.component';
 import { TeamsDisplayComponent } from './components/teams-display/teams-display.component';
 import { CamelCaseToTitlePipe } from './pipes/camel-case-to-title.pipe';
+import { MaxPipe } from './pipes/max.pipe';
 import { PlayerOverallPipe } from './pipes/player-overall.pipe';
 import { PlayerPropertyValuePipe } from './pipes/player-property-value.pipe';
 import { RateColorPipe } from './pipes/rate-color.pipe';
@@ -49,6 +51,7 @@ import { TeamSkillOverallPipe } from './pipes/team-skill-overall.pipe';
         TeamOverallPipe,
         LoginComponent,
         CamelCaseToTitlePipe,
+        MaxPipe,
     ],
     imports: [
         BrowserModule,
@@ -71,6 +74,7 @@ import { TeamSkillOverallPipe } from './pipes/team-skill-overall.pipe';
         ProgressSpinnerModule,
         SidebarModule,
         AvatarModule,
+        DragDropModule,
     ],
     providers: [MessageService],
     bootstrap: [AppComponent]

@@ -6,10 +6,11 @@ import { Player } from '../models/player';
 })
 export class TeamSkillOverallPipe implements PipeTransform {
 
-    transform(team: Player[], prop: string): number {
-        return team.reduce((accumulator, player) => {
+    transform(team: Player[], prop: string, teamSize?: number): number {
+        const skillOverall = team.reduce((accumulator, player) => {
             return accumulator + (player[prop as keyof Player] as number);
-        }, 0) / team.length;
+        }, 0) / (teamSize ? teamSize : team.length);
+        return isNaN(skillOverall) ? 0 : skillOverall;
     }
 
 }

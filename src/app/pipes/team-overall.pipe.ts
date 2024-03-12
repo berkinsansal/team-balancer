@@ -6,8 +6,8 @@ import { Player } from '../models/player';
 })
 export class TeamOverallPipe implements PipeTransform {
 
-    transform(team: Player[]): number {
-        return Player.getTeamOverall(team);
+    transform(team: Player[], teamSize?: number): number {
+        return Player.getTeamOverall(team, teamSize);
     }
 
 }

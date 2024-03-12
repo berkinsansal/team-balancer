@@ -14,6 +14,7 @@ export class PlayersDisplayComponent implements OnInit {
     @Input() players: Player[] = [];
     @Input() isAllPlayersTable = false;
     @Input() showSkills = true;
+    @Input() dragDropDisabled = true;
 
     selectedPlayer: Player | null = null;
     selectedPlayers: Player[] = [];
@@ -52,6 +53,21 @@ export class PlayersDisplayComponent implements OnInit {
 
     playerUpdated(player: Player | null) {
         this.playerInputVisible = false;
+    }
+
+    dragPlayerStart(player: Player) {
+        this.teamBalancerService.draggedPlayer = player;
+    }
+
+    dragPlayerEnd() {
+        this.teamBalancerService.draggedPlayer = null;
+    }
+
+    dropPlayer() {
+        const player = this.teamBalancerService.draggedPlayer;
+        if (player && !this.players.includes(player)) {
+            this.teamBalancerService.swapPlayer(player);
+        }
     }
 
 }

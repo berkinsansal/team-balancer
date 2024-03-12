@@ -9,5 +9,6 @@ import { Player } from '../../models/player';
 export class TeamDisplayComponent {
     @Input() teamTitle: string = 'Team';
     @Input() team: Player[] = [];
+    @Input() dragDropDisabled = true;
 
 }

@@ -14,6 +14,9 @@ export class TeamBalancerService {
     team2ByPlayerSkills!: Player[];
     team1ByPlayerOverall!: Player[];
     team2ByPlayerOverall!: Player[];
+    team1Manual!: Player[];
+    team2Manual!: Player[];
+    draggedPlayer: Player | null = null;
 
     constructor(private ref: ApplicationRef) {
         this.initializeData();
@@ -28,6 +31,8 @@ export class TeamBalancerService {
         this.team2ByPlayerSkills = [];
         this.team1ByPlayerOverall = [];
         this.team2ByPlayerOverall = [];
+        this.team1Manual = [];
+        this.team2Manual = [];
     }
 
     // Sort players based on their skill levels
@@ -95,43 +100,13 @@ export class TeamBalancerService {
             }
         }
 
-        const addedPlayers: number[] = []; // players id
-        while (addedPlayers.length < teamSize * 2) {
-            let bestPair: [Player, Player] | null = null;
-            let bestScore = Number.MAX_VALUE;
-
-            for (let i = 0; i < teamSize; i++) {
-                const pair1 = bestTeams[0][i];
-                if (addedPlayers.includes(pair1.id)) {
-                    continue;
-                }
-
-                for (let j = 0; j < teamSize; j++) {
-                    const pair2 = bestTeams[1][j];
-                    if (addedPlayers.includes(pair2.id)) {
-                        continue;
-                    }
-
-                    let score = this.calculatePlayerSimilarity(pair1, pair2);
-                    if (score < bestScore) {
-                        bestScore = score;
-                        bestPair = [pair1, pair2];
-                    }
-                }
-            }
-
-            if (bestPair) {
-                this.team1ByTeamSkills.push(bestPair[0]);
-                this.team2ByTeamSkills.push(bestPair[1]);
-                addedPlayers.push(bestPair[0].id, bestPair[1].id);
-            }
-        }
-
         // add single player if selected players is odd number
-        if (this.selectedPlayers.length - (this.team1ByTeamSkills.length + this.team2ByTeamSkills.length) === 1) {
-            const bestPair: [Player, Player | undefined] = [this.selectedPlayers.find(p => !this.team1ByTeamSkills.includes(p) && !this.team2ByTeamSkills.includes(p))!, undefined];
-            this.putBestPairPlayersToTeams(bestPair, this.team1ByTeamSkills, this.team2ByTeamSkills);
+        if (this.selectedPlayers.length - (bestTeams[0].length + bestTeams[1].length) === 1) {
+            const bestPair: [Player, Player | undefined] = [this.selectedPlayers.find(p => !bestTeams[0].includes(p) && !bestTeams[1].includes(p))!, undefined];
+            this.putBestPairPlayersToTeams(bestPair, bestTeams[0], bestTeams[1]);
         }
+
+        this.orderTeamsBySimilarPlayers(bestTeams, this.team1ByTeamSkills, this.team2ByTeamSkills);
     }
 
     // Find the two most similar players by comparing 1vs1 players each skill
@@ -185,6 +160,33 @@ export class TeamBalancerService {
             const bestPair: [Player, Player | undefined] = [this.selectedPlayers[i * 2], this.selectedPlayers[i * 2 + 1]];
             this.putBestPairPlayersToTeams(bestPair, this.team1ByPlayerOverall, this.team2ByPlayerOverall);
         }
+    }
+
+    // After balancing teams by team skills, copy players into manual teams
+    initializeManualTeams() {
+        this.emptyTeams(this.team1Manual, this.team2Manual);
+        this.team1Manual.push(...this.team1ByTeamSkills);
+        this.team2Manual.push(...this.team2ByTeamSkills);
+    }
+
+    // Swap player from one team to another team
+    swapPlayer(player: Player) {
+        let toBeRemovedTeam: Player[];
+        let toBeMovedTeam: Player[];
+        if (this.team1Manual.includes(player)) {
+            toBeRemovedTeam = this.team1Manual;
+            toBeMovedTeam = this.team2Manual;
+        } else {
+            toBeRemovedTeam = this.team2Manual;
+            toBeMovedTeam = this.team1Manual;
+        }
+
+        toBeRemovedTeam.splice(toBeRemovedTeam.indexOf(player), 1);
+        toBeMovedTeam.push(player);
+
+        const teams: [Player[], Player[]] = [[...this.team1Manual], [...this.team2Manual]];
+        this.emptyTeams(this.team1Manual, this.team2Manual);
+        this.orderTeamsBySimilarPlayers(teams, this.team1Manual, this.team2Manual);
     }
 
     // Empty given teams
@@ -285,5 +287,59 @@ export class TeamBalancerService {
         }
         */
 
+    }
+
+    // Order team players according to similar player in opponent team
+    // Note: team1 and team2 should be empty, teams should hold players
+    private orderTeamsBySimilarPlayers(teams: [Player[], Player[]], team1: Player[], team2: Player[]) {
+        const minTeamSize = Math.min(teams[0].length, teams[1].length);
+        const addedPlayers: number[] = []; // players id
+        while (addedPlayers.length < minTeamSize * 2) {
+            let bestPair: [Player, Player] | null = null;
+            let bestScore = Number.MAX_VALUE;
+
+            for (let i = 0; i < teams[0].length; i++) {
+                const pair1 = teams[0][i];
+                if (addedPlayers.includes(pair1.id)) {
+                    continue;
+                }
+
+                for (let j = 0; j < teams[1].length; j++) {
+                    const pair2 = teams[1][j];
+                    if (addedPlayers.includes(pair2.id)) {
+                        continue;
+                    }
+
+                    let score = this.calculatePlayerSimilarity(pair1, pair2);
+                    if (score < bestScore) {
+                        bestScore = score;
+                        bestPair = [pair1, pair2];
+                    }
+                }
+            }
+
+            if (bestPair) {
+                team1.push(bestPair[0]);
+                team2.push(bestPair[1]);
+                addedPlayers.push(bestPair[0].id, bestPair[1].id);
+            }
+        }
+
+        if (teams[0].length !== teams[1].length) {
+            let biggerTeam: Player[];
+            let biggerTeamToBeFilled: Player[];
+            if (teams[0].length > teams[1].length) {
+                biggerTeam = teams[0];
+                biggerTeamToBeFilled = team1;
+            } else {
+                biggerTeam = teams[1];
+                biggerTeamToBeFilled = team2;
+            }
+            biggerTeam.forEach(p => {
+                if (!biggerTeamToBeFilled.includes(p)) {
+                    biggerTeamToBeFilled.push(p);
+                }
+            });
+        }
     }
 }
