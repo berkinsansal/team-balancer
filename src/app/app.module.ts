@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
@@ -54,6 +54,7 @@ import { TeamSkillOverallPipe } from './pipes/team-skill-overall.pipe';
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
+        FormsModule,
         ReactiveFormsModule,
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
         provideAuth(() => getAuth()),
