@@ -76,7 +76,8 @@ export class TeamBalancerService {
         const uniquePairings: [any[], any[]][] = [];
         combinationMap.forEach((team1, key1) => {
             combinationMap.forEach((team2, key2) => {
-                if (key1 === key2) return; // Skip if it's the same team
+                // Ensure the second loop starts beyond the current position of the first loop
+                if (key2 <= key1) return; // Skip duplicates and self-comparisons
 
                 const idsTeam1 = new Set(team1.map(player => player.id));
                 const isUniquePair = team2.every(player => !idsTeam1.has(player.id));
