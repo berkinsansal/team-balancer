@@ -13,13 +13,14 @@ export class PlayersDisplayComponent implements OnInit {
     @Input() header: string = '';
     @Input() players: Player[] = [];
     @Input() isAllPlayersTable = false;
-    @Input() showSkills = true;
+    @Input() showSkills = false;
+    @Input() showPassivePlayers = false;
     @Input() dragDropDisabled = true;
 
     selectedPlayer: Player | null = null;
     selectedPlayers: Player[] = [];
     skillList: string[];
-    playerInputVisible: boolean = false;
+    editMode: boolean = false;
 
     constructor(private teamBalancerService: TeamBalancerService) {
         this.skillList = Player.getPlayerClassSkillProperties();
@@ -48,11 +49,11 @@ export class PlayersDisplayComponent implements OnInit {
 
     showPlayerInputDialog(player: Player | null) {
         this.selectedPlayer = player;
-        this.playerInputVisible = true;
+        this.editMode = true;
     }
 
     playerUpdated(player: Player | null) {
-        this.playerInputVisible = false;
+        this.editMode = false;
     }
 
     dragPlayerStart(player: Player) {

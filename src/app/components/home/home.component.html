@@ -1,5 +1,5 @@
 <div class="grid">
-    <div *ngIf="allPlayers" class="col-10">
+    <div *ngIf="players" class="col-10">
         <p-button label="Balance Teams" (click)="balanceTeamsByAll()"></p-button>
     </div>
     <div class="col-2 flex flex-row-reverse">
@@ -7,9 +7,9 @@
     </div>
 </div>
 
-<div *ngIf="allPlayers" class="grid justify-content-evenly">
+<div *ngIf="players && players.length > 0" class="grid justify-content-evenly">
     <div class="col-fixed">
-        <app-players-display [header]="'Players'" [players]="allPlayers" [isAllPlayersTable]="true" [showSkills]="showSkills"></app-players-display>
+        <app-players-display [header]="'Players'" [players]="players" [isAllPlayersTable]="true" [showSkills]="showSkills" [showPassivePlayers]="showPassivePlayers"></app-players-display>
     </div>
     <div class="col-fixed">
         <div class="grid">
@@ -50,7 +50,14 @@
                 <p-avatar shape="circle" size="large" icon="fa-solid fa-gear" />
             </legend>
             <div class="flex flex-column align-items-end gap-3">
-                <p-selectButton [options]="showSkillsOptions" [(ngModel)]="showSkills" optionLabel="label" optionValue="value"></p-selectButton>
+                <div class="flex align-items-center">
+                    <label for="showSkills" class="font-bold mr-2">Show Skills</label>
+                    <p-checkbox [(ngModel)]="showSkills" [binary]="true" inputId="showSkills"></p-checkbox>
+                </div>
+                <div class="flex align-items-center">
+                    <label for="showPassivePlayers" class="font-bold mr-2">Show Passive Players</label>
+                    <p-checkbox [(ngModel)]="showPassivePlayers" [binary]="true" inputId="showPassivePlayers" (ngModelChange)="initializeData(false)"></p-checkbox>
+                </div>
             </div>
         </fieldset>
     </ng-template>

@@ -6,33 +6,33 @@ import { Player, playerPropertyWeightMap } from '../models/player';
     providedIn: 'root'
 })
 export class TeamBalancerService {
-    players!: Player[];
-    selectedPlayers!: Player[];
-    team1ByTeamSkills!: Player[];
-    team2ByTeamSkills!: Player[];
-    team1ByPlayerSkills!: Player[];
-    team2ByPlayerSkills!: Player[];
-    team1ByPlayerOverall!: Player[];
-    team2ByPlayerOverall!: Player[];
-    team1Manual!: Player[];
-    team2Manual!: Player[];
+    allPlayers: Player[] = [];
+    players: Player[] = [];
+    selectedPlayers: Player[] = [];
+    team1ByTeamSkills: Player[] = [];
+    team2ByTeamSkills: Player[] = [];
+    team1ByPlayerSkills: Player[] = [];
+    team2ByPlayerSkills: Player[] = [];
+    team1ByPlayerOverall: Player[] = [];
+    team2ByPlayerOverall: Player[] = [];
+    team1Manual: Player[] = [];
+    team2Manual: Player[] = [];
     draggedPlayer: Player | null = null;
 
-    constructor(private ref: ApplicationRef) {
-        this.initializeData();
-    }
+    constructor(private ref: ApplicationRef) {}
 
     initializeData() {
-        this.players = [];
-        this.selectedPlayers = [];
-        this.team1ByTeamSkills = [];
-        this.team2ByTeamSkills = [];
-        this.team1ByPlayerSkills = [];
-        this.team2ByPlayerSkills = [];
-        this.team1ByPlayerOverall = [];
-        this.team2ByPlayerOverall = [];
-        this.team1Manual = [];
-        this.team2Manual = [];
+        this.players.length = 0;
+        this.selectedPlayers.length = 0;
+        this.team1ByTeamSkills.length = 0;
+        this.team2ByTeamSkills.length = 0;
+        this.team1ByPlayerSkills.length = 0;
+        this.team2ByPlayerSkills.length = 0;
+        this.team1ByPlayerOverall.length = 0;
+        this.team2ByPlayerOverall.length = 0;
+        this.team1Manual.length = 0;
+        this.team2Manual.length = 0;
+        this.ref.tick();
     }
 
     // Sort players based on their skill levels
@@ -192,8 +192,8 @@ export class TeamBalancerService {
 
     // Empty given teams
     private emptyTeams(team1: Player[], team2: Player[]) {
-        team1.splice(0, team1.length);
-        team2.splice(0, team2.length);
+        team1.length = 0;
+        team2.length = 0;
         this.ref.tick();
     }
 

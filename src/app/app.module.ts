@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { BlockUIModule } from 'primeng/blockui';
 import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DragDropModule } from 'primeng/dragdrop';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -77,6 +78,7 @@ import { TeamSkillOverallPipe } from './pipes/team-skill-overall.pipe';
         SidebarModule,
         AvatarModule,
         DragDropModule,
+        CheckboxModule,
     ],
     providers: [MessageService],
     bootstrap: [AppComponent]

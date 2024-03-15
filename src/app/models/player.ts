@@ -12,7 +12,8 @@ export class Player {
 
     constructor(...args: any[]);
     constructor(
-        public name: string, // name has to be first in order, it has special logic according to that
+        public isActive: boolean, // isEnabled has to be first in order, it has special logic according to that (can be set false if player doesn't join for recent games)
+        public name: string, // name has to be second in order, it has special logic according to that
         public gender: Gender, // gender has to be second in order, it has special logic according to that
         public height: number, // 1-5 (150cm = 1, each 10cm += 1, 190cm = 5)
         public serving: number, // 1-5
@@ -42,7 +43,7 @@ export class Player {
 
     static getPlayerClassSkillProperties() {
         const playerProperties = Player.getPlayerClassAllProperties();
-        return playerProperties.slice(2, playerProperties.length - 1); // remove name and gender properties from beginning and id property from the end
+        return playerProperties.slice(3, playerProperties.length - 1); // remove isActive, name and gender properties from beginning and id property from the end
     }
 
     static getTeamOverall(team: Player[], teamSize?: number) {

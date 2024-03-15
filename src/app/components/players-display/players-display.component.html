@@ -1,4 +1,4 @@
-<p-table *ngIf="!playerInputVisible" #playersTable [columns]="skillList" [value]="players" [(selection)]="selectedPlayers" [rowHover]="true"
+<p-table *ngIf="!editMode" #playersTable [columns]="skillList" [value]="players" [(selection)]="selectedPlayers" [rowHover]="true"
     selectionMode="multiple" [globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
     pDroppable [pDroppableDisabled]="dragDropDisabled" (onDrop)="dropPlayer()"
     (selectionChange)="selectionChanged()">
@@ -120,6 +120,6 @@
     </td>
 </ng-template>
 
-<p-dialog [header]="selectedPlayer ? 'Edit Player' : 'Add Player'" [(visible)]="playerInputVisible" [modal]="true" [draggable]="false" [resizable]="false">
-    <app-player-input *ngIf="playerInputVisible" [selectedPlayer]="selectedPlayer" (playerUpdated)="playerUpdated($event)"></app-player-input>
+<p-dialog [header]="selectedPlayer ? 'Edit Player' : 'Add Player'" [(visible)]="editMode" [modal]="true" [draggable]="false" [resizable]="false">
+    <app-player-input *ngIf="editMode" [selectedPlayer]="selectedPlayer" (playerUpdated)="playerUpdated($event)"></app-player-input>
 </p-dialog>
