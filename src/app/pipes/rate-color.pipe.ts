@@ -4,6 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'rateColor'
 })
 export class RateColorPipe implements PipeTransform {
+    readonly maxSkillPoint = 10;
 
     transform(value: number, valueToCompare?: number): string {
         if (valueToCompare != null) {
@@ -19,12 +20,12 @@ export class RateColorPipe implements PipeTransform {
         } else if (value < valueToCompare) {
             const percentageDiff = (valueToCompare - value) / value;
             if (percentageDiff < 0.1) {
-                return this.colorGradient(3, true);
+                return this.colorGradient(this.maxSkillPoint / 2 + 1, true);
             } else {
                 return this.colorGradient(1, true);
             }
         } else {
-            return this.colorGradient(5, true);
+            return this.colorGradient(this.maxSkillPoint, true);
         }
     }
 
@@ -40,7 +41,7 @@ export class RateColorPipe implements PipeTransform {
         let colorFadeStart: rgbColor = { r: 0, g: 0, b: 0 }; // #000000 // black
         let colorFadeEnd: rgbColor = { r: 0, g: 0, b: 0 }; // #000000 // black
 
-        let fade = value / 5; // fade should be between 0-1
+        let fade = value / this.maxSkillPoint; // fade should be between 0-1
         fade = fade * (rgbColors.length - 1); // for many colors, we need this adjustment
 
         // find which interval to use and adjust the fade percentage

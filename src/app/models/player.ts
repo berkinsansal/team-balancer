@@ -15,17 +15,17 @@ export class Player {
         public isActive: boolean, // isEnabled has to be first in order, it has special logic according to that (can be set false if player doesn't join for recent games)
         public name: string, // name has to be second in order, it has special logic according to that
         public gender: Gender, // gender has to be second in order, it has special logic according to that
-        public height: number, // 1-5 (150cm = 1, each 10cm += 1, 190cm = 5)
-        public serving: number, // 1-5
-        public hitting: number, // 1-5
-        public blocking: number, // 1-5
-        public defense: number, // 1-5
-        public passing: number, // 1-5
-        public teamPlayer: number, // 1-5
-        public nonQuitter: number, // 1-5
-        public servingFlawless: number, // 1-5
-        public hittingFlawless: number, // 1-5
-        public attackReception: number, // 1-5
+        public height: number, // 1-10 (150cm = 1, each 10cm += 2, 190cm = 10)
+        public serving: number, // 1-10
+        public hitting: number, // 1-10
+        public blocking: number, // 1-10
+        public defense: number, // 1-10
+        public passing: number, // 1-10
+        public teamPlayer: number, // 1-10
+        public nonQuitter: number, // 1-10
+        public servingFlawless: number, // 1-10
+        public hittingFlawless: number, // 1-10
+        public attackReception: number, // 1-10
     ) {
         if (name) {
             this.id = ++Player.maxId;
@@ -71,21 +71,21 @@ export class Player {
     }
 }
 
-// 1-5
+// 1-10
 export const playerPropertyWeightMap = new Map<string, number>([
-    ['overall', 5],
-    ['gender', 5],
-    ['height', 5],
-    ['serving', 5],
-    ['hitting', 4],
-    ['blocking', 3],
-    ['defense', 4],
-    ['passing', 4],
-    ['teamPlayer', 3],
-    ['nonQuitter', 3],
-    ['servingFlawless', 5],
-    ['hittingFlawless', 5],
-    ['attackReception', 5],
+    ['overall', 10],
+    ['gender', 10],
+    ['height', 10],
+    ['serving', 10],
+    ['hitting', 8],
+    ['blocking', 6],
+    ['defense', 8],
+    ['passing', 8],
+    ['teamPlayer', 6],
+    ['nonQuitter', 6],
+    ['servingFlawless', 10],
+    ['hittingFlawless', 10],
+    ['attackReception', 10],
 ]);
 
 export const playerLabelSkillMap = new Map<string, string[]>([
