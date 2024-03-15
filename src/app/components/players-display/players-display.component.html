@@ -21,7 +21,7 @@
     <ng-template pTemplate="header" let-properties>
         <tr>
             <!-- START: SELECTION ALL CHECKBOX -->
-            <th *ngIf="isAllPlayersTable" class="w-1">
+            <th *ngIf="isAllPlayersTable" [ngClass]="{'w-1' : !showSkills}">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
             <!-- END: SELECTION ALL CHECKBOX -->
