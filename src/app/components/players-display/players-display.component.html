@@ -82,7 +82,7 @@
             <!-- END: NUMBER -->
             
             <!-- START: GENDER & NAME -->
-            <td class="ellipsis-cell">
+            <td [ngClass]="{'no-hover' : !isAllPlayersTable}" class="ellipsis-cell">
                 <i class="fa-solid" [ngClass]="player.gender === 0 ? 'fa-mars' : 'fa-venus'" [ngStyle]="{'color': player.gender === 0 ? 'deepskyblue' : 'deeppink'}"></i>
                 {{ player.name }}
             </td>

@@ -15,7 +15,7 @@
   white-space: nowrap;
   overflow: hidden;
 
-  &:hover {
+  &:hover:not(.no-hover) {
     overflow: visible;
   }
 }
