@@ -6,6 +6,8 @@ import { Player, playerPropertyWeightMap } from '../models/player';
     providedIn: 'root'
 })
 export class TeamBalancerService {
+    static readonly maxSkillPoint = 10;
+
     allPlayers: Player[] = [];
     players: Player[] = [];
     selectedPlayers: Player[] = [];
