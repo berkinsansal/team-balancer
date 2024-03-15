@@ -57,7 +57,7 @@ export class Player {
         let overall = 0;
         const skillList = Player.getPlayerClassSkillProperties();
         skillList.forEach(skill => {
-            const skillWeight =  playerPropertyWeightMap.get(skill) ?? 1;
+            const skillWeight = playerPropertyWeightMap.get(skill) ?? 1;
             totalSkillWeight += skillWeight;
             overall += this.getSkillValue(skill as keyof Player) * skillWeight;
         });
@@ -85,6 +85,14 @@ export const playerPropertyWeightMap = new Map<string, number>([
     ['servingFlawless', 5],
     ['hittingFlawless', 5],
     ['attackReception', 5],
+]);
+
+export const playerLabelSkillMap = new Map<string, string[]>([
+    ['attacker', ['height', 'serving', 'hitting']],
+    ['defender', ['defense', 'blocking', 'attackReception']],
+    ['blocker', ['height', 'blocking']],
+    ['passer', ['passing', 'attackReception']],
+    ['server', ['serving']],
 ]);
 
 // TODO: Use these to calibrate skills and calculate overall
