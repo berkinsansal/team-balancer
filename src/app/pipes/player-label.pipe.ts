@@ -10,15 +10,10 @@ export class PlayerLabelPipe implements PipeTransform {
     transform(player: Player): string {
         let playerLabel = '';
         for (let [label, skills] of playerLabelSkillMap) {
-            let labelOverall = 0;
-            skills.forEach(skill => {
-                labelOverall += player.getSkillValue(skill as keyof Player);
-            });
-            labelOverall = labelOverall / skills.length;
-            if (labelOverall >= TeamBalancerService.maxSkillPoint * 9 / 10) {
-                playerLabel += label + "(" + labelOverall.toFixed(1) + ") ";
+            const labelOverall = player.getPlayerLabelOverall(skills);
+            if (labelOverall >= TeamBalancerService.labelThreshold) {
+                playerLabel += label.substring(0, 3) + "_" + labelOverall.toFixed(1) + " ";
             }
-                
         }
         return playerLabel;
     }

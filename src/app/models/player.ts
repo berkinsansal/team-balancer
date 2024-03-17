@@ -66,6 +66,15 @@ export class Player {
         return overall;
     }
 
+    getPlayerLabelOverall(skills: string[]) {
+        let labelOverall = 0;
+        skills.forEach(skill => {
+            labelOverall += this.getSkillValue(skill as keyof Player);
+        });
+        labelOverall = labelOverall / skills.length;
+        return labelOverall;
+    }
+
     getSkillValue(skill: keyof Player) {
         return this[skill] as number ?? 0;
     }

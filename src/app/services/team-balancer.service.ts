@@ -7,6 +7,7 @@ import { Player, playerPropertyWeightMap } from '../models/player';
 })
 export class TeamBalancerService {
     static readonly maxSkillPoint = 10;
+    static readonly labelThreshold = TeamBalancerService.maxSkillPoint * 9 / 10;
 
     allPlayers: Player[] = [];
     players: Player[] = [];
