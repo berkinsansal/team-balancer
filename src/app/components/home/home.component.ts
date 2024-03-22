@@ -109,6 +109,7 @@ export class HomeComponent implements OnDestroy {
     }
 
     selectPlayers() {
+        // matches array should be kept sorted !
         const now = new Date();
         this.teamBalancerService.selectedPlayers = this.matches.length > 0 ? this.matches.find(m => m.date >= now || this.matches[this.matches.length - 1] === m)!.players.map(p => this.teamBalancerService.getPlayerById(p))
         : this.teamBalancerService.players.slice(0, this.teamBalancerService.players.length >= this.totalPlayerCount ? this.totalPlayerCount : this.teamBalancerService.players.length);
