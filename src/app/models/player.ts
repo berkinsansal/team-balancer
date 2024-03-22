@@ -98,7 +98,7 @@ export const playerPropertyWeightMap = new Map<string, number>([
 ]);
 
 export const playerLabelSkillMap = new Map<string, string[]>([
-    ['attacker', ['height', 'serving', 'hitting']],
+    ['attacker', ['serving', 'hitting']],
     ['defender', ['defense', 'attackReception']],
     ['blocker', ['height', 'blocking']],
     ['passer', ['passing', 'attackReception']],
