@@ -23,7 +23,7 @@ export class HomeComponent implements OnDestroy {
     user: User | null = null;
 
     sidebarVisible = false;
-    showSkills = true;
+    showSkills = false;
     showPassivePlayers = false;
 
     allPlayers: Player[] = [];
