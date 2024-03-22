@@ -10,6 +10,7 @@ import { MatchService } from '../../services/match.service';
 import { TeamBalancerService } from '../../services/team-balancer.service';
 import { UserService } from '../../services/user.service';
 
+// TODO: check when there is no players !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
