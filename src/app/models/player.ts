@@ -75,6 +75,10 @@ export class Player {
         return labelOverall;
     }
 
+    // getSkillValueWithWeight(skill: string) {
+    //     return this.getSkillValue(skill as keyof Player);
+    // }
+
     getSkillValue(skill: keyof Player) {
         return this[skill] as number ?? 0;
     }
