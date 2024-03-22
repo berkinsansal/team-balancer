@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Auth, EmailAuthProvider } from '@angular/fire/auth';
+import { AdditionalUserInfo, Auth, EmailAuthProvider, User } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import * as firebaseui from 'firebaseui';
+import { DatabaseService } from '../../services/database.service';
 
 @Component({
     selector: 'app-login',
@@ -11,6 +12,7 @@ import * as firebaseui from 'firebaseui';
 export class LoginComponent implements OnInit {
 
     constructor(private auth: Auth,
+        private databaseService: DatabaseService,
         private router: Router) { }
 
     ngOnInit(): void {
@@ -42,11 +44,18 @@ export class LoginComponent implements OnInit {
         ui.start('#firebaseui-auth-container', uiConfig);
     }
 
-    signInSuccessWithAuthResult(authResult: any, redirectUrl?: string): boolean {
+    signInSuccessWithAuthResult(authResult: { additionalUserInfo: AdditionalUserInfo, user: User }, redirectUrl?: string): boolean {
         // User successfully signed in.
         // Return type determines whether we continue the redirect automatically
         // or whether we leave that to developer to handle.
         // return true;
+
+        if (authResult.additionalUserInfo.isNewUser) {
+            // create document for new signed up user
+            this.databaseService.addNewUser(authResult.user.uid, authResult.user.email!)
+            .then(() => console.log('User created successfully'))
+            .catch(error => console.error('Error updating user:', error));
+        }
 
         this.router.navigate(['home']);
         return false;
