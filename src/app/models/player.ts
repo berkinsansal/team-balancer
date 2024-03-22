@@ -26,6 +26,7 @@ export class Player {
         public servingFlawless: number, // 1-10
         public hittingFlawless: number, // 1-10
         public attackReception: number, // 1-10
+        // public communication: number, // 1-10
     ) {
         if (name) {
             this.id = ++Player.maxId;
