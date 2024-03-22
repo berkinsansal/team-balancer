@@ -43,6 +43,16 @@ export class TeamBalancerService {
         players.sort((a, b) => b.getPlayerOverall() - a.getPlayerOverall());
     }
 
+    // Get player by id
+    getPlayerById(id: number) {
+        return this.allPlayers.find(p => p.id === id)!;
+    }
+
+    // Get player by name
+    getPlayerByName(name: string) {
+        return this.allPlayers.find(p => p.name === name)!;
+    }
+
     // Find the most similar teams by comparing team players each skill
     balanceTeamsByTeamSkills() {
         this.emptyTeams(this.team1ByTeamSkills, this.team2ByTeamSkills);

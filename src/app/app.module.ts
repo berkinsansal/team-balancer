@@ -32,6 +32,7 @@ import { TeamsDisplayComponent } from './components/teams-display/teams-display.
 import { CamelCaseToTitlePipe } from './pipes/camel-case-to-title.pipe';
 import { MaxPipe } from './pipes/max.pipe';
 import { PlayerLabelPipe } from './pipes/player-label.pipe';
+import { PlayerNameByIdPipe } from './pipes/player-name.pipe';
 import { PlayerOverallPipe } from './pipes/player-overall.pipe';
 import { PlayerPropertyValuePipe } from './pipes/player-property-value.pipe';
 import { RateColorPipe } from './pipes/rate-color.pipe';
@@ -55,6 +56,7 @@ import { TeamSkillOverallPipe } from './pipes/team-skill-overall.pipe';
         CamelCaseToTitlePipe,
         MaxPipe,
         PlayerLabelPipe,
+        PlayerNameByIdPipe,
     ],
     imports: [
         BrowserModule,

@@ -25,6 +25,36 @@
             <!-- <div class="col-fixed">
                 <app-teams-display caption="Comparison Algorithm:" header="Player's overall" [team1]="team1ByPlayerOverall" [team2]="team2ByPlayerOverall"></app-teams-display>
             </div> -->
+            <!-- TODO: TEMP MATCHES TABLE -->
+            <div class="col-fixed">
+                <table *ngFor="let m of matches">
+                    <tr>
+                        <td><b>{{m.date | date : 'dd.MM.yyyy HH:mm'}}</b></td>
+                    </tr>
+                    <tr *ngIf="m.place">
+                        <td><b>{{m.place}}</b></td>
+                    </tr>
+                    <tr *ngFor="let s of m.scores">
+                        <td>{{s[0]}}-{{s[1]}}</td>
+                    </tr>
+                    <ng-container *ngIf="!m.teams">
+                        <tr *ngFor="let p of m.players">
+                            <td>{{p | playerNameById : allPlayers}}</td>
+                        </tr>
+                        <tr *ngFor="let s of m.substitutes">
+                            <td><i>{{s | playerNameById : allPlayers}}</i></td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngFor="let t of m.teams; index as i">
+                        <tr>
+                            <td><b>Team {{i + 1}}</b></td>
+                        </tr>
+                        <tr *ngFor="let p of t">
+                            <td>{{p | playerNameById : allPlayers}}</td>
+                        </tr>
+                    </ng-container>
+                </table>
+            </div>
         </div>
     </div>
 </div>

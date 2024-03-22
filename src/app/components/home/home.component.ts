@@ -3,8 +3,10 @@ import { User } from '@angular/fire/auth';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { Gender } from '../../models/enums/gender.enum';
+import { Match } from '../../models/match';
 import { Player } from '../../models/player';
 import { DatabaseService } from '../../services/database.service';
+import { MatchService } from '../../services/match.service';
 import { TeamBalancerService } from '../../services/team-balancer.service';
 import { UserService } from '../../services/user.service';
 
@@ -23,7 +25,8 @@ export class HomeComponent implements OnDestroy {
     showSkills = true;
     showPassivePlayers = false;
 
-    players: Player[] | undefined;
+    allPlayers: Player[] = [];
+    players: Player[] = [];
     team1ByTeamSkills: Player[] = [];
     team2ByTeamSkills: Player[] = [];
     team1ByPlayerSkills: Player[] = [];
@@ -32,10 +35,12 @@ export class HomeComponent implements OnDestroy {
     team2ByPlayerOverall: Player[] = [];
     team1Manual: Player[] = [];
     team2Manual: Player[] = [];
+    matches: Match[] = [];
 
     private playersSubscription: Subscription | undefined;
 
     constructor(private teamBalancerService: TeamBalancerService,
+        private matchService: MatchService,
         private messageService: MessageService,
         private databaseService: DatabaseService,
         private userService: UserService) {
@@ -49,6 +54,8 @@ export class HomeComponent implements OnDestroy {
         if (isInitial) {
             if (isDevMode()) {
                 this.addTestPlayers();
+                this.addTestMatches();
+                this.initializeSetup();
             } else {
                 // this.getPlayers();
             }
@@ -80,6 +87,7 @@ export class HomeComponent implements OnDestroy {
         } else {
             this.teamBalancerService.players = [...this.teamBalancerService.allPlayers];
         }
+        this.allPlayers = this.teamBalancerService.allPlayers;
         this.players = this.teamBalancerService.players;
         this.team1ByTeamSkills = this.teamBalancerService.team1ByTeamSkills;
         this.team2ByTeamSkills = this.teamBalancerService.team2ByTeamSkills;
@@ -89,9 +97,16 @@ export class HomeComponent implements OnDestroy {
         this.team2ByPlayerOverall = this.teamBalancerService.team2ByPlayerOverall;
         this.team1Manual = this.teamBalancerService.team1Manual;
         this.team2Manual = this.teamBalancerService.team2Manual;
+        this.matches = this.matchService.matches;
         this.teamBalancerService.sortPlayers(this.teamBalancerService.players);
-        this.teamBalancerService.selectedPlayers = this.teamBalancerService.players.slice(0, this.teamBalancerService.players.length >= this.totalPlayerCount ? this.totalPlayerCount : this.teamBalancerService.players.length);
+        this.selectPlayers();
         this.balanceTeamsByAll();
+    }
+
+    selectPlayers() {
+        const now = new Date();
+        this.teamBalancerService.selectedPlayers = this.matches.length > 0 ? this.matches.find(m => m.date >= now || this.matches[this.matches.length - 1] === m)!.players.map(p => this.teamBalancerService.getPlayerById(p))
+        : this.teamBalancerService.players.slice(0, this.teamBalancerService.players.length >= this.totalPlayerCount ? this.totalPlayerCount : this.teamBalancerService.players.length);
     }
 
     balanceTeamsByAll() {
@@ -121,6 +136,52 @@ export class HomeComponent implements OnDestroy {
         if (this.playersSubscription) {
             this.playersSubscription.unsubscribe();
         }
+    }
+
+    addTestMatches() {
+        this.matchService.matches.push({
+            date: new Date(2024, 2, 20, 21, 30),
+            place: 'Vamos',
+            players: [
+                this.teamBalancerService.getPlayerByName('Anıl').id,
+                this.teamBalancerService.getPlayerByName('Ayça').id,
+                this.teamBalancerService.getPlayerByName('Aysu').id,
+                this.teamBalancerService.getPlayerByName('Barış').id,
+                this.teamBalancerService.getPlayerByName('Berkin').id,
+                this.teamBalancerService.getPlayerByName('Burçe').id,
+                this.teamBalancerService.getPlayerByName('Emre').id,
+                this.teamBalancerService.getPlayerByName('Görkem').id,
+                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Ozan').id,
+                this.teamBalancerService.getPlayerByName('Şeyda').id,
+                this.teamBalancerService.getPlayerByName('Yoldaş').id,
+            ],
+            substitutes: [
+                this.teamBalancerService.getPlayerByName('Güçlü').id,
+            ],
+            teams: [[
+                this.teamBalancerService.getPlayerByName('Anıl').id,
+                this.teamBalancerService.getPlayerByName('Ayça').id,
+                this.teamBalancerService.getPlayerByName('Aysu').id,
+                this.teamBalancerService.getPlayerByName('Barış').id,
+                this.teamBalancerService.getPlayerByName('Emre').id,
+                this.teamBalancerService.getPlayerByName('İpek').id,
+            ], [
+                this.teamBalancerService.getPlayerByName('Berkin').id,
+                this.teamBalancerService.getPlayerByName('Burçe').id,
+                this.teamBalancerService.getPlayerByName('Görkem').id,
+                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Şeyda').id,
+                this.teamBalancerService.getPlayerByName('Yoldaş').id,
+            ]],
+            scores: [
+                [13, 25],
+                [10, 25],
+                [25, 17],
+                [25, 20],
+                [23, 25],
+            ],
+        });
     }
 
     addTestPlayers() {
@@ -894,8 +955,6 @@ export class HomeComponent implements OnDestroy {
         // // //     8,
         // // //     8,
         // // // ));
-
-        this.initializeSetup();
     }
 
 }
