@@ -114,6 +114,7 @@ export class TeamBalancerService {
             }
         }
 
+        // TODO: THIS MAKE UNBALANCED TEAMS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // add single player if selected players is odd number
         if (this.selectedPlayers.length - (bestTeams[0].length + bestTeams[1].length) === 1) {
             const bestPair: [Player, Player | undefined] = [this.selectedPlayers.find(p => !bestTeams[0].includes(p) && !bestTeams[1].includes(p))!, undefined];
