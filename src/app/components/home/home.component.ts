@@ -76,6 +76,8 @@ export class HomeComponent implements OnDestroy {
                         detail: 'Player list is fetched',
                     });
                     this.teamBalancerService.allPlayers = items;
+                    // TODO: control Player.maxId after DB usage !!!!!!!
+                    Player.maxId = items.length - 1;
                     this.initializeSetup();
                 },
                 error: error => console.error('Error fetching items:', error)
