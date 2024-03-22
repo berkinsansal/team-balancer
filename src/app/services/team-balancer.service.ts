@@ -1,6 +1,7 @@
 import { ApplicationRef, Injectable } from '@angular/core';
 import { Gender } from '../models/enums/gender.enum';
-import { Player, playerPropertyWeightMap } from '../models/player';
+import { Player, playerLabelSkillMap, playerPropertyWeightMap } from '../models/player';
+import { PlayerSelection, PlayerWithLabel } from '../models/player-with-label';
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +13,7 @@ export class TeamBalancerService {
     allPlayers: Player[] = [];
     players: Player[] = [];
     selectedPlayers: Player[] = [];
+    playersWithLabel: PlayerWithLabel[] = [];
     team1ByTeamSkills: Player[] = [];
     team2ByTeamSkills: Player[] = [];
     team1ByPlayerSkills: Player[] = [];
@@ -22,11 +24,12 @@ export class TeamBalancerService {
     team2Manual: Player[] = [];
     draggedPlayer: Player | null = null;
 
-    constructor(private ref: ApplicationRef) {}
+    constructor(private ref: ApplicationRef) { }
 
     initializeData() {
         this.players.length = 0;
         this.selectedPlayers.length = 0;
+        this.playersWithLabel.length = 0;
         this.team1ByTeamSkills.length = 0;
         this.team2ByTeamSkills.length = 0;
         this.team1ByPlayerSkills.length = 0;
@@ -51,6 +54,48 @@ export class TeamBalancerService {
     // Get player by name
     getPlayerByName(name: string) {
         return this.allPlayers.find(p => p.name === name)!;
+    }
+
+    labelPlayers() {
+        this.playersWithLabel.length = 0;
+        this.selectedPlayers.forEach(p => {
+            for (let [label, skills] of playerLabelSkillMap) {
+                const labelOverall = p.getPlayerLabelOverall(skills);
+                if (labelOverall >= TeamBalancerService.labelThreshold) {
+                    this.playersWithLabel.push({
+                        player: p,
+                        label,
+                        labelOverall
+                    });
+                }
+            }
+        });
+        this.playersWithLabel.sort((a, b) => a.label.localeCompare(b.label) || b.labelOverall - a.labelOverall || a.player.name.localeCompare(b.player.name));
+
+        /*
+        I have below array with player name, player label, and  label value . I am writing code with typescirpt. If possible I want to pick filter this array which returns me exactly two items per label with who is best for that label. however if someone picked for one label, he cannot be picked for another label
+        */
+
+        // This implementation ensures each player is only selected once across all labels.
+        const selection: PlayerSelection = {};
+        const selectedPlayers = new Set<string>();
+
+        // Assuming you've sorted players by their label and value descendingly
+        this.playersWithLabel.forEach(player => {
+            if (selection[player.label]?.length >= 2 || selectedPlayers.has(player.player.name)) {
+                // Skip if we already have 2 top players for this label or this player is already selected
+                return;
+            }
+
+            if (!selection[player.label]) {
+                selection[player.label] = [];
+            }
+
+            selection[player.label].push(player.player);
+            selectedPlayers.add(player.player.name);
+
+            return selection;
+        });
     }
 
     // Find the most similar teams by comparing team players each skill

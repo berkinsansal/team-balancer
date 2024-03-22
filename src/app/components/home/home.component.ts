@@ -28,6 +28,7 @@ export class HomeComponent implements OnDestroy {
 
     allPlayers: Player[] = [];
     players: Player[] = [];
+    playersWithLabel: any[] = [];
     team1ByTeamSkills: Player[] = [];
     team2ByTeamSkills: Player[] = [];
     team1ByPlayerSkills: Player[] = [];
@@ -92,6 +93,7 @@ export class HomeComponent implements OnDestroy {
         }
         this.allPlayers = this.teamBalancerService.allPlayers;
         this.players = this.teamBalancerService.players;
+        this.playersWithLabel = this.teamBalancerService.playersWithLabel;
         this.team1ByTeamSkills = this.teamBalancerService.team1ByTeamSkills;
         this.team2ByTeamSkills = this.teamBalancerService.team2ByTeamSkills;
         this.team1ByPlayerSkills = this.teamBalancerService.team1ByPlayerSkills;
@@ -121,6 +123,7 @@ export class HomeComponent implements OnDestroy {
             });
             return;
         }
+        this.teamBalancerService.labelPlayers();
         this.teamBalancerService.balanceTeamsByTeamSkills();
         this.teamBalancerService.balanceTeamsByPlayerSkills();
         // this.teamBalancerService.balanceTeamsByPlayerOverall();

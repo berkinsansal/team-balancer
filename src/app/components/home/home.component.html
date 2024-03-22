@@ -8,8 +8,19 @@
 </div>
 
 <div *ngIf="players && players.length > 0" class="grid justify-content-evenly">
-    <div class="col-fixed">
+    <!-- TODO: TEMP PLAYERS WITH LABEL TABLE: remove "flex" from below div class -->
+    <div class="col-fixed flex">
         <app-players-display [header]="'Players'" [players]="players" [isAllPlayersTable]="true" [showSkills]="showSkills" [showPassivePlayers]="showPassivePlayers"></app-players-display>
+        <!-- TODO: TEMP PLAYERS WITH LABEL TABLE -->
+        <div class="col-fixed">
+            <table>
+                <tr *ngFor="let pl of playersWithLabel">
+                    <td>{{pl.player.name}}</td>
+                    <td>{{pl.label}}</td>
+                    <td>{{pl.labelOverall}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="col-fixed">
         <div class="grid">
