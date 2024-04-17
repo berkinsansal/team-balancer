@@ -177,7 +177,7 @@ export class HomeComponent implements OnDestroy {
                 this.teamBalancerService.getPlayerByName('Berkin').id,
                 this.teamBalancerService.getPlayerByName('Burçe').id,
                 this.teamBalancerService.getPlayerByName('Görkem').id,
-                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Ozan').id,
                 this.teamBalancerService.getPlayerByName('Şeyda').id,
                 this.teamBalancerService.getPlayerByName('Yoldaş').id,
             ]],
@@ -189,9 +189,121 @@ export class HomeComponent implements OnDestroy {
                 [23, 25],
             ],
         });
+
+        this.matchService.matches.push({
+            date: new Date(2024, 2, 27, 21, 30),
+            place: 'Vamos',
+            players: [
+                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Begüm').id,
+                this.teamBalancerService.getPlayerByName('Emre').id,
+                this.teamBalancerService.getPlayerByName('Yoldaş').id,
+                this.teamBalancerService.getPlayerByName('Bora').id,
+                this.teamBalancerService.getPlayerByName('Ozan').id,
+                this.teamBalancerService.getPlayerByName('Aysu').id,
+                this.teamBalancerService.getPlayerByName('Burçe').id,
+                this.teamBalancerService.getPlayerByName('Barış').id,
+                this.teamBalancerService.getPlayerByName('Orhun').id,
+                this.teamBalancerService.getPlayerByName('Görkem').id,
+                this.teamBalancerService.getPlayerByName('Berkin').id,
+            ],
+            teams: [[
+                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Begüm').id,
+                this.teamBalancerService.getPlayerByName('Emre').id,
+                this.teamBalancerService.getPlayerByName('Yoldaş').id,
+                this.teamBalancerService.getPlayerByName('Bora').id,
+                this.teamBalancerService.getPlayerByName('Ozan').id,
+            ], [
+                this.teamBalancerService.getPlayerByName('Aysu').id,
+                this.teamBalancerService.getPlayerByName('Burçe').id,
+                this.teamBalancerService.getPlayerByName('Barış').id,
+                this.teamBalancerService.getPlayerByName('Orhun').id,
+                this.teamBalancerService.getPlayerByName('Görkem').id,
+                this.teamBalancerService.getPlayerByName('Berkin').id,
+            ]],
+        });
+
+        this.matchService.matches.push({
+            date: new Date(2024, 3, 3, 21, 30),
+            place: 'Vamos',
+            players: [
+                this.teamBalancerService.getPlayerByName('Alperen').id,
+                this.teamBalancerService.getPlayerByName('Aysu').id,
+                this.teamBalancerService.getPlayerByName('Barış').id,
+                this.teamBalancerService.getPlayerByName('Begüm').id,
+                this.teamBalancerService.getPlayerByName('Berkin').id,
+                this.teamBalancerService.getPlayerByName('Burçe').id,
+                this.teamBalancerService.getPlayerByName('Can').id,
+                this.teamBalancerService.getPlayerByName('Görkem').id,
+                this.teamBalancerService.getPlayerByName('Işıl').id,
+                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Şeyda').id,
+                this.teamBalancerService.getPlayerByName('Yoldaş').id,
+            ],
+            teams: [[
+                this.teamBalancerService.getPlayerByName('Alperen').id,
+                this.teamBalancerService.getPlayerByName('Aysu').id,
+                this.teamBalancerService.getPlayerByName('Barış').id,
+                this.teamBalancerService.getPlayerByName('Begüm').id,
+                this.teamBalancerService.getPlayerByName('Berkin').id,
+                this.teamBalancerService.getPlayerByName('Şeyda').id,
+            ], [
+                this.teamBalancerService.getPlayerByName('Burçe').id,
+                this.teamBalancerService.getPlayerByName('Can').id,
+                this.teamBalancerService.getPlayerByName('Görkem').id,
+                this.teamBalancerService.getPlayerByName('Işıl').id,
+                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Yoldaş').id,
+            ]],
+            scores: [
+                [25, 11],
+                [22, 25],
+                [25, 22],
+                [22, 25],
+                [23, 25],
+            ],
+        });
+
+        this.matchService.matches.push({
+            date: new Date(2024, 3, 17, 21, 30),
+            place: 'Vamos',
+            players: [
+                this.teamBalancerService.getPlayerByName('Anıl').id,
+                this.teamBalancerService.getPlayerByName('Barış').id,
+                this.teamBalancerService.getPlayerByName('Begüm').id,
+                this.teamBalancerService.getPlayerByName('Berkin').id,
+                this.teamBalancerService.getPlayerByName('Emre').id,
+                this.teamBalancerService.getPlayerByName('Görkem').id,
+                this.teamBalancerService.getPlayerByName('Güçlü').id,
+                this.teamBalancerService.getPlayerByName('Işıl').id,
+                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Serkan').id,
+                this.teamBalancerService.getPlayerByName('Şeyda').id,
+                this.teamBalancerService.getPlayerByName('Yoldaş').id,
+            ],
+        });
     }
 
     addTestPlayers() {
+
+        this.teamBalancerService.allPlayers.push(new Player(
+            true,
+            'Alperen',
+            Gender.Male,
+            8,
+            4,
+            4,
+            6,
+            2,
+            2,
+            2,
+            4,
+            4,
+            6,
+            2,
+        ));
+
         this.teamBalancerService.allPlayers.push(new Player(
             true,
             'Anıl',
@@ -210,7 +322,7 @@ export class HomeComponent implements OnDestroy {
         ));
 
         this.teamBalancerService.allPlayers.push(new Player(
-            true,
+            false,
             'Ayça',
             Gender.Female,
             6,
@@ -312,6 +424,23 @@ export class HomeComponent implements OnDestroy {
         ));
 
         this.teamBalancerService.allPlayers.push(new Player(
+            true,
+            'Bora',
+            Gender.Male,
+            8,
+            4,
+            4,
+            6,
+            2,
+            2,
+            2,
+            4,
+            4,
+            6,
+            2,
+        ));
+
+        this.teamBalancerService.allPlayers.push(new Player(
             false,
             'Burak Gökalp',
             Gender.Male,
@@ -347,6 +476,23 @@ export class HomeComponent implements OnDestroy {
 
         this.teamBalancerService.allPlayers.push(new Player(
             false,
+            'Can',
+            Gender.Male,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            8,
+            10,
+            6,
+            8,
+            8,
+        ));
+
+        this.teamBalancerService.allPlayers.push(new Player(
+            false,
             'Duygu',
             Gender.Female,
             4,
@@ -363,7 +509,7 @@ export class HomeComponent implements OnDestroy {
         ));
 
         this.teamBalancerService.allPlayers.push(new Player(
-            true,
+            false,
             'Emrah',
             Gender.Male,
             8,
@@ -533,7 +679,7 @@ export class HomeComponent implements OnDestroy {
         ));
 
         this.teamBalancerService.allPlayers.push(new Player(
-            false,
+            true,
             'Serkan',
             Gender.Male,
             6,
@@ -550,7 +696,7 @@ export class HomeComponent implements OnDestroy {
         ));
 
         this.teamBalancerService.allPlayers.push(new Player(
-            true,
+            false,
             'Şahap',
             Gender.Male,
             10,
