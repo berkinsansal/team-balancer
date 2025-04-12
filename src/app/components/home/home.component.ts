@@ -270,6 +270,7 @@ export class HomeComponent implements OnDestroy {
             place: 'Vamos',
             players: [
                 this.teamBalancerService.getPlayerByName('Anıl').id,
+                this.teamBalancerService.getPlayerByName('Armağan').id,
                 this.teamBalancerService.getPlayerByName('Barış').id,
                 this.teamBalancerService.getPlayerByName('Begüm').id,
                 this.teamBalancerService.getPlayerByName('Berkin').id,
@@ -279,6 +280,44 @@ export class HomeComponent implements OnDestroy {
                 this.teamBalancerService.getPlayerByName('Işıl').id,
                 this.teamBalancerService.getPlayerByName('İpek').id,
                 this.teamBalancerService.getPlayerByName('Serkan').id,
+                this.teamBalancerService.getPlayerByName('Şeyda').id,
+            ],
+            teams: [[
+                this.teamBalancerService.getPlayerByName('Begüm').id,
+                this.teamBalancerService.getPlayerByName('Berkin').id,
+                this.teamBalancerService.getPlayerByName('Emre').id,
+                this.teamBalancerService.getPlayerByName('Görkem').id,
+                this.teamBalancerService.getPlayerByName('Işıl').id,
+                this.teamBalancerService.getPlayerByName('Serkan').id,
+            ], [
+                this.teamBalancerService.getPlayerByName('Anıl').id,
+                this.teamBalancerService.getPlayerByName('Armağan').id,
+                this.teamBalancerService.getPlayerByName('Barış').id,
+                this.teamBalancerService.getPlayerByName('Güçlü').id,
+                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Şeyda').id,
+            ]],
+            scores: [
+                [25, 13],
+                [25, 15],
+                [25, 22],
+            ],
+        });
+
+        this.matchService.matches.push({
+            date: new Date(2024, 3, 24, 21, 30),
+            place: 'Vamos',
+            players: [
+                this.teamBalancerService.getPlayerByName('Aysu').id,
+                this.teamBalancerService.getPlayerByName('Barış').id,
+                this.teamBalancerService.getPlayerByName('Begüm').id,
+                this.teamBalancerService.getPlayerByName('Berkin').id,
+                this.teamBalancerService.getPlayerByName('Burçe').id,
+                this.teamBalancerService.getPlayerByName('Çağatay').id,
+                this.teamBalancerService.getPlayerByName('Görkem').id,
+                this.teamBalancerService.getPlayerByName('Işıl').id,
+                this.teamBalancerService.getPlayerByName('İpek').id,
+                this.teamBalancerService.getPlayerByName('Ozan').id,
                 this.teamBalancerService.getPlayerByName('Şeyda').id,
                 this.teamBalancerService.getPlayerByName('Yoldaş').id,
             ],
@@ -319,6 +358,23 @@ export class HomeComponent implements OnDestroy {
             8,
             2,
             2,
+        ));
+
+        this.teamBalancerService.allPlayers.push(new Player(
+            true,
+            'Armağan',
+            Gender.Male,
+            6,
+            8,
+            6,
+            8,
+            4,
+            4,
+            8,
+            8,
+            8,
+            8,
+            4,
         ));
 
         this.teamBalancerService.allPlayers.push(new Player(
@@ -489,6 +545,23 @@ export class HomeComponent implements OnDestroy {
             6,
             8,
             8,
+        ));
+
+        this.teamBalancerService.allPlayers.push(new Player(
+            true,
+            'Çağatay',
+            Gender.Male,
+            8,
+            4,
+            4,
+            6,
+            2,
+            2,
+            2,
+            4,
+            4,
+            6,
+            2,
         ));
 
         this.teamBalancerService.allPlayers.push(new Player(
