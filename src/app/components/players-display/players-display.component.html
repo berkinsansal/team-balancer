@@ -85,7 +85,8 @@
             <td [ngClass]="{'no-hover' : !isAllPlayersTable}" class="ellipsis-cell">
                 <i class="fa-solid" [ngClass]="player.gender === 0 ? 'fa-mars' : 'fa-venus'" [ngStyle]="{'color': player.gender === 0 ? 'deepskyblue' : 'deeppink'}"></i>
                 {{ player.name }}
-                <b *ngIf="isAllPlayersTable">{{ player | playerLabel }}</b>
+                <!-- TODO: TEMP PLAYER LABEL -->
+                <!-- <b *ngIf="isAllPlayersTable">{{ player | playerLabel }}</b> -->
             </td>
             <!-- END: GENDER & NAME -->
             
